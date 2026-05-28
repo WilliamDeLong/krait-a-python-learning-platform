@@ -11,9 +11,20 @@ export default function Navbar() {
   // Warning disabled: 
   // eslint-disable-next-line
   const [user, setUser] = useState({})
+  const [progressShuffler, setProg] = useState(0);
+  const [progressDirection, setProgDir] = useState(1);
+
 
   useEffect(() => {
   setUser(getUserInfo())
+  setProg(progressShuffler+(0.01*progressDirection));
+    console.log("Current Progress =",progressShuffler+"%");
+    if (progressShuffler>1 || progressShuffler<0) {
+      if (progressShuffler>1)
+        setProgDir(-1);
+      else setProgDir(1);
+      console.log("Progress Direction: "+progressDirection);
+    }
   }, [])
   
   // if (!user) return null   - for now, let's show the bar even not logged in.
@@ -26,7 +37,10 @@ export default function Navbar() {
         <Nav.Link href="/">Start</Nav.Link>
         <Nav.Link href="/home">Home</Nav.Link>
         <Nav.Link href="/privateUserProfile">Profile</Nav.Link>
+        <Nav.Link href="/lessonTestpage">Lesson</Nav.Link>
+
       </Nav>
+      <progress draggable={false} value={progressShuffler}/>
     </Container>
   </ReactNavbar>
 

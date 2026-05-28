@@ -15,6 +15,7 @@ const Landingpage = () => {
                     <Card.Link href="/signup">Sign Up</Card.Link>
                     <Card.Link href="/login">Login</Card.Link>
                 </Card.Body>
+                
             </Card>
         </div>
     )

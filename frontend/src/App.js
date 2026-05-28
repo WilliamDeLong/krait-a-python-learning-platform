@@ -14,11 +14,17 @@ import PrivateUserProfile from "./components/pages/privateUserProfilePage";
 import { createContext, useState, useEffect } from "react";
 import getUserInfo from "./utilities/decodeJwt";
 
+import LessonTestPage from "./components/pages/LessonTestPage";
+
 export const UserContext = createContext();
 //test change
 //test again
 const App = () => {
   const [user, setUser] = useState();
+  const [isLightMode, setIsLightMode] = useState(() => {
+    const savedTheme = sessionStorage.getItem("isLightMode");
+    return savedTheme ? JSON.parse(savedTheme) : false;
+  });
 
   useEffect(() => {
     setUser(getUserInfo());
@@ -34,6 +40,8 @@ const App = () => {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
+          <Route path="/lessonTestpage" element={<LessonTestPage />} />
+
         </Routes>
       </UserContext.Provider>
     </>

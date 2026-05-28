@@ -1,0 +1,59 @@
+
+# @name createUser
+POST http://localhost:8081/user/signup
+Content-Type: application/json 
+
+{
+    "username" : "tochiamanze",
+    "email" : "cdon@gmail.com",
+    "password" : "tochi12345"
+}
+
+###
+@userTestId1 = {{createUser.response.body.$._id}}
+@userTestName1 = {{createUser.response.body.$.username}}
+@userTestEmail1 = {{createUser.response.body.$.email}}
+@userTestPassword1 = "tochi12345"
+
+###
+
+POST http://localhost:8081/user/login
+Content-Type: application/json 
+
+{
+    "username" : "{{userTestName1}}",
+    "password" : "tochi12345"
+}
+
+
+###
+GET http://localhost:8081/user/getAll
+Content-Type: application/json
+
+###
+
+POST http://localhost:8081/user/editUser
+Content-Type: application/json 
+
+{
+    "userId" : "{{userTestId1}}",
+    "username" : "{{userTestName1}}_Edited",
+    "email" : "edit_{{userTestEmail1}}",
+    "password" : "tochi12345_v2"
+}
+
+###
+GET  http://localhost:8081/user/getUserById
+Content-Type: application/json 
+
+{
+    "userId" : "{{userTestId1}}"
+}
+
+###
+POST  http://localhost:8081/user/{{userTestId1}}/delete
+Content-Type: application/json 
+
+
+###
+# POST  http://localhost:8081/user/deleteAll

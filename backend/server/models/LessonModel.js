@@ -7,21 +7,25 @@ const lessonSchema = new mongoose.Schema(
       type: String,
       required: true,
       label: "title",
+      default: "Placeholder title."
     },
     instructions: {
       type: String,
       required: true,
       label: "instructions",
+      default: "You know how to make a print statement, right? Make one."
     },
     default_script: {
       type: String,
       required: true,
       label: "initial_script",
+      default: "#This is where you put YOUR code to be ran."
     },
     solution_verification: {
       type: String,
       required: true,
-      label: "solver"
+      label: "solver",
+      default: "print('Hello World')"
     },
     is_test: {
       type: Boolean,
@@ -32,16 +36,17 @@ const lessonSchema = new mongoose.Schema(
     chapter_no: {
       type: Number,
       required: true,
-      label: "chapter"
+      label: "chapter",
+      default: 0
     },
     order_within_chapter: {
       type: Number,
       required: true,
-      label: "lesson_number"
+      label: "lesson_number",
+      default: 0
     },
     documentation_id: {
       type: String,
-      required: true,
       label: "documentation_id"
     },
     date: {

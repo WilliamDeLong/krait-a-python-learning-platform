@@ -3,7 +3,7 @@ const router = express.Router();
 const z = require("zod");
 const bcrypt = require("bcrypt");
 
-const newUserModel = require("../models/userModel");
+const newUserModel = require('../../models/userModel')
 
 router.post("/:id/delete", async (req, res) => {
   var { id } = req.params;

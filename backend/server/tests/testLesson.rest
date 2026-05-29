@@ -1,0 +1,73 @@
+
+# @name create
+POST http://localhost:8081/lesson/create
+Content-Type: application/json 
+
+{
+    "title" : "Hello World2",
+    "instructions": "The print statement is used for displaying text allowing for the creation of visuals.",
+    "default_script": "# This is the code editor, it allows for the modification of code and programming in general.\n",
+    "solution_verification": "print(\"Hello World.\")",
+    "is_test": false,
+    "chapter_no": 0,
+    "order_within_chapter": 0,
+    "documentation_id": "To be fixed later"
+}
+
+###
+@lessonTestId1 = {{create.response.body.$._id}}
+@lessonTestTitle1 = {{create.response.body.$.title}}
+@lessonTestInstruction1 = {{create.response.body.$.instructions}}
+@lessonTestDefaultScript1 = {{create.response.body.$.default_script}}
+@lessonTestSolutionVerification1 = {{create.response.body.$.solution_verification}}
+@lessonTestIsTest1 = {{create.response.body.$.is_test}}
+@lessonTestChapterNo1 = {{create.response.body.$.chapter_no}}
+@lessonTestChapterOrder1 = {{create.response.body.$.order_within_chapter}}
+@lessonTestDocumentId1 = {{create.response.body.$.documentation_id}}
+
+###
+
+POST http://localhost:8081/lesson/load
+Content-Type: application/json 
+
+{
+    "lessonId" : "{{lessonTestId1}}"
+}
+
+
+###
+GET http://localhost:8081/lesson/getAll
+Content-Type: application/json
+
+###
+
+POST http://localhost:8081/lesson/edit
+Content-Type: application/json 
+
+{
+    "lessonId" : "{{lessonTestId1}}",
+    "title" : "{{lessonTestTitle1}}_EditedExample",
+    "instructions" : "Edited Example: {{lessonTestInstruction1}}",
+    "default_script" : "Edited Example: {{lessonTestDefaultScript1}}",
+    "solution_verification" : "Edited Example: {{lessonTestSolutionVerification1}}",
+    "is_test" : true,
+    "chapter_no" : {{lessonTestChapterNo1}},
+    "order_within_chapter" : {{lessonTestChapterOrder1}},
+    "documentation_id" : "Document #57221",
+}
+
+###
+GET  http://localhost:8081/lesson/getLessonById
+Content-Type: application/json 
+
+{
+    "userId" : "{{lessonTestId1}}"
+}
+
+###
+POST  http://localhost:8081/lesson/{{lessonTestId1}}/delete
+Content-Type: application/json 
+
+
+###
+# POST  http://localhost:8081/user/deleteAll

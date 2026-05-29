@@ -4,7 +4,7 @@ POST http://localhost:8081/lesson/create
 Content-Type: application/json 
 
 {
-    "title" : "Hello World2",
+    "title" : "Hello World",
     "instructions": "The print statement is used for displaying text allowing for the creation of visuals.",
     "default_script": "# This is the code editor, it allows for the modification of code and programming in general.\n",
     "solution_verification": "print(\"Hello World.\")",

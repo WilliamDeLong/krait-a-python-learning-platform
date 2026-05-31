@@ -25,6 +25,7 @@ const deleteSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionD
 const updateSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionUpdate')
 const findSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionFind')
 const getAllSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionGetAll')
+const loadSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionLoad')
 
 
 
@@ -54,6 +55,7 @@ app.use('/submissions', deleteSubmissionRoute);
 app.use('/submissions', updateSubmissionRoute);
 app.use('/submissions', findSubmissionRoute);
 app.use('/submissions', getAllSubmissionRoute);
+app.use('/submissions', loadSubmissionRoute);
 
 
 app.listen(SERVER_PORT, (req, res) => {

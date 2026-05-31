@@ -27,6 +27,11 @@ const findSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionFin
 const getAllSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionGetAll')
 const loadSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionLoad')
 
+// Chapter Routes
+const createChapter = require('./routes/chapterRoutes/createChapter')
+const deleteChapter = require('./routes/chapterRoutes/deleteChapter')
+const listChapter = require('./routes/chapterRoutes/listChapters')
+
 
 
 require('dotenv').config();
@@ -56,6 +61,10 @@ app.use('/submissions', updateSubmissionRoute);
 app.use('/submissions', findSubmissionRoute);
 app.use('/submissions', getAllSubmissionRoute);
 app.use('/submissions', loadSubmissionRoute);
+// Chapter Routes
+app.use('/chapter', createChapter);
+app.use('/chapter', deleteChapter);
+app.use('/chapter', listChapter);
 
 
 app.listen(SERVER_PORT, (req, res) => {

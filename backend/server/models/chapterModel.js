@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const LessonSchema = require('./LessonModel')
 
 //user schema/model
 const ChapterSchema = new mongoose.Schema(
@@ -15,22 +16,18 @@ const ChapterSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
       label: "description",
     },
     lessons: {
-      type: [LessonSchema],
-      required: true,
+      type: [mongoose.ObjectId],
       label: "lessons_belonging_to_chapter"
     },
     test_id: {
-      type: ObjectId,
-      required: true,
+      type: mongoose.ObjectId,
       label: "test_id"
     },
     documentation_references: {
       type: String,
-      required: true,
       label: "references_to_documentation"
     },
     date: {

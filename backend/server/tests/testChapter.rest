@@ -1,0 +1,129 @@
+
+
+
+# @name lesson
+POST http://localhost:8081/lesson/create
+Content-Type: application/json 
+
+{
+    "title" : "Garbage Deleted Lesson",
+    "instructions": "Ignore this lesson",
+    "default_script": "break",
+    "solution_verification": "break",
+    "is_test": false,
+    "chapter_no": 5,
+    "order_within_chapter": 1,
+    "documentation_id": "2Bdeleted"
+}
+
+###
+@lessonId = {{lesson.response.body.$._id}}
+# @name lesson2
+POST http://localhost:8081/lesson/create
+Content-Type: application/json 
+
+{
+    "title" : "Other Garbage Deleted Lesson",
+    "instructions": "Ignore this lesson",
+    "default_script": "break",
+    "solution_verification": "break",
+    "is_test": false,
+    "chapter_no": 5,
+    "order_within_chapter": 2,
+    "documentation_id": "2Bdeleted"
+}
+
+###
+@lessonId2 = {{lesson2.response.body.$._id}}
+
+# @name lesson3
+POST http://localhost:8081/lesson/create
+Content-Type: application/json 
+
+{
+    "title" : "Garbage Deleted TEST",
+    "instructions": "Ignore this lesson",
+    "default_script": "break",
+    "solution_verification": "break",
+    "is_test": true,
+    "chapter_no": 5,
+    "order_within_chapter": 3,
+    "documentation_id": "2Bdeleted"
+}
+
+###
+@lessonId3 = {{lesson3.response.body.$._id}}
+
+
+# @name create
+POST http://localhost:8081/chapter/create
+Content-Type: application/json 
+
+{
+    "title": "Chapter 5: The Garbage Testing Deletion Chapter",
+    "chapter_no": 5, 
+    "description": "This chapter was made to make sure chapter routes are functional.", 
+    "documentation_references": "Nonexistant, its getting deleted anyways."
+}
+
+###
+@chapterTestId1 = {{create.response.body.$._id}}
+@chapterTestTitle1 = {{create.response.body.$.title}}
+@chapterTestDescription = {{create.response.body.$.description}}
+@chapterTestTestID = {{create.response.body.$.test_id}}
+@chapterTestDocRef = {{create.response.body.$.documentation_references}}
+###
+
+###
+
+
+
+###
+GET http://localhost:8081/chapter/list
+Content-Type: application/json
+
+###
+
+POST http://localhost:8081/chapter/{{chapterTestId1}}/update
+Content-Type: application/json 
+
+{
+    "lessonID": "{{lessonId}}",
+    "script_submission": "This was a triumph",
+    "success": true
+}
+
+###
+
+GET http://localhost:8081/chapter/findSubmission
+Content-Type: application/json 
+
+{
+    "lessonID": null,
+    "script_submission": null,
+    "success": true
+}
+
+
+###
+GET  http://localhost:8081/chapter/load/{{chapterTestId1}}
+Content-Type: application/json 
+
+###
+POST  http://localhost:8081/chapter/{{chapterTestId1}}/delete
+Content-Type: application/json 
+
+###
+
+POST  http://localhost:8081/lesson/{{lessonId}}/delete
+Content-Type: application/json 
+
+###
+POST  http://localhost:8081/lesson/{{lessonId2}}/delete
+Content-Type: application/json 
+
+###
+POST  http://localhost:8081/lesson/{{lessonId3}}/delete
+Content-Type: application/json 
+
+###

@@ -19,6 +19,13 @@ const editLessonRoute = require('./routes/lessonRoutes/editLessonByID')
 const findLessonRoute = require('./routes/lessonRoutes/findLesson')
 const getLessonRoute = require('./routes/lessonRoutes/getLessonByID')
 
+// Code Submission Routes
+const createSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionCreate')
+const deleteSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionDelete')
+const updateSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionUpdate')
+const findSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionFind')
+const getAllSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionGetAll')
+
 
 
 require('dotenv').config();
@@ -41,6 +48,13 @@ app.use('/lesson', deleteLessonRoute);
 app.use('/lesson', editLessonRoute);
 app.use('/lesson', findLessonRoute);
 app.use('/lesson', getLessonRoute);
+// Code Submission Routes
+app.use('/submissions', createSubmissionRoute);
+app.use('/submissions', deleteSubmissionRoute);
+app.use('/submissions', updateSubmissionRoute);
+app.use('/submissions', findSubmissionRoute);
+app.use('/submissions', getAllSubmissionRoute);
+
 
 app.listen(SERVER_PORT, (req, res) => {
     console.log(`The backend service is running on port ${SERVER_PORT} and waiting for requests.`);

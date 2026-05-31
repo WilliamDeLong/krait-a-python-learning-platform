@@ -1,24 +1,22 @@
-import { ObjectId } from "bson";
-
 const mongoose = require("mongoose");
 
 //user schema/model
 const userSubmissionSchema = new mongoose.Schema(
   {
     userID: {
-      type: ObjectId,
+      type: mongoose.ObjectId,
       required: true,
       label: "userID",
     },
     lessonID: {
-      type: ObjectId,
+      type: mongoose.ObjectId,
       required: true,
       label: "lesson ID",
     },
     script_submission: {
       type: String,
       required: true,
-      label: "submitted script",
+      label: "submitted script"
     },
     success: {
       required: true,
@@ -31,7 +29,7 @@ const userSubmissionSchema = new mongoose.Schema(
     },
     submission_date: {
       type: Date,
-      default: null,
+      default: Date.now,
     },
   },
   { collection: "codeSubmissions" }

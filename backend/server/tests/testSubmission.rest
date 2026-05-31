@@ -1,0 +1,109 @@
+
+
+
+# @name lesson
+POST http://localhost:8081/lesson/create
+Content-Type: application/json 
+
+{
+    "title" : "Garbage Deleted Lesson",
+    "instructions": "Ignore this lesson",
+    "default_script": "break",
+    "solution_verification": "break",
+    "is_test": false,
+    "chapter_no": 5,
+    "order_within_chapter": 7,
+    "documentation_id": "2Bdeleted"
+}
+
+###
+@lessonId = {{lesson.response.body.$._id}}
+
+###
+# @name User
+POST http://localhost:8081/user/signup
+Content-Type: application/json 
+
+{
+    "username" : "User2Delete",
+    "email" : "gonna@delete.com",
+    "password" : "GetD31373D"
+}
+
+###
+@userId = {{User.response.body.$._id}}
+
+
+# @name create
+POST http://localhost:8081/submissions/create
+Content-Type: application/json 
+
+{
+    "userID" : "{{userId}}",
+    "lessonID": "{{lessonId}}"
+}
+
+###
+@submissionTestId1 = {{create.response.body.$._id}}
+@submissionTestUserID1 = {{create.response.body.$.userID}}
+@submissionTestLessonID1 = {{create.response.body.$.lessonID}}
+@submissionTestScriptSubmission1 = {{create.response.body.$.script_submission}}
+###
+
+###
+
+POST http://localhost:8081/submissions/load
+Content-Type: application/json 
+
+{
+    "lessonId" : "{{submissionTestId1}}"
+}
+
+
+###
+GET http://localhost:8081/submissions/getAll
+Content-Type: application/json
+
+###
+
+POST http://localhost:8081/submissions/{{submissionTestId1}}/update
+Content-Type: application/json 
+
+{
+    "userID" : "{{userId}}",
+    "lessonID": "{{lessonId}}",
+    "script_submission": "How'd ya like them abbles",
+    "success": false
+}
+
+###
+
+GET http://localhost:8081/submissions/findSubmission
+Content-Type: application/json 
+
+{
+    "userID" : null,
+    "lessonID": null,
+    "script_submission": null,
+    "success": false
+}
+
+
+###
+GET  http://localhost:8081/submissions/{{submissionTestId1}}
+Content-Type: application/json 
+
+###
+POST  http://localhost:8081/submissions/{{submissionTestId1}}/delete
+Content-Type: application/json 
+
+###
+POST  http://localhost:8081/user/{{userId}}/delete
+Content-Type: application/json 
+
+###
+
+POST  http://localhost:8081/lesson/{{lessonId}}/delete
+Content-Type: application/json 
+
+###

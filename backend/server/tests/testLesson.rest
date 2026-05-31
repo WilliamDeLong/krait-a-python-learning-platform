@@ -10,7 +10,7 @@ Content-Type: application/json
     "solution_verification": "print(\"Hello World.\")",
     "is_test": false,
     "chapter_no": 0,
-    "order_within_chapter": 0,
+    "order_within_chapter": 1,
     "documentation_id": "To be fixed later"
 }
 
@@ -41,28 +41,44 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8081/lesson/edit
+POST http://localhost:8081/lesson/{{lessonTestId1}}/edit
 Content-Type: application/json 
 
 {
-    "lessonId" : "{{lessonTestId1}}",
-    "title" : "{{lessonTestTitle1}}_EditedExample",
-    "instructions" : "Edited Example: {{lessonTestInstruction1}}",
-    "default_script" : "Edited Example: {{lessonTestDefaultScript1}}",
-    "solution_verification" : "Edited Example: {{lessonTestSolutionVerification1}}",
+    "title" : "Title Replaced",
+    "instructions" : "Instructions Modified",
+    "default_script" : "Script Rewritten",
+    "solution_verification" : "Solution Corrected",
     "is_test" : true,
-    "chapter_no" : {{lessonTestChapterNo1}},
-    "order_within_chapter" : {{lessonTestChapterOrder1}},
-    "documentation_id" : "Document #57221",
+    "documentation_id" : "Document #57221"
 }
 
 ###
-GET  http://localhost:8081/lesson/getLessonById
+
+GET http://localhost:8081/lesson/findLesson
 Content-Type: application/json 
 
 {
-    "userId" : "{{lessonTestId1}}"
+"title": null,
+"instructions": null,
+"default_script": null,
+"solution_verification": null,
+"is_test": null,
+"chapter_no": 0,
+"order_within_chapter": null,
+"documentation_id": null
 }
+
+###
+GET http://localhost:8081/lesson/findLesson
+Content-Type: application/json 
+
+{"question_prompt": "Who", "q_category": null, "q_difficulty": null}
+
+
+###
+GET  http://localhost:8081/lesson/{{lessonTestId1}}
+Content-Type: application/json 
 
 ###
 POST  http://localhost:8081/lesson/{{lessonTestId1}}/delete

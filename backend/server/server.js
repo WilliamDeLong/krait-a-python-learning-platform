@@ -14,6 +14,10 @@ const deleteUID = require("./routes/userRoutes/userDeleteID");
 
 // Lesson Routes
 const createLessonRoute = require('./routes/lessonRoutes/createLesson')
+const deleteLessonRoute = require('./routes/lessonRoutes/deleteLessonByID')
+const editLessonRoute = require('./routes/lessonRoutes/editLessonByID')
+const findLessonRoute = require('./routes/lessonRoutes/findLesson')
+const getLessonRoute = require('./routes/lessonRoutes/getLessonByID')
 
 
 
@@ -33,6 +37,10 @@ app.use('/user', deleteUser);
 app.use("/user", deleteUID);
 // Lesson Routes
 app.use('/lesson', createLessonRoute);
+app.use('/lesson', deleteLessonRoute);
+app.use('/lesson', editLessonRoute);
+app.use('/lesson', findLessonRoute);
+app.use('/lesson', getLessonRoute);
 
 app.listen(SERVER_PORT, (req, res) => {
     console.log(`The backend service is running on port ${SERVER_PORT} and waiting for requests.`);

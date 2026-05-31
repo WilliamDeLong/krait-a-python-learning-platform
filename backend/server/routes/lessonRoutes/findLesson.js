@@ -52,7 +52,7 @@ router.get("/findLesson", (req, res, next) => {
       console.log(err);
     }
     if (less.length==0) {
-      res.status(404).send(`A Lesson matching the parameters could not be found.\nParameters that were in use:\ntitle: ${parameter_status["title"]}, \ninstructions: ${parameter_status["instructions"]}, \ndefault_script: ${parameter_status["default_script"]}, \nsolution_verification: ${parameter_status["solution_verification"]}, \nis_test: ${parameter_status["is_test"]}, \nchapter_no: ${parameter_status["chapter_no"]}, \norder_within_chapter: ${parameter_status["order_within_chapter"]}, \ndocumentation_id: ${parameter_status["documentation_id"]}`);
+      res.status(404).send(`A Lesson matching the parameters could not be found.`);
     } 
     else {
       return res.json(less);
@@ -64,6 +64,7 @@ router.get("/findLesson", (req, res, next) => {
 
 router.get("/findLesson", async (req, res) => {
   //console.log("Check 2");
+  const paramater_status = {"title": 0, "instructions": 0, "default_script": 0, "solution_verification": 0, "is_test": 0, "chapter_no": 0, "order_within_chapter": 0, "documentation_id": 0}
   const query = lessonSchema.find();
   var { title, instructions, default_script, solution_verification, is_test, chapter_no, order_within_chapter, documentation_id} = req.body;
   if (title != null) {
@@ -106,7 +107,8 @@ router.get("/findLesson", async (req, res) => {
       console.log(err);
     }
     if (less.length==0) {
-      res.status(404).send(`A Lesson matching the parameters could not be found.\nParameters that were in use:\ntitle: ${parameter_status["title"]}, \ninstructions: ${parameter_status["instructions"]}, \ndefault_script: ${parameter_status["default_script"]}, \nsolution_verification: ${parameter_status["solution_verification"]}, \nis_test: ${parameter_status["is_test"]}, \nchapter_no: ${parameter_status["chapter_no"]}, \norder_within_chapter: ${parameter_status["order_within_chapter"]}, \ndocumentation_id: ${parameter_status["documentation_id"]}`);
+      //\nParameters that were in use:\ntitle: ${parameter_status["title"]}, \ninstructions: ${parameter_status["instructions"]}, \ndefault_script: ${parameter_status["default_script"]}, \nsolution_verification: ${parameter_status["solution_verification"]}, \nis_test: ${parameter_status["is_test"]}, \nchapter_no: ${parameter_status["chapter_no"]}, \norder_within_chapter: ${parameter_status["order_within_chapter"]}, \ndocumentation_id: ${parameter_status["documentation_id"]}
+      res.status(404).send(`A Lesson matching the parameters could not be found.`);
     } 
     else {
       return res.json(less);

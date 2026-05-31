@@ -59,21 +59,15 @@ GET http://localhost:8081/lesson/findLesson
 Content-Type: application/json 
 
 {
-"title": null,
+"title": "Title",
 "instructions": null,
 "default_script": null,
 "solution_verification": null,
 "is_test": null,
-"chapter_no": 0,
+"chapter_no": null,
 "order_within_chapter": null,
 "documentation_id": null
 }
-
-###
-GET http://localhost:8081/lesson/findLesson
-Content-Type: application/json 
-
-{"question_prompt": "Who", "q_category": null, "q_difficulty": null}
 
 
 ###

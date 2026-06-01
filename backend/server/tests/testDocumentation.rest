@@ -1,0 +1,79 @@
+
+
+
+# @name create
+POST http://localhost:8081/documentation/make
+Content-Type: application/json 
+
+{
+    "title": "What is a print statement",
+    "author": "6a18823fe3a22d37ce5b6b83", 
+    "description": "Documentation going the ins-and-outs of the print function in Python.",
+    "content": "Pretend that this is a highly detailed, over the top, explanation of what a print statement is.", 
+    "reference_list": "https://docs.python.org/3/library/functions.html#print"
+}
+
+###
+@docTestID = {{create.response.body.$._id}}
+@docTestTitle = {{create.response.body.$.title}}
+@docTestDesc = {{create.response.body.$.description}}
+@docTestAuthor = {{create.response.body.$.test_id}}
+@docTestDocRef = {{create.response.body.$.reference_list}}
+@docTestContent = {{create.response.body.$.documentation_references}}
+###
+
+###
+
+
+
+###
+GET http://localhost:8081/documentation/list
+Content-Type: application/json
+
+###
+
+POST http://localhost:8081/documentation/{{docTestID}}/edit
+Content-Type: application/json 
+
+{
+    "title": "What is a function?",
+    "description": "Documentation going the ins-and-outs of user defined functions in Python.",
+    "content": "Pretend that this is a highly detailed, over the top, explanation of how to use functions.", 
+    "reference_list": "https://docs.python.org/3/tutorial/controlflow.html"
+}
+###
+
+POST http://localhost:8081/documentation/{{docTestID}}/refresh
+Content-Type: application/json 
+
+
+
+###
+POST http://localhost:8081/lesson/6a1dbeccb7829fed4e8a331f/edit
+Content-Type: application/json 
+
+{
+    "is_test" : true,
+    "chapter_no": 6
+}
+
+###
+
+GET http://localhost:8081/documentation/find
+Content-Type: application/json 
+
+{
+    "title": "function"
+    
+}
+
+
+###
+GET  http://localhost:8081/documentation/{{docTestID}}
+Content-Type: application/json 
+
+###
+POST  http://localhost:8081/documentation/{{docTestID}}/delete
+Content-Type: application/json 
+
+###

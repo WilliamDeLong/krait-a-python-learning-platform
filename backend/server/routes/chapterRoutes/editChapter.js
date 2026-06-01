@@ -46,7 +46,7 @@ router.post("/:id/edit", async (req, res) =>
         lessons: lessons,
         test_id: test_id,
         documentation_references: documentation_references
-    } ,function (err, chapter) {
+    }, {new: true} ,function (err, chapter) {
     if (err){
         console.log(err);
     } else {

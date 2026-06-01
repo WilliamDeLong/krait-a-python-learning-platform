@@ -60,8 +60,8 @@ POST http://localhost:8081/chapter/create
 Content-Type: application/json 
 
 {
-    "title": "Chapter 5: The Garbage Testing Deletion Chapter",
-    "chapter_no": 5, 
+    "title": "Chapter 6: The Garbage Testing Deletion Chapter",
+    "chapter_no": 6, 
     "description": "This chapter was made to make sure chapter routes are functional.", 
     "documentation_references": "Nonexistant, its getting deleted anyways."
 }
@@ -88,10 +88,10 @@ POST http://localhost:8081/chapter/{{chapterTestId1}}/edit
 Content-Type: application/json 
 
 {
-    "title": "Chapter 5: The Garbage Testing Deletion Chapter",
+    "title": "Chapter 5: The New and Improved Chapter marked for Deletion",
     "chapter_no": 5, 
-    "description": "This chapter was made to make sure chapter routes are functional.", 
-    "documentation_references": "Nonexistant, its getting deleted anyways."
+    "description": "After being modified this chapter now has lessons assigned to it!", 
+    "documentation_references": "Who cares rn."
 }
 ###
 

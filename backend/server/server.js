@@ -34,6 +34,14 @@ const listChapter = require('./routes/chapterRoutes/listChapters')
 const editChapter = require('./routes/chapterRoutes/editChapter')
 const refreshChapter = require('./routes/chapterRoutes/refreshChapter')
 
+// Documentation Routes
+const makeDocumentation = require('./routes/documentationRoutes/makeDocumentation')
+const deleteDocumentation = require('./routes/documentationRoutes/deleteDocumentation')
+const findDocumentation = require('./routes/documentationRoutes/findDocumentation')
+const editDocumentation = require('./routes/documentationRoutes/editDocumentation')
+const getDocumentation = require('./routes/documentationRoutes/getDocByID')
+
+
 
 
 require('dotenv').config();
@@ -69,6 +77,13 @@ app.use('/chapter', deleteChapter);
 app.use('/chapter', listChapter);
 app.use('/chapter', editChapter);
 app.use('/chapter', refreshChapter);
+// Documentation Routes
+app.use('/documentation', makeDocumentation);
+app.use('/documentation', deleteDocumentation);
+app.use('/documentation', findDocumentation);
+app.use('/documentation', editDocumentation);
+app.use('/documentation', getDocumentation);
+
 
 
 app.listen(SERVER_PORT, (req, res) => {

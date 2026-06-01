@@ -31,6 +31,8 @@ const loadSubmissionRoute = require('./routes/submissionRoutes/codeSubmissionLoa
 const createChapter = require('./routes/chapterRoutes/createChapter')
 const deleteChapter = require('./routes/chapterRoutes/deleteChapter')
 const listChapter = require('./routes/chapterRoutes/listChapters')
+const editChapter = require('./routes/chapterRoutes/editChapter')
+const refreshChapter = require('./routes/chapterRoutes/refreshChapter')
 
 
 
@@ -65,6 +67,8 @@ app.use('/submissions', loadSubmissionRoute);
 app.use('/chapter', createChapter);
 app.use('/chapter', deleteChapter);
 app.use('/chapter', listChapter);
+app.use('/chapter', editChapter);
+app.use('/chapter', refreshChapter);
 
 
 app.listen(SERVER_PORT, (req, res) => {

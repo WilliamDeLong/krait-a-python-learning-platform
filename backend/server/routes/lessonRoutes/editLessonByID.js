@@ -43,7 +43,7 @@ router.post("/:id/edit", async (req, res) =>
         documentation_id: documentation_id
     } ,function (err, lesson) {
     if (err){
-        //console.log(err);
+        console.log(err);
     } else {
         // create and send new access token to local storage
         //console.log("Gate 5");

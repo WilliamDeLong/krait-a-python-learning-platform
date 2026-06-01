@@ -84,13 +84,29 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8081/chapter/{{chapterTestId1}}/update
+POST http://localhost:8081/chapter/{{chapterTestId1}}/edit
 Content-Type: application/json 
 
 {
-    "lessonID": "{{lessonId}}",
-    "script_submission": "This was a triumph",
-    "success": true
+    "title": "Chapter 5: The Garbage Testing Deletion Chapter",
+    "chapter_no": 5, 
+    "description": "This chapter was made to make sure chapter routes are functional.", 
+    "documentation_references": "Nonexistant, its getting deleted anyways."
+}
+###
+
+POST http://localhost:8081/chapter/{{chapterTestId1}}/refresh
+Content-Type: application/json 
+
+
+
+###
+POST http://localhost:8081/lesson/6a1dbeccb7829fed4e8a331f/edit
+Content-Type: application/json 
+
+{
+    "is_test" : true,
+    "chapter_no": 6
 }
 
 ###

@@ -17,7 +17,7 @@ router.post('/create', async (req, res) => {
     });
     
     // After we have our defaulted sets, we can now properly set them to their individual variables and check each one for duplicates.
-    const { title, instructions, default_script, solution_verification, is_test, chapter_no, order_within_chapter, documentation_id } = data_2_check
+    var { title, instructions, default_script, solution_verification, is_test, chapter_no, order_within_chapter, documentation_id } = data_2_check
 
     
     const lesson_title = await lessonSchema.findOne({ title: title })
@@ -28,6 +28,14 @@ router.post('/create', async (req, res) => {
     //console.log(chapter_no);
     if (lesson_order_within_chapter)
         return res.status(409).send({ message: "There's a pre-existing lesson with that order value in the same chapter, please select another." })
+
+    const test_within_chapter = await lessonSchema.findOne({chapter_no: chapter_no, is_test: true})
+    //console.log(chapter_no);
+    if (test_within_chapter&&is_test) {
+        is_test = false;
+        return res.status(409).send({ message: "There is already a test within that chapter. Please refrain from adding another test." });
+    }
+        
 
     
     //creates the new lesson

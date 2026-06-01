@@ -59,7 +59,7 @@ GET http://localhost:8081/lesson/findLesson
 Content-Type: application/json 
 
 {
-"title": "Title",
+"title": null,
 "instructions": null,
 "default_script": null,
 "solution_verification": null,

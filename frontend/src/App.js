@@ -1,6 +1,6 @@
 import React from "react";
 // We use Route in order to define the different routes of our application
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import './css/card.css';
 import './index.css';
 
@@ -25,15 +25,26 @@ const App = () => {
     const savedTheme = sessionStorage.getItem("isLightMode");
     return savedTheme ? JSON.parse(savedTheme) : false;
   });
+  const location = useLocation();
 
   useEffect(() => {
     setUser(getUserInfo());
-  }, []);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    sessionStorage.setItem("isLightMode", JSON.stringify(isLightMode));
+  }, [isLightMode]);
+
+  const toggleTheme = () => {
+    setIsLightMode((prev) => !prev);
+  };
 
   return (
     <>
-      <Navbar />
-      <UserContext.Provider value={user}>
+      {user?.id && (
+              <Navbar isLightMode={isLightMode} toggleTheme={toggleTheme} />
+            )}
+      <UserContext.Provider value={{ user, isLightMode, toggleTheme }}>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home" element={<HomePage />} />

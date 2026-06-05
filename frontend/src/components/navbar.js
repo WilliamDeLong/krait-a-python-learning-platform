@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import ReactNavbar from 'react-bootstrap/Navbar';
 import { useNavigate, useLocation } from "react-router-dom";
+import "../css/box.css";
 
 
 import logo from "../images/Logo.png";
@@ -18,6 +19,8 @@ export default function Navbar({ isLightMode, toggleTheme }) {
   // eslint-disable-next-line
   const navigate = useNavigate();
   const location = useLocation();
+  const [profileUrl, setProfileUrl] = useState("/user-icon.png");
+  const [isProfileAreaHovered, setIsProfileAreaHovered] = useState(false);
   const [user, setUser] = useState({})
   
   const getNavLinkStyle = (path) => {
@@ -84,7 +87,11 @@ export default function Navbar({ isLightMode, toggleTheme }) {
   setUser(getUserInfo())
   
   }, [])
-  
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("accessToken");
+    navigate("/");
+  };
   // if (!user) return null   - for now, let's show the bar even not logged in.
   // we have an issue with getUserInfo() returning null after a few minutes
   // it seems.
@@ -94,15 +101,16 @@ export default function Navbar({ isLightMode, toggleTheme }) {
         padding: "12px 24px",
         boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
       }} variant="dark">
-      <img style={{width:"10%",display:'inline-block'}} alt='KRA.IT Logo' src={isLightMode ? logo : logo_dm}/>
+      <Nav.Link style={{width:"10%",color: isLightMode ? "#0f172a" : "white"}} href="/">
+          <img style={{width:"100%",display:'inline-block'}} alt='KRA.IT Logo' src={isLightMode ? logo : logo_dm}/></Nav.Link>
       <Container >
-        <Nav className="me-auto">
-          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/">Start</Nav.Link>
-          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/home">Home</Nav.Link>
-          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/privateUserProfile">Profile</Nav.Link>
-          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/lessonTestpage">Lesson</Nav.Link>
-
+        <Nav className="me-auto" style={{width:"50%"}}>
+          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/lessonTestpage">Lessons</Nav.Link>
+          
+          
         </Nav>
+        <div className="box" style={{width:"fit-content"}}>
+        <Nav style={{width:"100%",marginLeft: 'auto', marginRight: '0',display:'flex',justifyContent: "flex-end"}}>
         <button
             onClick={toggleTheme}
             style={themeToggleStyle}
@@ -129,6 +137,57 @@ export default function Navbar({ isLightMode, toggleTheme }) {
               </>
             )}
           </button>
+          <div
+            onClick={() => navigate("/home")}
+            onMouseEnter={() => setIsProfileAreaHovered(true)}
+            onMouseLeave={() => setIsProfileAreaHovered(false)}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              cursor: "pointer",
+              transform: isProfileAreaHovered ? "scale(1.06)" : "scale(1)",
+              transition: "transform 0.2s ease",
+            }}
+          >
+            <img
+              src={profileUrl}
+              alt="Profile"
+              onError={() => setProfileUrl("/user-icon.png")}
+              style={{
+                width: "42px",
+                height: "42px",
+                borderRadius: "50%",
+                objectFit: "cover",
+                border: `2px solid ${isLightMode ? "#0f172a" : "white"}`,
+              }}
+            />
+            <span
+              style={{
+                color: isLightMode ? "#0f172a" : "white",
+                fontWeight: "600",
+                textDecoration: isProfileAreaHovered ? "underline" : "none",
+              }}
+            >
+              {user.username}
+            </span>
+          </div>
+          <button
+            onClick={handleLogout}
+            style={{
+              backgroundColor: "#ef4444",
+              color: "white",
+              border: "none",
+              borderRadius: "999px",
+              padding: "8px 16px",
+              cursor: "pointer",
+              fontWeight: "600",
+            }}
+          >
+            Log Out
+          </button>
+          </Nav>
+          </div>
       </Container>
   </ReactNavbar>
 

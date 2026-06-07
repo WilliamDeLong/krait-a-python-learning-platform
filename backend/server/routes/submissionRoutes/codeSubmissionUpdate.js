@@ -13,10 +13,23 @@ router.post("/:id/update", async (req, res) =>
 {
     //console.log("Gate 1");
     const { id } = req.params;
-    var {userID, lessonID, script_submission, success } = req.body
-
-    //console.log(req.body);
+    if (Object.keys(req.body).length===1) {
+        var {userID, lessonID, script_submission, success } = req.body.params;
+        //console.log(`Req Params: ${req.params}`);
+        //console.log(`user id: ${userID}`);
+        //console.log(`lesson id ${lessonID}`);
+    }
+    else {
+        var {userID, lessonID, script_submission, success } = req.body;
+        //console.log(`Req Body: ${req.body}`);
+        //console.log(req.body);
+        //console.log(`user id: ${userID}`);
+        //console.log(`lesson id ${lessonID}`);
+    }
+    
+    //console.log(lessonID);
     const lesson = await lessonSchema.findById(lessonID);
+    //console.log(lesson);
     if (!lesson)
         return res.status(409).send({ message: "That lesson does not exist." })
     //console.log("Gate 2");
@@ -34,9 +47,9 @@ router.post("/:id/update", async (req, res) =>
         script_submission: script_submission,
         success: success,
         submission_date: submission_date
-    } ,function (err, submission) {
+    }, {new: true} ,function (err, submission) {
     if (err){
-        console.log(err);
+        //console.log(err);
     } else {
         // create and send new access token to local storage
         //console.log("Gate 4");

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
+import Nav from 'react-bootstrap/Nav';
 import Form from "react-bootstrap/Form";
 import API_BASE from '../../api';
 import getUserInfo from "../../utilities/decodeJwt";
@@ -9,19 +10,60 @@ import { UserContext } from '../../App';
 
 const PRIMARY_COLOR = "#f18900";
 const SECONDARY_COLOR = '#0c0c1f'
-const url = `${API_BASE}/question/create`;
-const data_default = { question: "", correct_answer: "", incorrect_answer1: "", incorrect_answer2: "", incorrect_answer3: "", category: "any", difficulty: 'any'};
+const url_submissionUpdate = `${API_BASE}/submissions/`;
+const url_submissionLoad = `${API_BASE}/submissions/findSubmission`;
+const url_submissionCreate = `${API_BASE}/submissions/create`;
+const url_LessonData = `${API_BASE}/lesson/`;
+
+
+const lessonDefault = {lessonID: "6a19e16bd4abefc266f8ab0c"};
+const lesson_block_data_default = { default_script: "", solution_verification: '', instructions: "", title: ''};
+const codeSubmission_default = {"_id": null, script_submission: null, userID: "null", lessonID: "null", success: false, submission_date: null};
+
 
 const LessonTestPage = () => {
-  const [user, setUser] = useState({})
-  const [data, setData] = useState(data_default);
+  const [user, setUser] = useState(getUserInfo());
+  //const [data, setData] = useState(dataDefault);
+  const [lessonID, setLesson] = useState(lessonDefault);
+  const [lesson_block_data, setlesson_block_data] = useState(lesson_block_data_default);
+  const [codeSubmission, setCodeSubmission] = useState(codeSubmission_default);
+
   const [error, setError] = useState("");
-  const [isLightMode, setLightM] = useState(false);
+  const { isLightMode } = useContext(UserContext);
   const [light, setLight] = useState(false);
   const [bgColor, setBgColor] = useState(SECONDARY_COLOR);
   //const { isLightMode } = useContext();
   const [bgText, setBgText] = useState('Light Mode')
   const navigate = useNavigate();
+  let rightCard = {
+        display: "flex",
+        justifyContent: "flex-end",
+        marginLeft: 'auto',
+        marginRight: 0,
+        width: '30rem',
+        height: '656px',
+        textAlign: 'center',
+        //backgroundColor: isLightMode ? '#ffffff' : '#000000'
+    };
+    let leftCard = {
+        display: "flex",
+        justifyContent: "flex-end",
+        marginLeft: 0,
+        //marginRight: '50px',
+        width: '45rem',
+        height: '656px',
+        textAlign: 'center',
+        //backgroundColor: isLightMode ? '#ffffff' : '#000000'
+    };
+    let centerCard = {
+        display: "flex",
+        justifyContent: "center",
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        width: '45rem',
+        textAlign: 'center',
+        //backgroundColor: isLightMode ? '#ffffff' : '#000000'
+    };
 
   let TextyStyling = {
     color: isLightMode? "#0c0c0c": "#ffe5f3",
@@ -41,43 +83,27 @@ const LessonTestPage = () => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
-    //console.log(input.name);
-    console.log(input.name+":",input.value);
+    console.log(input.name);
+    console.log(`Code Box:`,input.value);
+    console.log(codeSubmission);
     //const ques = newQuestionModel.findOne({ question: input.value });
     //console.log(ques);
-    
-    
-    setData({ ...data, [input.name]: input.value });
-    //console.log(data);
+    setCodeSubmission({ ...codeSubmission, ["script_submission"]: input.value });
+    //console.log(lesson_block_data);
   };
 
-  useEffect(() => {
-    setUser(getUserInfo());
-    //console.log(isLightMode);
-    if (isLightMode) {
-      setBgColor("white");
-      setBgText('Dark mode')
-    } else {
-      setBgColor(SECONDARY_COLOR);
-      setBgText('Light mode')
-    }
-    //console.log(progressShuffler);
-    
-  }, [light]);
-  //const { username } = user;
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(codeSubmission);
+      console.log((url_submissionUpdate+codeSubmission._id+"/update"));
+      await axios.post((url_submissionUpdate+codeSubmission['_id']+"/update"), {params: codeSubmission});
       //console.log(data);
-      //console.log(e.target.id);
-      await axios.post(url, data);
-      //console.log(data);
-      const inputField = document.getElementById("form"); 
-      inputField.reset(); // This resets the prompts so that the page doesn't have to be reloaded to create a new question
-      setData(data_default); // This resets the values for all of the prompts
+      //const inputField = document.getElementById("form"); 
+      //inputField.reset(); // This resets the prompts so that the page doesn't have to be reloaded to create a new question
+      //setData(data_default); // This resets the values for all of the prompts
       //console.log(data); // This 
-      setError(""); // This resets the error pop-up so it doesn't stick around and bother me
+      //setError(""); // This resets the error pop-up so it doesn't stick around and bother me
     } catch (error) {
       if (
         error.response &&
@@ -90,34 +116,99 @@ const LessonTestPage = () => {
     
   };
 
-  /*if (!user) return (
-        <div><h4>Log in to view this page.</h4></div>
+  useEffect(() => {
+    setUser(getUserInfo());
+    //console.log(isLightMode);
+    fetch_data();
+    if (isLightMode) {
+      setBgColor("white");
+      setBgText('Dark mode')
+    } else {
+      setBgColor(SECONDARY_COLOR);
+      setBgText('Light mode')
+    }
+    console.log("Data Fetched");
+    
+  }, [light]);
+
+  const fetch_data = async () => {
+      
+      try {
+
+        //console.log({userID: user['id'], lessonID: lessonID.lessonID});
+        const submissionResult = await axios.get(url_submissionLoad, {params: {userID: user['id'], lessonID: lessonID.lessonID}});
+
+        setCodeSubmission(submissionResult.data[0]);
+        console.log(submissionResult.data);
+        console.log(submissionResult.data[0]._id);
+        console.log(`Submission retrieved`);
+        console.log(codeSubmission._id);
+      } catch (error) {
+        console.log(error);
+        if (error.response.status === 404) {
+          const submissionCreateResult = await axios.post(url_submissionCreate, {params: {userID: user['id'], lessonID: lessonID.lessonID}});
+          //console.log(submissionCreateResult);
+        }
+        else if (
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status <= 500
+        ) {
+          setError(error.response.data.message);
+        }
+      }
+      try {
+        //console.log(lesson_block_data);
+        const lessonResult = await axios.get(url_LessonData+lessonID.lessonID);
+        setlesson_block_data(lessonResult.data);
+        //console.log(result);
+        console.log(lessonResult.data);
+        console.log(`Lesson found`);
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status <= 500
+        ) {
+          setError(error.response.data.message);
+        }
+      }
+    };
+  //const { username } = user;
+  
+  
+  if (codeSubmission.script_submission===null) return (
+        <div><h4>Loading User Submission</h4></div>
     ) 
-  else */return (
+  else return (
     <>
-      <section className="vh-100">
-        <div className="container-fluid h-custom vh-100">
+      <section className="vh-90">
+        <div className="container-fluid h-custom vh-90">
           <div
             className="row d-flex h-100"
             style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)",
                         color: !isLightMode? "#000000": "#ffffff"}}>
-            <table>
-                  <tbody>
-                    <tr>
-                      <td width="50%" height={"100%"}>
-                        <textarea name="ide" id="fine, you can have an id" onChange={handleChange} style={{color: isLightMode? "#a0316e": "#ff2f00",Width:"100%",height:"100%",backgroundColor:"#000000",overflowY:"scroll"}} defaultValue={"This is the correct answer to the question, there will only be one correct answer."} rows={25} cols={101}/>
-                      </td>
-                      <td className="alignRight" width="50%">
-                        <tr>
-                          <textarea id="you too I guess" style={{color: isLightMode? "#a0316e": "#ff2f00", width:"100%"}} defaultValue={"This is the correct answer to the question, there will only be one correct answer."} cols={101} rows={15} contentEditable={false}/>
-                          </tr>
-                        <tr>
-                            <textarea id="and you." style={{color: isLightMode? "#a0316e": "#ff2f00",Width:"100%"}} defaultValue={"This is the correct answer to the question, there will only be one correct answer."} cols={101} rows={10} contentEditable={false}/>
-                            </tr>
-                      </td>
-                    </tr>
-                </tbody>
-                </table>
+            <div className='box vh-90'>
+                <div className='box' style={leftCard}>
+                  <Nav style={centerCard}>
+                      <Button variant="success" /* href="/lessons" */>Back</Button>
+                      <Button variant="success" onClick={handleSubmit}/* href="/lessons" */>Run Code</Button>
+                      <Button variant="success" /* href="/lessons" */>Next Lesson</Button>
+                      
+                    </Nav>
+                  <div>
+                    <textarea name="Code_Editor" id="script_submission" onChange={handleChange} style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor:"#000000",overflowY:"scroll", resize:"none", width:"716px"}} defaultValue={codeSubmission['script_submission']} rows={25} cols={101}/>
+                    </div>
+                </div>
+                <div className='box' style={rightCard}>
+                  <div className="right">
+                    <textarea id="Instructions" style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor: isLightMode? "#ffffff": "#000000",height:"100%", resize:"none"}} defaultValue={lesson_block_data["instructions"]} cols={101} rows={15} contentEditable={false}/>
+                  </div>
+                  <div className="right" >
+                    <textarea id="terminal" style={{color: "#008a00",backgroundColor:"#000000",height:"100%", resize:"none"}} defaultValue={"This is the correct answer to the question, there will only be one correct answer."} cols={101} rows={10} contentEditable={false}/>
+                  </div>
+                </div>
+            </div>
           </div>
         </div>
       </section>

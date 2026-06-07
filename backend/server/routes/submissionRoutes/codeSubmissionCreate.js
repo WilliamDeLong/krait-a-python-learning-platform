@@ -8,21 +8,35 @@ const userSchema = require('../../models/userModel')
 //const data_default = { title: "Placeholder title.", instructions: "You know how to make a print statement, right? Make one.", default_script: "#This is where you put YOUR code to be ran.", solution_verification: "print('Hello World')", is_test: false, chapter_no: 0, order_within_chapter: 0};
 
 router.post('/create', async (req, res) => {
-    const { userID, lessonID} = req.body;
+    if (Object.keys(req.params).length>0) {
+        var { userID, lessonID} = req.params;
+        //console.log(`Req Params: ${req.params}`);
+        //console.log(`user id: ${userID}`);
+        //console.log(`lesson id ${lessonID}`);
+    }
+    else {
+        var { userID, lessonID} = req.body.params;
+        //console.log(`Req Body: ${req.body}`);
+        //console.log(req.body);
+        //console.log(`user id: ${userID}`);
+        //console.log(`lesson id ${lessonID}`);
+    }
+    
     var script_submission;
-    //console.log(req.body);
-    //console.log(lessonID);
+    
     const lesson = await lessonSchema.findById(lessonID)
-    //console.log(lesson);
+    //console.log(`lesson: ${lesson}`);
     if (!lesson)
         return res.status(409).send({ message: "That lesson does not exist." })
 
     const user = await userSchema.findById(userID)
+    //console.log(`user: ${user}`);
     if (!user)
         return res.status(409).send({ message: "That user does not exist." })
     
     
     const submission = await submissionSchema.findOne({ userID: userID, lessonID: lessonID })
+    //console.log(`submission: ${submission}`);
     if (submission)
         return res.status(409).send({ message: "There is already a submission for this lesson by that user." })
     else {

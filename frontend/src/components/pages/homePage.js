@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import getUserInfo from '../../utilities/decodeJwt';
 
-const HomePage = () => {
+const ProfilePage = () => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
 
@@ -38,11 +38,8 @@ const HomePage = () => {
                     <p className="email">{email}</p>
                 </div>
             </div>
-            <button onClick={(e) => handleClick(e)}>
-                Log Out
-            </button>
         </>
     );
 };
 
-export default HomePage;
+export default ProfilePage;

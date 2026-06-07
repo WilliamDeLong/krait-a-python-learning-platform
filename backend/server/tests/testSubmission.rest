@@ -39,8 +39,8 @@ POST http://localhost:8081/submissions/create
 Content-Type: application/json 
 
 {
-    "userID" : "{{userId}}",
-    "lessonID": "{{lessonId}}"
+    "userID" : "6a18823fe3a22d37ce5b6b83",
+    "lessonID": "6a19e16bd4abefc266f8ab0c"
 }
 
 ###
@@ -60,26 +60,29 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8081/submissions/{{submissionTestId1}}/update
+POST http://localhost:8081/submissions/6a25bef72b7fca3270e70900/update
 Content-Type: application/json 
 
 {
-    "userID" : "{{userId}}",
-    "lessonID": "{{lessonId}}",
-    "script_submission": "This was a triumph",
-    "success": true
-}
+    "_id": "6a25bef72b7fca3270e70900",
+    "userID": "6a18823fe3a22d37ce5b6b83",
+    "lessonID": "6a19e16bd4abefc266f8ab0c",
+    "script_submission": "Success! # This is the code editor, it allows for the modification of code and programming in general.",
+    "success": false,
+    "start_date": "2026-06-07T18:57:55.031Z",
+    "submission_date": "2026-06-07T20:13:21.578Z",
+    "__v": 0}
 
+###
+//http://localhost:8081/submissions/6a25bef72b7fca3270e70900/update
 ###
 
 GET http://localhost:8081/submissions/findSubmission
 Content-Type: application/json 
 
 {
-    "userID" : null,
-    "lessonID": null,
-    "script_submission": null,
-    "success": true
+    "userID" : "6a18823fe3a22d37ce5b6b83",
+    "lessonID": "6a19e16bd4abefc266f8ab0c"
 }
 
 

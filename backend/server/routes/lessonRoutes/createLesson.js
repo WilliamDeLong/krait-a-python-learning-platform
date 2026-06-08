@@ -17,7 +17,7 @@ router.post('/create', async (req, res) => {
     });
     
     // After we have our defaulted sets, we can now properly set them to their individual variables and check each one for duplicates.
-    var { title, instructions, default_script, solution_verification, is_test, chapter_no, order_within_chapter, documentation_id } = data_2_check
+    var { title, instructions, default_script, solution_verification, is_test, chapter_no, order_within_chapter, documentation_id, description } = data_2_check
 
     
     const lesson_title = await lessonSchema.findOne({ title: title })
@@ -47,7 +47,8 @@ router.post('/create', async (req, res) => {
         is_test: is_test,
         chapter_no: chapter_no,
         order_within_chapter: order_within_chapter,
-        documentation_id: documentation_id
+        documentation_id: documentation_id,
+        description: description
     });
 
    

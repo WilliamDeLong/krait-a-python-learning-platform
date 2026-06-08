@@ -6,14 +6,15 @@ POST http://localhost:8081/lesson/create
 Content-Type: application/json 
 
 {
-    "title" : "Garbage Deleted Lesson",
-    "instructions": "Ignore this lesson",
-    "default_script": "break",
-    "solution_verification": "break",
+    "title" : "What is a function?",
+    "instructions": "Now that we have a good understanding of storing data, let's put it to use. \nLet's start by learning how to use a pre-defined function.\nThis requires importing from a file we'll call Helper. Try importing \"Odd or Even\" from Helper.\n.",
+    "default_script": "#To import functions you have to use import statements, followed by the name of the function you're importing.\n# Formatting: import {function_name} from {namespace}",
+    "solution_verification": "import oddOrEven from Helper\noddOrEven()",
     "is_test": false,
-    "chapter_no": 5,
+    "chapter_no": 2,
     "order_within_chapter": 1,
-    "documentation_id": "2Bdeleted"
+    "documentation_id": "2beMadeLater",
+    "description": "A lesson that gives examples of pre-existing functions and how to use them"
 }
 
 ###
@@ -23,14 +24,14 @@ POST http://localhost:8081/lesson/create
 Content-Type: application/json 
 
 {
-    "title" : "Other Garbage Deleted Lesson",
-    "instructions": "Ignore this lesson",
-    "default_script": "break",
-    "solution_verification": "break",
+    "title" : "My own function",
+    "instructions": "After learning how to import functions, why don't we try making one of our own.\nBegin by typing def functionZero():.\nAfter this, try making a function that runs through 5 loops and returns a value stating how many times it looped by using a \"return\" statement.",
+    "default_script": "# Delete me to start coding",
+    "solution_verification": "def functionZero():\np=0\t\n\tfor i in range(5):\n\t\tp+=1\n\treturn p",
     "is_test": false,
-    "chapter_no": 5,
+    "chapter_no": 2,
     "order_within_chapter": 2,
-    "documentation_id": "2Bdeleted"
+    "documentation_id": "gonnaAddL8r"
 }
 
 ###
@@ -41,14 +42,14 @@ POST http://localhost:8081/lesson/create
 Content-Type: application/json 
 
 {
-    "title" : "Garbage Deleted TEST",
-    "instructions": "Ignore this lesson",
-    "default_script": "break",
-    "solution_verification": "break",
+    "title" : "def(Parameter=s):",
+    "instructions": "Now that we know how to create our own function, we can learn how to pass parameters into them so they can be more versatile.\nBegin by defining a function that loops a certain amount of times and returns how many loops it went through. \nOnce you have done that, instead of making the range a static value, make it a variable, for example 'h', and put the same value in the parentheses next to the function name.",
+    "default_script": "# Remember that you have to put h both in the parentheses for range and the definition of the function.",
+    "solution_verification": "def functionZero(h):\np=0\t\n\tfor i in range(h):\n\t\tp+=1\n\treturn p",
     "is_test": true,
-    "chapter_no": 5,
+    "chapter_no": 2,
     "order_within_chapter": 3,
-    "documentation_id": "2Bdeleted"
+    "documentation_id": "Nope"
 }
 
 ###
@@ -60,9 +61,9 @@ POST http://localhost:8081/chapter/create
 Content-Type: application/json 
 
 {
-    "title": "Chapter 6: The Garbage Testing Deletion Chapter",
-    "chapter_no": 6, 
-    "description": "This chapter was made to make sure chapter routes are functional.", 
+    "title": "Chapter 2: Python Functionality",
+    "chapter_no": 2, 
+    "description": "In this section you will learn about functions, how to use built-in functions, how to make your own functions, why functions are helpful, and how to handle all the issues that come with them.", 
     "documentation_references": "Nonexistant, its getting deleted anyways."
 }
 
@@ -122,7 +123,7 @@ Content-Type: application/json
 
 
 ###
-GET  http://localhost:8081/chapter/load/{{chapterTestId1}}
+GET  http://localhost:8081/chapter/{{chapterTestId1}}
 Content-Type: application/json 
 
 ###

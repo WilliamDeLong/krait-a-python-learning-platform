@@ -111,14 +111,13 @@ export default function Navbar({ isLightMode, toggleTheme }) {
       <Container >
         <Nav className="me-auto" style={{width:"50%"}}>
           <Dropdown as={ButtonGroup} style={{color: isLightMode ? "#0f172a" : "white"}}>
-            <Button variant="success" href="/lessons">Lessons</Button>
+            <Button href="/lessons">Chapters</Button>
 
-            <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-
+            <Dropdown.Toggle split  id="dropdown-split-basic" />
             <Dropdown.Menu>
-              <Dropdown.Item href="/chapter0">Section Zero: Basics</Dropdown.Item>
+              <Dropdown.Item href="/lessonTestpage/6a22e76fb403eec45b62da21">Section Zero: Basics</Dropdown.Item>
               <Dropdown.Item href="/chapter1">Section One: Functions</Dropdown.Item>
-              <Dropdown.Item href="/chapter2">Section Two: tbd</Dropdown.Item>
+              <Dropdown.Item href="/chapter/6a270c143837df2cb279ae22">Section Two: tbd</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/lessonTestpage">Lesson test page</Nav.Link>

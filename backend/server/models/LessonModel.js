@@ -49,6 +49,10 @@ const lessonSchema = new mongoose.Schema(
       type: String,
       label: "documentation_id"
     },
+    description: {
+      type: String,
+      label: "description"
+    },
     date: {
       type: Date,
       default: Date.now,

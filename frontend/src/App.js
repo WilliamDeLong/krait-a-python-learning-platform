@@ -15,6 +15,7 @@ import { createContext, useState, useEffect } from "react";
 import getUserInfo from "./utilities/decodeJwt";
 
 import LessonTestPage from "./components/pages/LessonTestPage";
+import ChapterTemplatePage from "./components/pages/ChapterTemplatePage";
 
 export const UserContext = createContext();
 //test change
@@ -51,8 +52,9 @@ const App = () => {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
-          <Route path="/lessonTestpage" element={<LessonTestPage />} />
-
+          <Route path="/lessonTestpage/:lessonID" element={<LessonTestPage />} />
+          <Route path="/chapter/:ChapterID" element={<ChapterTemplatePage />} />
+          
         </Routes>
       </UserContext.Provider>
     </>

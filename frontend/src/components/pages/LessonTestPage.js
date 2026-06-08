@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext} from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Nav from 'react-bootstrap/Nav';
-import Form from "react-bootstrap/Form";
 import API_BASE from '../../api';
 import getUserInfo from "../../utilities/decodeJwt";
 import { UserContext } from '../../App';
 
-const PRIMARY_COLOR = "#f18900";
-const SECONDARY_COLOR = '#0c0c1f'
 const url_submissionUpdate = `${API_BASE}/submissions/`;
 const url_submissionLoad = `${API_BASE}/submissions/findSubmission`;
 const url_submissionCreate = `${API_BASE}/submissions/create`;
@@ -24,16 +21,16 @@ const codeSubmission_default = {"_id": null, script_submission: null, userID: "n
 const LessonTestPage = () => {
   const [user, setUser] = useState(getUserInfo());
   //const [data, setData] = useState(dataDefault);
-  const [lessonID, setLesson] = useState(lessonDefault);
+  let {lessonID} = useParams();
+  //console.log(lessonID);
+  //const [lessonID, setLesson] = useState(lessonDefault);
+  
   const [lesson_block_data, setlesson_block_data] = useState(lesson_block_data_default);
   const [codeSubmission, setCodeSubmission] = useState(codeSubmission_default);
-
+  const [seed, setSeed] = useState(1);
   const [error, setError] = useState("");
   const { isLightMode } = useContext(UserContext);
-  const [light, setLight] = useState(false);
-  const [bgColor, setBgColor] = useState(SECONDARY_COLOR);
   //const { isLightMode } = useContext();
-  const [bgText, setBgText] = useState('Light Mode')
   const navigate = useNavigate();
   let rightCard = {
         display: "flex",
@@ -65,22 +62,7 @@ const LessonTestPage = () => {
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
     };
 
-  let TextyStyling = {
-    color: isLightMode? "#0c0c0c": "#ffe5f3",
-    //fontWeight: "lighter",
-  };
- 
-  let labelStyling = {
-    color: isLightMode? "#7b0445": "#f18900",
-    fontWeight: "bold",
-    textDecoration: "none",
-  };
-  let backgroundStyling = { background: bgColor};
-  let buttonStyling = {
-    background: isLightMode? "#7b0445": "#f18900",
-    borderStyle: "none",
-    color: bgColor,
-  };
+
 
   const handleChange = ({ currentTarget: input }) => {
     console.log(input.name);
@@ -120,33 +102,27 @@ const LessonTestPage = () => {
     setUser(getUserInfo());
     //console.log(isLightMode);
     fetch_data();
-    if (isLightMode) {
-      setBgColor("white");
-      setBgText('Dark mode')
-    } else {
-      setBgColor(SECONDARY_COLOR);
-      setBgText('Light mode')
-    }
     console.log("Data Fetched");
     
-  }, [light]);
+  }, [seed]);
 
   const fetch_data = async () => {
       
       try {
 
-        //console.log({userID: user['id'], lessonID: lessonID.lessonID});
-        const submissionResult = await axios.get(url_submissionLoad, {params: {userID: user['id'], lessonID: lessonID.lessonID}});
+        console.log({userID: user['id'], lessonID: lessonID});
+        const submissionResult = await axios.get(url_submissionLoad, {params: {userID: user['id'], lessonID: lessonID}});
 
         setCodeSubmission(submissionResult.data[0]);
-        console.log(submissionResult.data);
-        console.log(submissionResult.data[0]._id);
-        console.log(`Submission retrieved`);
-        console.log(codeSubmission._id);
+        //console.log(submissionResult.data);
+        //console.log(submissionResult.data[0]._id);
+        //console.log(`Submission retrieved`);
+        //console.log(codeSubmission._id);
       } catch (error) {
         console.log(error);
         if (error.response.status === 404) {
-          const submissionCreateResult = await axios.post(url_submissionCreate, {params: {userID: user['id'], lessonID: lessonID.lessonID}});
+          const submissionCreateResult = await axios.post(url_submissionCreate, {params: {userID: user['id'], lessonID: lessonID}});
+          setSeed(seed+1);
           //console.log(submissionCreateResult);
         }
         else if (
@@ -159,11 +135,11 @@ const LessonTestPage = () => {
       }
       try {
         //console.log(lesson_block_data);
-        const lessonResult = await axios.get(url_LessonData+lessonID.lessonID);
+        const lessonResult = await axios.get(url_LessonData+lessonID);
         setlesson_block_data(lessonResult.data);
         //console.log(result);
-        console.log(lessonResult.data);
-        console.log(`Lesson found`);
+        //console.log(lessonResult.data);
+        //console.log(`Lesson found`);
       } catch (error) {
         if (
           error.response &&
@@ -178,7 +154,9 @@ const LessonTestPage = () => {
   
   
   if (codeSubmission.script_submission===null) return (
-        <div><h4>Loading User Submission</h4></div>
+    <>
+        <div key={seed}><h4>Loading User Submission</h4></div>
+    </>
     ) 
   else return (
     <>
@@ -191,7 +169,7 @@ const LessonTestPage = () => {
             <div className='box vh-90'>
                 <div className='box' style={leftCard}>
                   <Nav style={centerCard}>
-                      <Button variant="success" /* href="/lessons" */>Back</Button>
+                      <Button variant="success" /* href="/lessons" */>Previous Lesson</Button>
                       <Button variant="success" onClick={handleSubmit}/* href="/lessons" */>Run Code</Button>
                       <Button variant="success" /* href="/lessons" */>Next Lesson</Button>
                       

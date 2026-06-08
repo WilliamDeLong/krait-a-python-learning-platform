@@ -64,14 +64,14 @@ Content-Type: application/json
 "default_script": null,
 "solution_verification": null,
 "is_test": null,
-"chapter_no": null,
+"chapter_no": 2,
 "order_within_chapter": null,
 "documentation_id": null
 }
 
 
 ###
-GET  http://localhost:8081/lesson/{{lessonTestId1}}
+GET  http://localhost:8081/lesson/6a27093019793c4ac9a07a56
 Content-Type: application/json 
 
 ###

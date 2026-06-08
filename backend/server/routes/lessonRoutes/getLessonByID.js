@@ -7,7 +7,7 @@ const lessonSchema = require('../../models/LessonModel')
 
 router.get("/:id", async (req, res) => {
   var { id } = req.params;
-  //console.log(id);
+  console.log(id);
 
   lessonSchema.findById(id, function (err, lesson) {
     if (err) {

@@ -6,6 +6,8 @@ import Nav from 'react-bootstrap/Nav';
 import API_BASE from '../../api';
 import getUserInfo from "../../utilities/decodeJwt";
 import { UserContext } from '../../App';
+//import { useRef } from "react";
+
 
 const url_submissionUpdate = `${API_BASE}/submissions/`;
 const url_submissionLoad = `${API_BASE}/submissions/findSubmission`;
@@ -30,6 +32,11 @@ const LessonTestPage = () => {
   const [seed, setSeed] = useState(1);
   const [error, setError] = useState("");
   const { isLightMode } = useContext(UserContext);
+  //const inputRef = useRef(null);
+  //input.addEventListener("change", updateValue);
+
+  
+
   //const { isLightMode } = useContext();
   const navigate = useNavigate();
   let rightCard = {
@@ -48,16 +55,17 @@ const LessonTestPage = () => {
         marginLeft: 0,
         //marginRight: '50px',
         width: '45rem',
-        height: '656px',
-        textAlign: 'center',
+        //height: 'fit-content',
+        //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
     };
     let centerCard = {
         display: "flex",
         justifyContent: "center",
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        //marginLeft: 'auto',
+        //marginRight: 'auto',
         width: '45rem',
+        height: "40.8px",
         textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
     };
@@ -138,7 +146,7 @@ const LessonTestPage = () => {
         const lessonResult = await axios.get(url_LessonData+lessonID);
         setlesson_block_data(lessonResult.data);
         //console.log(result);
-        //console.log(lessonResult.data);
+        console.log(lessonResult.data);
         //console.log(`Lesson found`);
       } catch (error) {
         if (
@@ -159,38 +167,41 @@ const LessonTestPage = () => {
     </>
     ) 
   else return (
-    <>
-      <section className="vh-90">
+    
+      <section className="vh-90" style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)"}}>
         <div className="container-fluid h-custom vh-90">
           <div
             className="row d-flex h-100"
-            style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)",
-                        color: !isLightMode? "#000000": "#ffffff"}}>
-            <div className='box vh-90'>
-                <div className='box' style={leftCard}>
-                  <Nav style={centerCard}>
-                      <Button variant="success" /* href="/lessons" */>Previous Lesson</Button>
+            style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", color: !isLightMode? "#000000": "#ffffff"}}>
+            <div className='box2'>
+                <div className='box2' style={leftCard}>
+                  <Nav className="left" style={centerCard}>
+                      <Button variant="secondary" /* href="/lessons" */>Previous Lesson</Button>
+                      <Button disabled >Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}: {lesson_block_data.title}</Button>
                       <Button variant="success" onClick={handleSubmit}/* href="/lessons" */>Run Code</Button>
-                      <Button variant="success" /* href="/lessons" */>Next Lesson</Button>
+                      <Button variant="secondary" /* href="/lessons" */>Next Lesson</Button>
                       
                     </Nav>
-                  <div>
-                    <textarea name="Code_Editor" id="script_submission" onChange={handleChange} style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor:"#000000",overflowY:"scroll", resize:"none", width:"716px"}} defaultValue={codeSubmission['script_submission']} rows={25} cols={101}/>
+                  <div className="left">
+                    <div className="Code_Editor" id="script_submission" onChange={handleChange} style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor:"#000000",/*overflowY:"scroll",*/ resize:"none", width:"716px", borderRadius: "5px", height:"612px", fontSize:"1rem"}} >
+                      {codeSubmission['script_submission']}
+                      </div>
                     </div>
                 </div>
-                <div className='box' style={rightCard}>
+                <div className='box2' style={rightCard}>
                   <div className="right">
-                    <textarea id="Instructions" style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor: isLightMode? "#ffffff": "#000000",height:"100%", resize:"none"}} defaultValue={lesson_block_data["instructions"]} cols={101} rows={15} contentEditable={false}/>
+                    <div id="Instructions" style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor: isLightMode? "#ffffff": "#000000",height:"100%", width:"757.6px", textAlign:'left'}} >{lesson_block_data["instructions"]}</div>
                   </div>
                   <div className="right" >
-                    <textarea id="terminal" style={{color: "#008a00",backgroundColor:"#000000",height:"100%", resize:"none"}} defaultValue={"This is the correct answer to the question, there will only be one correct answer."} cols={101} rows={10} contentEditable={false}/>
+                    <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",height:"100%", resize:"none", width:"757.6px"}}>
+                      {"Pretend this is a terminal that's spitting out results, I'll get it working later"}</div>
                   </div>
                 </div>
             </div>
           </div>
         </div>
+      <footer style={{fontSize:"1px"}}>help</footer>
       </section>
-    </>
   );
 };
 

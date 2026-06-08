@@ -4,8 +4,27 @@
   background-color: rgb(96 139 168 / 0.2);
   width: '100%';
 }
+.box2 .right {
+  border: 2px solid rgb(96 139 168);
+  border-radius: 5px;
+  background-color: rgb(96 139 168 / 0.2);
+  /*width: '100%'*/;
+}
+.box2 .left {
+  border: 2px solid rgb(96 139 168);
+  border-radius: 5px;
+  background-color: rgb(96 139 168 / 0.2);
+  /*width: '100%'*/;
+}
 
 .box {
+  width: '100%';
+  
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.box2 {
   width: '100%';
   
   display: flex;

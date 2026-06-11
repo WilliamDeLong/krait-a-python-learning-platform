@@ -74,7 +74,6 @@ export default function Navbar({ isLightMode, toggleTheme }) {
     boxShadow: "0 2px 6px rgba(0,0,0,0.25)",
     transition: "all 0.25s ease",
   };
-
   const themeLabelStyle = {
     position: "absolute",
     top: "50%",
@@ -103,9 +102,9 @@ export default function Navbar({ isLightMode, toggleTheme }) {
   return (
     <ReactNavbar style={{
         backgroundColor: isLightMode ? "#e2e8f0" : "#000000",
-        padding: "12px 24px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-      }} variant="dark">
+        padding: "0% 1.5625%",
+        height: "10%"
+      }} variant= "dark">
       <ReactNavbar.Brand style={{width:"10%",color: isLightMode ? "#0f172a" : "white"}} href="/">
           <img style={{width:"100%",display:'inline-block'}} alt='KRA.IT Logo' src={isLightMode ? logo : logo_dm}/></ReactNavbar.Brand>
       <Container >
@@ -124,7 +123,7 @@ export default function Navbar({ isLightMode, toggleTheme }) {
           
           
         </Nav>
-        <div className="box" style={{width:"fit-content"}}>
+        <div className="boxy" style={{width:"fit-content", display: "flex", flexFlow: "row wrap"}}>
         <Nav variant="pills" style={{width:"100%",marginLeft: 'auto', marginRight: '0',display:'flex',justifyContent: "flex-end"}}>
           <button onClick={toggleTheme} style={themeToggleStyle} title={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"} aria-label={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"}>
                 {isLightMode ? (<><span style={{ ...themeLabelStyle, left: "10px" }}>LIGHT<br />MODE</span><span style={themeKnobStyle}>☀️</span></>) : (<><span style={themeKnobStyle}>🌙</span><span style={{ ...themeLabelStyle, right: "10px" }}>DARK<br />MODE</span></>)}

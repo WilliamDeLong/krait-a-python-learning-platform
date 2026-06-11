@@ -43,15 +43,15 @@ const LessonTestPage = () => {
         display: "flex",
         justifyContent: "flex-end",
         marginLeft: 'auto',
-        marginRight: 0,
-        width: '30rem',
+        //marginRight: 0,
+        width:"760px",
         height: '656px',
-        textAlign: 'center',
+        //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
     };
     let leftCard = {
         display: "flex",
-        justifyContent: "flex-end",
+        //justifyContent: "flex-end",
         marginLeft: 0,
         //marginRight: '50px',
         width: '45rem',
@@ -61,14 +61,18 @@ const LessonTestPage = () => {
     };
     let centerCard = {
         display: "flex",
-        justifyContent: "center",
+        flexDirection:"column",
+        //justifyContent: "baseline",
         //marginLeft: 'auto',
         //marginRight: 'auto',
-        width: '45rem',
+        width:"716px",
         height: "40.8px",
         textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
     };
+    let replaceBox2 = {width: '100%',  
+      display: 'flex',
+      flexFlow: 'row wrap'}
 
 
 
@@ -168,39 +172,38 @@ const LessonTestPage = () => {
     ) 
   else return (
     
-      <section className="vh-90" style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)"}}>
-        <div className="container-fluid h-custom vh-90">
+      <section className="lesson" style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", height:"93.5vh"}}>
+        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", color: !isLightMode? "#000000": "#ffffff"}}>
           <div
-            className="row d-flex h-100"
+            className="row d-flex"
             style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", color: !isLightMode? "#000000": "#ffffff"}}>
-            <div className='box2'>
-                <div className='box2' style={leftCard}>
+            <div className='box' style={leftCard}>
                   <Nav className="left" style={centerCard}>
-                      <Button variant="secondary" /* href="/lessons" */>Previous Lesson</Button>
-                      <Button disabled >Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}: {lesson_block_data.title}</Button>
-                      <Button variant="success" onClick={handleSubmit}/* href="/lessons" */>Run Code</Button>
-                      <Button variant="secondary" /* href="/lessons" */>Next Lesson</Button>
+                      <Button style={{justifyContent:"left"}}  variant="secondary" /* href="/lessons" */>Previous Lesson</Button>
+                      <Button style={{justifyContent:"center"}}  disabled >Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}: {lesson_block_data.title}</Button>
+                      <Button style={{justifyContent:"center"}}  variant="success" onClick={handleSubmit}/* href="/lessons" */>Run Code</Button>
+                      <Button style={{justifyContent:"right"}}  variant="secondary" /* href="/lessons" */>Next Lesson</Button>
                       
                     </Nav>
+                  <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                   <div className="left">
-                    <div className="Code_Editor" id="script_submission" onChange={handleChange} style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor:"#000000",/*overflowY:"scroll",*/ resize:"none", width:"716px", borderRadius: "5px", height:"612px", fontSize:"1rem"}} >
+                    <div className="editor" id="script_submission" onChange={handleChange} style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor:"#000000",/*overflowY:"scroll",*/ resize:"none", borderRadius: "5px", height:"612px", fontSize:"1rem"}} contentEditable="">
                       {codeSubmission['script_submission']}
                       </div>
                     </div>
                 </div>
-                <div className='box2' style={rightCard}>
-                  <div className="right">
-                    <div id="Instructions" style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor: isLightMode? "#ffffff": "#000000",height:"100%", width:"757.6px", textAlign:'left'}} >{lesson_block_data["instructions"]}</div>
-                  </div>
-                  <div className="right" >
-                    <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",height:"100%", resize:"none", width:"757.6px"}}>
-                      {"Pretend this is a terminal that's spitting out results, I'll get it working later"}</div>
-                  </div>
+                <div className='box' style={rightCard}>
+                  <div id="Instructions" style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor: isLightMode? "#ffffff": "#000000", width:"stretch", textAlign:'left', height:"50%"}} >{lesson_block_data["instructions"]}</div>
+                  <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
+                  <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",height:"100%", resize:"none", width:"stretch", height:"50%"}}>
+                      {"Pretend this is a terminal that's spitting out results, I'll get it working later"}
+                      {false&&
+                      <iframe src="" frameBorder={"0"} className="iframe">
+                        </iframe>}
+                        </div>
                 </div>
-            </div>
           </div>
         </div>
-      <footer style={{fontSize:"1px"}}>help</footer>
       </section>
   );
 };

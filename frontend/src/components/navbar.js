@@ -110,7 +110,7 @@ export default function Navbar({ isLightMode, toggleTheme }) {
       <Container >
         <Nav className="me-auto" style={{width:"50%"}}>
           <Dropdown as={ButtonGroup} style={{color: isLightMode ? "#0f172a" : "white"}}>
-            <Button href="/lessons">Chapters</Button>
+            <Button href="/chapters">Chapters</Button>
 
             <Dropdown.Toggle split  id="dropdown-split-basic" />
             <Dropdown.Menu>

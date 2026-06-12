@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import API_BASE from '../../api';
 import getUserInfo from "../../utilities/decodeJwt";
 import { UserContext } from '../../App';
+//import CodeEditor from "../CodeEditor";
 //import { useRef } from "react";
 
 
@@ -122,7 +123,7 @@ const LessonTestPage = () => {
       
       try {
 
-        console.log({userID: user['id'], lessonID: lessonID});
+        //console.log({userID: user['id'], lessonID: lessonID});
         const submissionResult = await axios.get(url_submissionLoad, {params: {userID: user['id'], lessonID: lessonID}});
 
         setCodeSubmission(submissionResult.data[0]);
@@ -150,7 +151,7 @@ const LessonTestPage = () => {
         const lessonResult = await axios.get(url_LessonData+lessonID);
         setlesson_block_data(lessonResult.data);
         //console.log(result);
-        console.log(lessonResult.data);
+        //console.log(lessonResult.data);
         //console.log(`Lesson found`);
       } catch (error) {
         if (
@@ -177,31 +178,30 @@ const LessonTestPage = () => {
           <div
             className="row d-flex"
             style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", color: !isLightMode? "#000000": "#ffffff"}}>
-            <div className='box' style={leftCard}>
-                  <Nav className="left" style={centerCard}>
-                      <Button style={{justifyContent:"left"}}  variant="secondary" /* href="/lessons" */>Previous Lesson</Button>
-                      <Button style={{justifyContent:"center"}}  disabled >Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}: {lesson_block_data.title}</Button>
-                      <Button style={{justifyContent:"center"}}  variant="success" onClick={handleSubmit}/* href="/lessons" */>Run Code</Button>
-                      <Button style={{justifyContent:"right"}}  variant="secondary" /* href="/lessons" */>Next Lesson</Button>
-                      
-                    </Nav>
-                  <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
-                  <div className="left">
-                    <div className="editor" id="script_submission" onChange={handleChange} style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor:"#000000",/*overflowY:"scroll",*/ resize:"none", borderRadius: "5px", height:"612px", fontSize:"1rem"}} contentEditable="">
-                      {codeSubmission['script_submission']}
-                      </div>
-                    </div>
+              <div className='box' style={leftCard}>
+                <Nav className="left" style={centerCard}>
+                  <Button style={{justifyContent:"left"}}  variant="secondary" /* href="/lessons" */>Previous Lesson</Button>
+                  <Button style={{justifyContent:"center"}}  disabled >Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}: {lesson_block_data.title}</Button>
+                  <Button style={{justifyContent:"center"}}  variant="success" onClick={handleSubmit}/* href="/lessons" */>Run Code</Button>
+                  <Button style={{justifyContent:"right"}}  variant="secondary" /* href="/lessons" */>Next Lesson</Button>   
+                </Nav>
+                <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
+                <div className="left" style={{width:'stretch'}}>
+                  <div className="editor" id="script_submission" onChange={handleChange} style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor:"#000000",overflowY:"auto",overflowWrap: "anywhere",resize:"none", borderRadius: "5px", height:"612px", fontSize:"1rem", inlineSize: 'fit-content', minWidth: '100%', width: 'stretch'}} defaultValue={codeSubmission['script_submission']} contentEditable="plaintext-only">
+                    {codeSubmission['script_submission']}
+                  </div>
                 </div>
-                <div className='box' style={rightCard}>
-                  <div id="Instructions" style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor: isLightMode? "#ffffff": "#000000", width:"stretch", textAlign:'left', height:"50%"}} >{lesson_block_data["instructions"]}</div>
-                  <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
-                  <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",height:"100%", resize:"none", width:"stretch", height:"50%"}}>
-                      {"Pretend this is a terminal that's spitting out results, I'll get it working later"}
-                      {false&&
-                      <iframe src="" frameBorder={"0"} className="iframe">
-                        </iframe>}
-                        </div>
+              </div>
+              <div className='box' style={rightCard}>
+                <div id="Instructions" style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor: isLightMode? "#ffffff": "#000000", width:"stretch", textAlign:'left', height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}} >{lesson_block_data["instructions"]}</div>
+                <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
+                <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",height:"100%", resize:"none", width:"stretch", height:"50%"}}>
+                  {"Pretend this is a terminal that's spitting out results, I'll get it working later"}
+                  {false&&
+                  <iframe src="" frameBorder={"0"} className="iframe">
+                  </iframe>}
                 </div>
+              </div>
           </div>
         </div>
       </section>

@@ -4,7 +4,7 @@ const z = require('zod')
 const bcrypt = require("bcrypt");
 const chapterSchema = require('../../models/chapterModel')
 
-router.get("/:id", async (req, res) =>
+router.get("/find/:id", async (req, res) =>
 {
     //console.log("Gate 1");
     

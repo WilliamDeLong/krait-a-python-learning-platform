@@ -33,7 +33,8 @@ const deleteChapter = require('./routes/chapterRoutes/deleteChapter')
 const listChapter = require('./routes/chapterRoutes/listChapters')
 const editChapter = require('./routes/chapterRoutes/editChapter')
 const refreshChapter = require('./routes/chapterRoutes/refreshChapter')
-const findChapter = require('./routes/chapterRoutes/findChapterByID')
+const findChapterID = require('./routes/chapterRoutes/findChapterByID')
+const findChapter = require('./routes/chapterRoutes/findChapter')
 
 // Documentation Routes
 const makeDocumentation = require('./routes/documentationRoutes/makeDocumentation')
@@ -78,6 +79,7 @@ app.use('/chapter', deleteChapter);
 app.use('/chapter', listChapter);
 app.use('/chapter', editChapter);
 app.use('/chapter', refreshChapter);
+app.use('/chapter', findChapterID);
 app.use('/chapter', findChapter);
 // Documentation Routes
 app.use('/documentation', makeDocumentation);

@@ -112,13 +112,14 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8081/chapter/findSubmission
+GET http://localhost:8081/chapter/findChapter
 Content-Type: application/json 
 
 {
-    "lessonID": null,
-    "script_submission": null,
-    "success": true
+    "title": null,
+    "chapter_no": 2,
+    "description": null,
+    "test_id": null
 }
 
 

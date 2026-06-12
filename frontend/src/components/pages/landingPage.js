@@ -30,7 +30,7 @@ const Landingpage = () => {
     
     
     return (
-        <div style={{maxHeight: '200%', minHeight: '200%', height:'91vh', backgroundColor: isLightMode ? '#5562be' : '#14294c'}}>
+        <div style={{maxHeight: '200%', minHeight: '200%', height:'93.5vh', backgroundColor: isLightMode ? '#5562be' : '#14294c'}}>
             <div className='box' style={{padding: '3rem'}}>
                 <Card style={leftCard}>
                     <Card.Body style={{color: isLightMode ? "#0f172a" : "#cccccc"}}>

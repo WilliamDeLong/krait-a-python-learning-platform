@@ -55,7 +55,7 @@ const Login = () => {
       const { accessToken } = res;
       //store token in localStorage
       localStorage.setItem("accessToken", accessToken);
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       if (
         error.response &&
@@ -68,7 +68,7 @@ const Login = () => {
   };
 
   if(user) {
-    navigate('/home')
+    navigate('/')
     return
   }
 
@@ -111,17 +111,7 @@ const Login = () => {
                     </span>
                   </Form.Text>
                 </Form.Group>
-                <div class="form-check form-switch">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="flexSwitchCheckDefault"
-                    onChange={() => { setLight(!light) }}
-                  />
-                  <label class="form-check-label" for="flexSwitchCheckDefault" className='text-muted'>
-                    {bgText}
-                  </label>
-                </div>
+                
                 {error && <div style={labelStyling} className='pt-3'>{error}</div>}
                 <Button
                   variant="primary"

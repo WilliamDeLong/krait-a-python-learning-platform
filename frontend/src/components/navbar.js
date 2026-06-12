@@ -110,7 +110,7 @@ export default function Navbar({ isLightMode, toggleTheme }) {
       <Container >
         <Nav className="me-auto" style={{width:"50%"}}>
           <Dropdown as={ButtonGroup} style={{color: isLightMode ? "#0f172a" : "white"}}>
-            <Button href="/chapters">Chapters</Button>
+            <Button href="/lessons">Chapters</Button>
 
             <Dropdown.Toggle split  id="dropdown-split-basic" />
             <Dropdown.Menu>
@@ -124,25 +124,23 @@ export default function Navbar({ isLightMode, toggleTheme }) {
           
         </Nav>
         <div className="boxy" style={{width:"fit-content", display: "flex", flexFlow: "row wrap"}}>
-        <Nav variant="pills" style={{width:"100%",marginLeft: 'auto', marginRight: '0',display:'flex',justifyContent: "flex-end"}}>
-          <button onClick={toggleTheme} style={themeToggleStyle} title={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"} aria-label={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"}>
-                {isLightMode ? (<><span style={{ ...themeLabelStyle, left: "10px" }}>LIGHT<br />MODE</span><span style={themeKnobStyle}>☀️</span></>) : (<><span style={themeKnobStyle}>🌙</span><span style={{ ...themeLabelStyle, right: "10px" }}>DARK<br />MODE</span></>)}
-              </button>
-          <DropdownButton title="profile" id="profile-dropdown" align={{ lg: 'end' }} >
-              <div onClick={() => navigate("/profile")} onMouseEnter={() => setIsProfileAreaHovered(true)} onMouseLeave={() => setIsProfileAreaHovered(false)} style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", transform: isProfileAreaHovered ? "scale(1.06)" : "scale(1)", transition: "transform 0.2s ease", }}>
-                <img src={profileUrl} alt="Profile" onError={() => setProfileUrl("/user-icon.png")} style={{   width: "42px",   height: "42px",   borderRadius: "50%",   objectFit: "cover",   border: `2px solid ${isLightMode ? "#0f172a" : "white"}`, }}/>
-                <span style={{   color: isLightMode ? "#0f172a" : "white",   fontWeight: "600",   textDecoration: isProfileAreaHovered ? "underline" : "none", }}> 
-                  {user.username}
+          <Nav variant="pills" style={{width:"100%",marginLeft: 'auto', marginRight: '0',display:'flex',justifyContent: "flex-end"}}>
+            <button onClick={toggleTheme} style={themeToggleStyle} title={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"} aria-label={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"}>
+              {isLightMode ? (<><span style={{ ...themeLabelStyle, left: "10px" }}>LIGHT<br />MODE</span><span style={themeKnobStyle}>☀️</span></>) : (<><span style={themeKnobStyle}>🌙</span><span style={{ ...themeLabelStyle, right: "10px" }}>DARK<br />MODE</span></>)}
+            </button>
+            <div onClick={() => navigate("/profile")} onMouseEnter={() => setIsProfileAreaHovered(true)} onMouseLeave={() => setIsProfileAreaHovered(false)} style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", transform: isProfileAreaHovered ? "scale(1.06)" : "scale(1)", transition: "transform 0.2s ease", }}>
+              {/* <img src={profileUrl} alt="Profile" onError={() => setProfileUrl("/user-icon.png")} style={{   width: "42px",   height: "42px",   borderRadius: "50%",   objectFit: "cover",   border: `2px solid ${isLightMode ? "#0f172a" : "white"}`, }}/> */}
+              <span style={{   color: 'white',   fontWeight: "600",   textDecoration: isProfileAreaHovered ? "underline" : "none", }}> 
+                {user.username}
                 </span>
-              </div>
-              <button
-                onClick={handleLogout}
-                style={{backgroundColor: "#ef4444", color: "white", border: "none", borderRadius: "999px", padding: "8px 16px", cursor: "pointer", fontWeight: "600",}}>
-                Log Out
-              </button>
-          </DropdownButton>
+            </div>
+            <button
+              onClick={handleLogout}
+              style={{backgroundColor: "#ef4444", color: "white", border: "none", borderRadius: "999px", padding: "8px 16px", cursor: "pointer", fontWeight: "600",}}>
+              Log Out
+            </button>
           </Nav>
-          </div>
+        </div>
       </Container>
   </ReactNavbar>
 

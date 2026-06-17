@@ -6,8 +6,21 @@ import Nav from 'react-bootstrap/Nav';
 import API_BASE from '../../api';
 import getUserInfo from "../../utilities/decodeJwt";
 import { UserContext } from '../../App';
+import "../../css/editor.css";
+import "../../css/h3.css";
+import "../../css/box.css";
 //import CodeEditor from "../CodeEditor";
 //import { useRef } from "react";
+import {basicSetup} from "codemirror";
+import {EditorState} from "@codemirror/state";
+import {EditorView, keymap} from "@codemirror/view";
+import {defaultKeymap, indentWithTab} from "@codemirror/commands";
+
+import { python } from "@codemirror/lang-python";
+
+import { oneDark } from "@codemirror/theme-one-dark";
+import { createEditorState, createEditorView } from "../editor";
+
 
 
 const url_submissionUpdate = `${API_BASE}/submissions/`;
@@ -35,7 +48,25 @@ const LessonTestPage = () => {
   const { isLightMode } = useContext(UserContext);
   //const inputRef = useRef(null);
   //input.addEventListener("change", updateValue);
-
+  //let extensions = [keymap.of([defaultKeymap, indentWithTab]), basicSetup, python()];
+  let options = {
+          oneDark: !isLightMode,
+      };
+  const view = createEditorView(undefined, document.getElementById("editor"));
+  const initialState = createEditorState(codeSubmission['script_submission'], options);
+  view.setState(initialState);
+  
+  function changeTheme() {
+    //console.log("Gate 1");
+    //console.log(`is dark: ${!isLightMode}`);
+      let options = {
+          oneDark: !isLightMode,
+      };
+      //console.log("Gate 2");
+      let newState = createEditorState(view.state.doc, options);
+      //console.log(options);
+      view.setState(newState);
+  }
   
 
   //const { isLightMode } = useContext();
@@ -76,7 +107,6 @@ const LessonTestPage = () => {
       flexFlow: 'row wrap'}
 
 
-
   const handleChange = ({ currentTarget: input }) => {
     console.log(input.name);
     console.log(`Code Box:`,input.value);
@@ -114,6 +144,10 @@ const LessonTestPage = () => {
   useEffect(() => {
     setUser(getUserInfo());
     //console.log(isLightMode);
+    if (isLightMode===false) {
+      changeTheme();
+      //console.log("Tried to set dark mode");
+    };
     fetch_data();
     console.log("Data Fetched");
     
@@ -187,19 +221,17 @@ const LessonTestPage = () => {
                 </Nav>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div className="left" style={{width:'stretch'}}>
-                  <div className="editor" id="script_submission" onChange={handleChange} style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor:"#000000",overflowY:"auto",overflowWrap: "anywhere",resize:"none", borderRadius: "5px", height:"612px", fontSize:"1rem", inlineSize: 'fit-content', minWidth: '100%', width: 'stretch'}} defaultValue={codeSubmission['script_submission']} contentEditable="plaintext-only">
-                    {codeSubmission['script_submission']}
-                  </div>
+                  <div id="editor" className="script_submission" style={{height:"612px", width: '100%'}} />
                 </div>
               </div>
               <div className='box' style={rightCard}>
                 <div id="Instructions" style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor: isLightMode? "#ffffff": "#000000", width:"stretch", textAlign:'left', height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}} >{lesson_block_data["instructions"]}</div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
-                <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",height:"100%", resize:"none", width:"stretch", height:"50%"}}>
+                <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"50%"}}>
                   {"Pretend this is a terminal that's spitting out results, I'll get it working later"}
-                  {false&&
+                  {/* {false&&
                   <iframe src="" frameBorder={"0"} className="iframe">
-                  </iframe>}
+                  </iframe>} */}
                 </div>
               </div>
           </div>

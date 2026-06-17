@@ -16,7 +16,7 @@ import getUserInfo from "./utilities/decodeJwt";
 
 import LessonTestPage from "./components/pages/LessonTestPage";
 import ChapterTemplatePage from "./components/pages/ChapterTemplatePage";
-// import editorThing from "./components/pages/editorThing";
+import ExperimentEditor from "./components/pages/EditorTestPage";
 
 export const UserContext = createContext();
 //test change
@@ -55,7 +55,7 @@ const App = () => {
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
           <Route path="/lessonTestpage/:lessonID" element={<LessonTestPage />} />
           <Route path="/chapter/:ChapterID" element={<ChapterTemplatePage />} />
-          {/* <Route path="/editorthing" element={<editorThing />} /> */}
+          <Route path="/editorthing" element={<ExperimentEditor />} />
           
         </Routes>
       </UserContext.Provider>

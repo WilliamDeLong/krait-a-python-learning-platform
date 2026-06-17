@@ -1,0 +1,11 @@
+#editor {
+	height: 500px;
+	width: 50%;
+}
+
+/* Stretch editor to fit inside its containing div */
+.cm-editor {
+	height: 100%;
+	width: 100%;
+	overflow-wrap:"break-word";
+}

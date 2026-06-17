@@ -120,6 +120,7 @@ export default function Navbar({ isLightMode, toggleTheme }) {
             </Dropdown.Menu>
           </Dropdown>
           <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/lessonTestpage/6a19e16bd4abefc266f8ab0c">Lesson test page</Nav.Link>
+          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/editorthing">Editor Test</Nav.Link>
           
           
         </Nav>

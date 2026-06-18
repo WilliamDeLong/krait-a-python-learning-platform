@@ -9,3 +9,7 @@
 	width: 100%;
 	overflow-wrap:"break-word";
 }
+
+.cm-editor .cm-content { 
+	font-family: "Consolas" 
+}

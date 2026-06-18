@@ -46,24 +46,43 @@ const LessonTestPage = () => {
   const [seed, setSeed] = useState(1);
   const [error, setError] = useState("");
   const { isLightMode } = useContext(UserContext);
+  const {editorTheme, setEditorTheme} = useState(isLightMode);
   //const inputRef = useRef(null);
   //input.addEventListener("change", updateValue);
   //let extensions = [keymap.of([defaultKeymap, indentWithTab]), basicSetup, python()];
   let options = {
-          oneDark: !isLightMode,
-      };
-  const view = createEditorView(undefined, document.getElementById("editor"));
-  const initialState = createEditorState(codeSubmission['script_submission'], options);
-  view.setState(initialState);
-  
+    oneDark: !isLightMode,
+  };
+  if (document.querySelector(`.cm-editor`)!==null) {
+    //var view_updator = document.querySelector(`.cm-editor`);
+    let cmEditorElement = document.querySelector(".cm-editor"); // Or whatever query you need
+    //let editorView = cmEditorElement.querySelector(".cm-content");
+    console.log("Removed existing editor.");
+    cmEditorElement.remove();
+    //console.log(editorView);
+    //console.log(editorView.state.doc.toString());
+    //g
+    //setCodeSubmission({ ...codeSubmission, ["script_submission"]: editorView.state.doc.toString() });
+  }
+  //console.log(document.querySelector(`.cm-editor`));
+  if (document.querySelector(`.cm-editor`)===null) {
+    console.log("Creating new Editor.");
+    var view = createEditorView(undefined, document.getElementById("editor"));
+    const initialState = createEditorState(codeSubmission['script_submission'], options);
+    view.setState(initialState);
+  }
+  //
   function changeTheme() {
     //console.log("Gate 1");
     //console.log(`is dark: ${!isLightMode}`);
+    
       let options = {
           oneDark: !isLightMode,
       };
       //console.log("Gate 2");
-      let newState = createEditorState(view.state.doc, options);
+      let newState = createEditorState(view.state.doc);
+      if (!isLightMode)
+        newState = createEditorState(view.state.doc, options);
       //console.log(options);
       view.setState(newState);
   }
@@ -107,19 +126,36 @@ const LessonTestPage = () => {
       flexFlow: 'row wrap'}
 
 
-  const handleChange = ({ currentTarget: input }) => {
-    console.log(input.name);
-    console.log(`Code Box:`,input.value);
-    console.log(codeSubmission);
-    //const ques = newQuestionModel.findOne({ question: input.value });
-    //console.log(ques);
-    setCodeSubmission({ ...codeSubmission, ["script_submission"]: input.value });
-    //console.log(lesson_block_data);
+  const handleSave = async (e) => {
+    e.preventDefault();
+    try {
+      //console.log(document.querySelector(`.cm-editor`));
+      console.log(view.state.doc.toString());
+      setCodeSubmission({ ...codeSubmission, ["script_submission"]: view.state.doc.toString() });
+      console.log(codeSubmission);
+      //a
+      //const inputField = document.getElementById("form"); 
+      //inputField.reset(); // This resets the prompts so that the page doesn't have to be reloaded to create a new question
+      //setData(data_default); // This resets the values for all of the prompts
+      //console.log(data); // This 
+      //setError(""); // This resets the error pop-up so it doesn't stick around and bother me
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setError(error.response.data.message);
+      }
+    }
+    
   };
-
+//a
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      //console.log(document.querySelector(`.cm-editor`));
+      console.log(view.state.doc.toString());
       console.log(codeSubmission);
       console.log((url_submissionUpdate+codeSubmission._id+"/update"));
       await axios.post((url_submissionUpdate+codeSubmission['_id']+"/update"), {params: codeSubmission});
@@ -144,10 +180,8 @@ const LessonTestPage = () => {
   useEffect(() => {
     setUser(getUserInfo());
     //console.log(isLightMode);
-    if (isLightMode===false) {
+    if (isLightMode===false)
       changeTheme();
-      //console.log("Tried to set dark mode");
-    };
     fetch_data();
     console.log("Data Fetched");
     
@@ -215,7 +249,7 @@ const LessonTestPage = () => {
               <div className='box' style={leftCard}>
                 <Nav className="left" style={centerCard}>
                   <Button style={{justifyContent:"left"}}  variant="secondary" /* href="/lessons" */>Previous Lesson</Button>
-                  <Button style={{justifyContent:"center"}}  disabled >Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}: {lesson_block_data.title}</Button>
+                  <Button style={{justifyContent:"center"}}  onClick={handleSave} >Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}: {lesson_block_data.title}</Button>
                   <Button style={{justifyContent:"center"}}  variant="success" onClick={handleSubmit}/* href="/lessons" */>Run Code</Button>
                   <Button style={{justifyContent:"right"}}  variant="secondary" /* href="/lessons" */>Next Lesson</Button>   
                 </Nav>

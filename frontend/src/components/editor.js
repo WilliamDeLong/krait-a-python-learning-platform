@@ -18,6 +18,7 @@ function createEditorState(initialContents, options = {}) {
     let extensions = [
 		keymap.of([defaultKeymap, indentWithTab]), 
 		basicSetup, 
+        EditorView.lineWrapping,
 		python()
 	];
 
@@ -30,7 +31,7 @@ function createEditorState(initialContents, options = {}) {
         extensions
     });
 }
-
+//test case
 function createEditorView(state, parent) {
     return new EditorView({ state, parent });
 }

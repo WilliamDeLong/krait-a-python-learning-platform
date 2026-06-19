@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import getUserInfo from '../utilities/decodeJwt';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
+import axios from "axios";
 import ReactNavbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
+import API_BASE from '../api';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { useNavigate, useLocation } from "react-router-dom";
 import "../css/box.css";
@@ -15,7 +17,7 @@ import "../css/box.css";
 import logo from "../images/Logo.png";
 import logo_dm from "../images/DarkModeLogo.png";
 
-
+const url = `${API_BASE}/chapter/list`;
 
 // Here, we display our Navbar
 export default function Navbar({ isLightMode, toggleTheme }) {
@@ -26,7 +28,8 @@ export default function Navbar({ isLightMode, toggleTheme }) {
   const location = useLocation();
   const [profileUrl, setProfileUrl] = useState("/user-icon.png");
   const [isProfileAreaHovered, setIsProfileAreaHovered] = useState(false);
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
+  const [data, setData] = useState([]);
   
   const getNavLinkStyle = (path) => {
     const isActive = location.pathname === path;
@@ -86,16 +89,45 @@ export default function Navbar({ isLightMode, toggleTheme }) {
     textAlign: "center",
     pointerEvents: "none",
   };
+  const fetch_data = async () => {
+      try {
+        //console.log(ChapterID);
+        const result = await axios.get(url);
+        //console.log(result.data);
+
+        setData(result.data.sort((a, b) => (a.chapter_no - b.chapter_no)));
+        //const LessonsRes = await axios.get(LessonDataurl, {params: {chapter_no: result.data['chapter_no']}});
+        //setLessons(LessonsRes.data.sort((a, b) => (a.order_within_chapter - b.order_within_chapter)));
+        console.log(result.data.sort((a, b) => (a.chapter_no - b.chapter_no)));
+        //console.log((LessonsRes.data));
+        //console.log(lessonResult.data);
+        //console.log(`Lesson found`);
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status <= 500
+        ) {
+          console.log(error.response.data.message);
+        }
+      }
+    };
 
   useEffect(() => {
   setUser(getUserInfo())
-  
+  fetch_data();
   }, [])
   const handleLogout = (e) => {
     e.preventDefault();
     localStorage.removeItem("accessToken");
     navigate("/");
   };
+  const chapters = data.map(chapter =>
+    <Dropdown.Item key={chapter.chapter_no} href={"/chapter/"+chapter._id} style={{color:isLightMode ? '#000000': '#ffffff'}}>
+      Chapter {chapter.chapter_no}: {chapter.title}
+    </Dropdown.Item>
+  );
+  console.log(chapters);
   // if (!user) return null   - for now, let's show the bar even not logged in.
   // we have an issue with getUserInfo() returning null after a few minutes
   // it seems.
@@ -110,13 +142,14 @@ export default function Navbar({ isLightMode, toggleTheme }) {
       <Container >
         <Nav className="me-auto" style={{width:"50%"}}>
           <Dropdown as={ButtonGroup} style={{color: isLightMode ? "#0f172a" : "white"}}>
-            <Button href="/lessons">Chapters</Button>
+            <Button href="/chapters">Chapters</Button>
 
             <Dropdown.Toggle split  id="dropdown-split-basic" />
-            <Dropdown.Menu>
-              <Dropdown.Item href="/lessonTestpage/6a22e76fb403eec45b62da21">Section Zero: Basics</Dropdown.Item>
+            <Dropdown.Menu style={{backgroundColor:isLightMode ? '#ffffff': '#000000'}}>
+              {/* <Dropdown.Item href="/lessonTestpage/6a22e76fb403eec45b62da21">Section Zero: Basics</Dropdown.Item>
               <Dropdown.Item href="/chapter1">Section One: Functions</Dropdown.Item>
-              <Dropdown.Item href="/chapter/6a270c143837df2cb279ae22">Section Two: tbd</Dropdown.Item>
+              <Dropdown.Item href="/chapter/6a270c143837df2cb279ae22">Section Two: tbd</Dropdown.Item> */}
+              {chapters}
             </Dropdown.Menu>
           </Dropdown>
           <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/lessonTestpage/6a19e16bd4abefc266f8ab0c">Lesson test page</Nav.Link>

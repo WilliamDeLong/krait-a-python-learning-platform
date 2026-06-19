@@ -126,13 +126,13 @@ const LessonTestPage = () => {
       flexFlow: 'row wrap'}
 
 
-  const handleSave = async (e) => {
+  const handleRun = async (e) => {
     e.preventDefault();
     try {
       //console.log(document.querySelector(`.cm-editor`));
       console.log(view.state.doc.toString());
       setCodeSubmission({ ...codeSubmission, ["script_submission"]: view.state.doc.toString() });
-      console.log(codeSubmission);
+      console.log(`codeSubmission: ${codeSubmission["script_submission"]}`);
       //a
       //const inputField = document.getElementById("form"); 
       //inputField.reset(); // This resets the prompts so that the page doesn't have to be reloaded to create a new question
@@ -151,7 +151,7 @@ const LessonTestPage = () => {
     
   };
 //a
-  const handleSubmit = async (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
     try {
       //console.log(document.querySelector(`.cm-editor`));
@@ -249,8 +249,9 @@ const LessonTestPage = () => {
               <div className='box' style={leftCard}>
                 <Nav className="left" style={centerCard}>
                   <Button style={{justifyContent:"left"}}  variant="secondary" /* href="/lessons" */>Previous Lesson</Button>
-                  <Button style={{justifyContent:"center"}}  onClick={handleSave} >Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}: {lesson_block_data.title}</Button>
-                  <Button style={{justifyContent:"center"}}  variant="success" onClick={handleSubmit}/* href="/lessons" */>Run Code</Button>
+                  <Button style={{justifyContent:"center",height:'37.6px'}}  disabled={true} ><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%'}}>{lesson_block_data.title}</p></Button>
+                  <Button style={{justifyContent:"center"}} variant="success" onClick={handleSave} >Save Code</Button>
+                  <Button style={{justifyContent:"center"}}  variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</Button>
                   <Button style={{justifyContent:"right"}}  variant="secondary" /* href="/lessons" */>Next Lesson</Button>   
                 </Nav>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>

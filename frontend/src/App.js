@@ -18,6 +18,8 @@ import LessonTestPage from "./components/pages/LessonTestPage";
 import ChapterTemplatePage from "./components/pages/ChapterTemplatePage";
 import ChapterSelect from "./components/pages/ChapterSelectPage";
 import ExperimentEditor from "./components/pages/EditorTestPage";
+import LoggedOutRedirect from "./components/logOutPage";
+import DocumentationSelect from "./components/pages/documentationSelectionPage";
 
 export const UserContext = createContext();
 //test change
@@ -58,6 +60,8 @@ const App = () => {
           <Route path="/chapter/:ChapterID" element={<ChapterTemplatePage />} />
           <Route path="/editorthing" element={<ExperimentEditor />} />
           <Route path="/chapters" element={<ChapterSelect />} />
+          <Route path="/logout" element={<LoggedOutRedirect />} />
+          <Route path="/documentation" element={<DocumentationSelect />} />
           
         </Routes>
       </UserContext.Provider>

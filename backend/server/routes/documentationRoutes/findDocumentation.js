@@ -8,7 +8,7 @@ const documentationSchema = require("../../models/documentationModel");
 
 router.get("/find", async (req, res, next) => {
   const query = documentationSchema.find();
-  var { title, description, content, author} = req.query;
+  var { shortID, title, description, content, author} = req.query;
   if (Object.keys(req.query).length===0) return next('route');
   if (title != null) {
     query.find({title: { "$regex": title}});
@@ -18,6 +18,9 @@ router.get("/find", async (req, res, next) => {
   }
   if (content != null) {
     query.find({content: { "$regex": content}});
+  }
+  if (shortID != null) {
+    query.find({shortID: shortID});
   }
   
   if (author != null) {

@@ -3,6 +3,12 @@ mongoose.set('strictQuery', false);
 //user schema/model
 const newDocumentationSchema = new mongoose.Schema(
   {
+    shortID: {
+      type: Number,
+      required: true,
+      label: "identification",
+      default: 0
+    },
     title: {
       type: String,
       required: true,

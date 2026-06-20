@@ -6,10 +6,10 @@ POST http://localhost:8081/documentation/make
 Content-Type: application/json 
 
 {
-    "title": "What is a print statement",
+    "title": "What is a for loop",
     "author": "6a18823fe3a22d37ce5b6b83", 
-    "description": "Documentation going the ins-and-outs of the print function in Python.",
-    "content": "Pretend that this is a highly detailed, over the top, explanation of what a print statement is.", 
+    "description": "Documentation going over the ins-and-outs of for loops in Python.",
+    "content": "Pretend that this is a highly detailed, over the top, explanation of what a for loop is.", 
     "reference_list": "https://docs.python.org/3/library/functions.html#print"
 }
 

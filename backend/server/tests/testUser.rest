@@ -43,12 +43,8 @@ Content-Type: application/json
 }
 
 ###
-GET  http://localhost:8081/user/getUserById
+GET  http://localhost:8081/user/get/6a18823fe3a22d37ce5b6b83
 Content-Type: application/json 
-
-{
-    "userId" : "{{userTestId1}}"
-}
 
 ###
 POST  http://localhost:8081/user/{{userTestId1}}/delete

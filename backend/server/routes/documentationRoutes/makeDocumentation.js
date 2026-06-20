@@ -6,12 +6,13 @@ const documentationSchema = require('../../models/documentationModel')
 
 
 router.post('/make', async (req, res) => {
-    const { title, description, content, author, reference_list} = req.body;
+    const { shortID, title, description, content, author, reference_list} = req.body;
     //const lesson = await lessonSchema.find(lessonID)
     //console.log(lessons);
     //console.log("Gate 1");
     //creates the new lesson
     const createDocumentation = new documentationSchema({
+        shortID: shortID, 
         title: title,
         description: description,
         content: content,

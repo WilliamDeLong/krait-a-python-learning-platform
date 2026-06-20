@@ -120,7 +120,7 @@ export default function Navbar({ isLightMode, toggleTheme }) {
   const handleLogout = (e) => {
     e.preventDefault();
     localStorage.removeItem("accessToken");
-    navigate("/");
+    navigate("/logout");
   };
   const chapters = data.map(chapter =>
     <Dropdown.Item key={chapter.chapter_no} href={"/chapter/"+chapter._id} style={{color:isLightMode ? '#000000': '#ffffff'}}>
@@ -152,6 +152,17 @@ export default function Navbar({ isLightMode, toggleTheme }) {
               {chapters}
             </Dropdown.Menu>
           </Dropdown>
+          <Dropdown as={ButtonGroup} style={{color: isLightMode ? "#0f172a" : "white"}}>
+            <Button href="/documentation">Documentation</Button>
+
+            <Dropdown.Toggle disabled split  id="dropdown-split-basic" />
+            <Dropdown.Menu disabled style={{backgroundColor:isLightMode ? '#ffffff': '#000000'}}>
+              {/* <Dropdown.Item href="/lessonTestpage/6a22e76fb403eec45b62da21">Section Zero: Basics</Dropdown.Item>
+              <Dropdown.Item href="/chapter1">Section One: Functions</Dropdown.Item>
+              <Dropdown.Item href="/chapter/6a270c143837df2cb279ae22">Section Two: tbd</Dropdown.Item> */}
+            </Dropdown.Menu>
+          </Dropdown>
+          
           <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/lessonTestpage/6a19e16bd4abefc266f8ab0c">Lesson test page</Nav.Link>
           <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/editorthing">Editor Test</Nav.Link>
           
@@ -164,13 +175,13 @@ export default function Navbar({ isLightMode, toggleTheme }) {
             </button>
             <div onClick={() => navigate("/profile")} onMouseEnter={() => setIsProfileAreaHovered(true)} onMouseLeave={() => setIsProfileAreaHovered(false)} style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", transform: isProfileAreaHovered ? "scale(1.06)" : "scale(1)", transition: "transform 0.2s ease", }}>
               {/* <img src={profileUrl} alt="Profile" onError={() => setProfileUrl("/user-icon.png")} style={{   width: "42px",   height: "42px",   borderRadius: "50%",   objectFit: "cover",   border: `2px solid ${isLightMode ? "#0f172a" : "white"}`, }}/> */}
-              <span style={{   color: 'white',   fontWeight: "600",   textDecoration: isProfileAreaHovered ? "underline" : "none", }}> 
+              <span style={{backgroundColor: isLightMode ? '#000000': '#ffd903', color: isLightMode ? '#ffd903': '#000000',   fontWeight: "600",   textDecoration: isProfileAreaHovered ? "underline" : "none", order: "none", borderRadius: "999px", padding: "8px 16px", cursor: "pointer"}}> 
                 {user.username}
                 </span>
             </div>
             <button
               onClick={handleLogout}
-              style={{backgroundColor: "#ef4444", color: "white", border: "none", borderRadius: "999px", padding: "8px 16px", cursor: "pointer", fontWeight: "600",}}>
+              style={{backgroundColor: "#ef4444", color: "white", border: "none", borderRadius: "999px", padding: "8px 16px", cursor: "pointer", fontWeight: "600"}}>
               Log Out
             </button>
           </Nav>

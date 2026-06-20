@@ -11,14 +11,14 @@ import "../../css/h3.css";
 import "../../css/box.css";
 //import CodeEditor from "../CodeEditor";
 //import { useRef } from "react";
-import {basicSetup} from "codemirror";
-import {EditorState} from "@codemirror/state";
-import {EditorView, keymap} from "@codemirror/view";
-import {defaultKeymap, indentWithTab} from "@codemirror/commands";
+//import {basicSetup} from "codemirror";
+//import {EditorState} from "@codemirror/state";
+//import {EditorView, keymap} from "@codemirror/view";
+//import {defaultKeymap, indentWithTab} from "@codemirror/commands";
 
-import { python } from "@codemirror/lang-python";
+//import { python } from "@codemirror/lang-python";
 
-import { oneDark } from "@codemirror/theme-one-dark";
+//import { oneDark } from "@codemirror/theme-one-dark";
 import { createEditorState, createEditorView } from "../editor";
 
 
@@ -29,7 +29,7 @@ const url_submissionCreate = `${API_BASE}/submissions/create`;
 const url_LessonData = `${API_BASE}/lesson/`;
 
 
-const lessonDefault = {lessonID: "6a19e16bd4abefc266f8ab0c"};
+//const lessonDefault = {lessonID: "6a19e16bd4abefc266f8ab0c"};
 const lesson_block_data_default = { default_script: "", solution_verification: '', instructions: "", title: ''};
 const codeSubmission_default = {"_id": null, script_submission: null, userID: "null", lessonID: "null", success: false, submission_date: null};
 
@@ -46,7 +46,7 @@ const LessonTestPage = () => {
   const [seed, setSeed] = useState(1);
   const [error, setError] = useState("");
   const { isLightMode } = useContext(UserContext);
-  const {editorTheme, setEditorTheme} = useState(isLightMode);
+  //const {editorTheme, setEditorTheme} = useState(isLightMode);
   //const inputRef = useRef(null);
   //input.addEventListener("change", updateValue);
   //let extensions = [keymap.of([defaultKeymap, indentWithTab]), basicSetup, python()];
@@ -89,7 +89,7 @@ const LessonTestPage = () => {
   
 
   //const { isLightMode } = useContext();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   let rightCard = {
         display: "flex",
         justifyContent: "flex-end",
@@ -130,9 +130,10 @@ const LessonTestPage = () => {
     e.preventDefault();
     try {
       //console.log(document.querySelector(`.cm-editor`));
+      console.log(`1 codeSubmission: ${codeSubmission["script_submission"]}`);
       console.log(view.state.doc.toString());
       setCodeSubmission({ ...codeSubmission, ["script_submission"]: view.state.doc.toString() });
-      console.log(`codeSubmission: ${codeSubmission["script_submission"]}`);
+      console.log(`2 codeSubmission: ${codeSubmission["script_submission"]}`);
       //a
       //const inputField = document.getElementById("form"); 
       //inputField.reset(); // This resets the prompts so that the page doesn't have to be reloaded to create a new question
@@ -250,17 +251,17 @@ const LessonTestPage = () => {
                 <Nav className="left" style={centerCard}>
                   <Button style={{justifyContent:"left"}}  variant="secondary" /* href="/lessons" */>Previous Lesson</Button>
                   <Button style={{justifyContent:"center",height:'37.6px'}}  disabled={true} ><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%'}}>{lesson_block_data.title}</p></Button>
-                  <Button style={{justifyContent:"center"}} variant="success" onClick={handleSave} >Save Code</Button>
-                  <Button style={{justifyContent:"center"}}  variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</Button>
+                  <Button style={{justifyContent:"center"}} title="Save Code" variant="success" onClick={handleSave} >Save Code</Button>
+                  <Button style={{justifyContent:"center"}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</Button>
                   <Button style={{justifyContent:"right"}}  variant="secondary" /* href="/lessons" */>Next Lesson</Button>   
                 </Nav>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div className="left" style={{width:'stretch'}}>
-                  <div id="editor" className="script_submission" style={{height:"612px", width: '100%'}} />
+                  <div id="editor" className="script_submission" style={{height:"612px", width: '100%',backgroundColor: isLightMode? "#ffffff": "#000000",color: isLightMode? "#000000":"#ffffff"}} />
                 </div>
               </div>
               <div className='box' style={rightCard}>
-                <div id="Instructions" style={{color: isLightMode? "#a0316e": "#ff2f00",backgroundColor: isLightMode? "#ffffff": "#000000", width:"stretch", textAlign:'left', height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}} >{lesson_block_data["instructions"]}</div>
+                <div id="Instructions" style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#000000", width:"stretch", textAlign:'left', height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}} >{lesson_block_data["instructions"]}</div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"50%"}}>
                   {"Pretend this is a terminal that's spitting out results, I'll get it working later"}

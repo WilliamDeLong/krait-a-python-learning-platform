@@ -60,12 +60,12 @@ const [user, setUser] = useState(getUserInfo());
                     <Card.Body style={{color: isLightMode ? "#0f172a" : "#cccccc"}}>
                         <Card.Title style={{ fontWeight: 'bold'}}>Are you new to Python and/or Programming?</Card.Title>
                         <Card.Text style={{color: isLightMode ? "#0f172a" : "#cccccc", 'fontSize': 'small', fontWeight:'normal'}}>Then start here!</Card.Text>
-                        <a /* href="/login" */ style={{ color: '#ffd903', backgroundColor: isLightMode ? '#000000' : '#5562be', borderRadius: "6px", fontWeight: "bold", width: '90%', height: '35px', display: 'inline-block', alignContent: 'center' }}> Section Zero: Python Fundamentals </a>
+                        <a disabled /* href="/login" */ style={{ color: '#ffd903', backgroundColor: isLightMode ? '#000000' : '#5562be', borderRadius: "6px", fontWeight: "bold", width: '90%', height: '35px', display: 'inline-block', alignContent: 'center' }}> Section Zero: Python Fundamentals </a>
                         
                         <h3 style={{'fontSize':'small'}}>or</h3>
                         <Card.Title style={{fontWeight: 'bold'}}>If you do know the fundamentals</Card.Title>
                         <Card.Text style={{color: isLightMode ? "#0f172a" : "#cccccc", 'fontSize': 'small', fontWeight:'normal'}}>Feel free to start with Section One:</Card.Text>
-                        <a /* href="/signup" */ style={{ backgroundColor: '#ffd903', color: isLightMode ? '#000000': '#5562be', borderRadius: "6px", fontWeight: "bold", width: '90%', height: '35px', display: 'inline-block', alignContent: 'center' }}> Section Two: Functions </a>
+                        <a disabled /* href="/signup" */ style={{ backgroundColor: '#ffd903', color: isLightMode ? '#000000': '#5562be', borderRadius: "6px", fontWeight: "bold", width: '90%', height: '35px', display: 'inline-block', alignContent: 'center' }}> Section Two: Functions </a>
                         
                     </Card.Body>
                 </Card>}

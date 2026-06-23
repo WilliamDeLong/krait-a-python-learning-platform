@@ -46,12 +46,14 @@ const DocumentationSelect = () => {
         display: "flex",
         justifyContent: 'start',
         justifyItems: 'center',
-        flexDirection:"column",
-		flexWrap: 'wrap',
+        flexDirection:"row",
+		    flexWrap: 'wrap',
+        paddingLeft: 0,
         //marginLeft: 'auto',
         //marginRight: 0,
-        //width:"720px",
+        width:"1200px",
         height: '550px',
+
         borderColor: isLightMode ? '#000000' : '#ffffff'
         //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
@@ -140,17 +142,17 @@ const DocumentationSelect = () => {
     ) 
   else {
 	const listItems = data.map(document =>
-		<li key={document._id} style={{color:isLightMode ? '#000000': '#ffffff', border: "2px solid rgb(96 139 168)"}}>
+		<li key={document._id} style={{color:isLightMode ? '#000000': '#ffffff', border: "2px solid rgb(96 139 168)", width: '250px', marginLeft: '20px', height: '180px'}}>
 		{/* <img
 			src={isLightMode ? (document.is_test ? checkMarkLM : downArrowDM) :  (document.is_test ? checkMarkDM : downArrowLM)}
 			alt={document.title}
 			style={{width: "30px",display:'inline-block'}}/> */}
-		<p style={{display:'inline', marginLeft:"10px", }}>
+		<p style={{display:'inline'}}>
 			<a href={`/document/${document._id}`} style={{fontWeight:"bold",color:isLightMode ? '#000000': '#ffffff'}}><b>Document {document.shortID} - {document.title}</b> </a><br/>
 		</p>
 		{users.length>1 &&<p>by {users.find((element) => element._id === document.author).username}</p>}
 		{users.length<1&&<p>by {document.author}</p>}
-		<p style={{marginLeft:"40px"}}>{document.description}</p>
+		<p style={{wordWrap:'break-word'}}>{document.description}</p>
 		</li>
 	);
 	return (
@@ -159,9 +161,8 @@ const DocumentationSelect = () => {
         <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", color: !isLightMode? "#000000": "#ffffff"}}>
           <div className="row d-flex" style={{color:isLightMode ? '#000000': '#ffffff', justifyContent:'center', textAlign:'center'}}>
             <h3>Documentation</h3>
-            <h4 style={{fontSize:"100%"}}>Please select a chapter from the below list.</h4>
+            <h4 style={{fontSize:"100%"}}>Please select a document from the below list.</h4>
             
-            <h5 style={{fontSize:"80%"}}>If a chapter is grayed out, that means you haven't completed the previous chapter.</h5>
           </div>
           <div className="bar" style={{height:"2px", backgroundColor:isLightMode ? '#000000': '#ffffff'}}/>
           

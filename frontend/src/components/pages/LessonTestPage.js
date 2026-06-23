@@ -19,7 +19,7 @@ import "../../css/box.css";
 //import { python } from "@codemirror/lang-python";
 
 //import { oneDark } from "@codemirror/theme-one-dark";
-import { createEditorState, createEditorView } from "../editor";
+//import { createEditorState, createEditorView } from "../editor";
 
 
 
@@ -36,6 +36,9 @@ const codeSubmission_default = {"_id": null, script_submission: null, userID: "n
 
 const LessonTestPage = () => {
   const [user, setUser] = useState(getUserInfo());
+  const {editorView} = useContext(UserContext);
+  const {createEditor} = useContext(UserContext);
+
   //const [data, setData] = useState(dataDefault);
   let {lessonID} = useParams();
   //console.log(lessonID);
@@ -53,7 +56,7 @@ const LessonTestPage = () => {
   let options = {
     oneDark: !isLightMode,
   };
-  if (document.querySelector(`.cm-editor`)!==null) {
+  /* if (document.querySelector(`.cm-editor`)!==null) {
     //var view_updator = document.querySelector(`.cm-editor`);
     let cmEditorElement = document.querySelector(".cm-editor"); // Or whatever query you need
     //let editorView = cmEditorElement.querySelector(".cm-content");
@@ -63,16 +66,11 @@ const LessonTestPage = () => {
     //console.log(editorView.state.doc.toString());
     //g
     //setCodeSubmission({ ...codeSubmission, ["script_submission"]: editorView.state.doc.toString() });
-  }
+  }*/
   //console.log(document.querySelector(`.cm-editor`));
-  if (document.querySelector(`.cm-editor`)===null) {
-    console.log("Creating new Editor.");
-    var view = createEditorView(undefined, document.getElementById("editor"));
-    const initialState = createEditorState(codeSubmission['script_submission'], options);
-    view.setState(initialState);
-  }
+  
   //
-  function changeTheme() {
+  /* function changeTheme() {
     //console.log("Gate 1");
     //console.log(`is dark: ${!isLightMode}`);
     
@@ -85,9 +83,8 @@ const LessonTestPage = () => {
         newState = createEditorState(view.state.doc, options);
       //console.log(options);
       view.setState(newState);
-  }
-  
-
+  } */
+  //console.log(typeof(createEditor));
   //const { isLightMode } = useContext();
   //const navigate = useNavigate();
   let rightCard = {
@@ -130,10 +127,13 @@ const LessonTestPage = () => {
     e.preventDefault();
     try {
       //console.log(document.querySelector(`.cm-editor`));
-      console.log(`1 codeSubmission: ${codeSubmission["script_submission"]}`);
-      console.log(view.state.doc.toString());
-      setCodeSubmission({ ...codeSubmission, ["script_submission"]: view.state.doc.toString() });
-      console.log(`2 codeSubmission: ${codeSubmission["script_submission"]}`);
+      //console.log(`1 codeSubmission: ${codeSubmission["script_submission"]}`);
+      //console.log("Gate 1");
+      //console.log(editorView.state.doc.toString());
+      //console.log("Gate 2");
+      setCodeSubmission({ ...codeSubmission, ["script_submission"]: editorView.state.doc.toString() });
+      
+      //console.log(`2 codeSubmission: ${codeSubmission["script_submission"]}`);
       //a
       //const inputField = document.getElementById("form"); 
       //inputField.reset(); // This resets the prompts so that the page doesn't have to be reloaded to create a new question
@@ -152,13 +152,12 @@ const LessonTestPage = () => {
     
   };
 //a
-  const handleSave = async (e) => {
-    e.preventDefault();
+  const handleSave = async () => {
     try {
       //console.log(document.querySelector(`.cm-editor`));
-      console.log(view.state.doc.toString());
-      console.log(codeSubmission);
-      console.log((url_submissionUpdate+codeSubmission._id+"/update"));
+      //console.log(editorView.state.doc.toString());
+      //console.log(codeSubmission);
+      //console.log((url_submissionUpdate+codeSubmission._id+"/update"));
       await axios.post((url_submissionUpdate+codeSubmission['_id']+"/update"), {params: codeSubmission});
       //console.log(data);
       //const inputField = document.getElementById("form"); 
@@ -177,16 +176,24 @@ const LessonTestPage = () => {
     }
     
   };
+  useEffect(() => {
+    //console.log(codeSubmission["script_submission"]);
+    const result = handleSave();
+  }, [codeSubmission["script_submission"]]);
 
   useEffect(() => {
     setUser(getUserInfo());
     //console.log(isLightMode);
-    if (isLightMode===false)
-      changeTheme();
     fetch_data();
     console.log("Data Fetched");
     
   }, [seed]);
+  useEffect(() => {
+    if (document.querySelector(`.cm-editor`)===null) {
+      console.log("Creating new Editor.");
+      createEditor(codeSubmission["script_submission"]);
+    }
+  }, [createEditor]);
 
   const fetch_data = async () => {
       
@@ -251,7 +258,7 @@ const LessonTestPage = () => {
                 <Nav className="left" style={centerCard}>
                   <Button style={{justifyContent:"left"}}  variant="secondary" /* href="/lessons" */>Previous Lesson</Button>
                   <Button style={{justifyContent:"center",height:'37.6px'}}  disabled={true} ><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%'}}>{lesson_block_data.title}</p></Button>
-                  <Button style={{justifyContent:"center"}} title="Save Code" variant="success" onClick={handleSave} >Save Code</Button>
+                  {/* <Button style={{justifyContent:"center"}} title="Save Code" variant="success" onClick={handleSave} >Save Code</Button> */}
                   <Button style={{justifyContent:"center"}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</Button>
                   <Button style={{justifyContent:"right"}}  variant="secondary" /* href="/lessons" */>Next Lesson</Button>   
                 </Nav>

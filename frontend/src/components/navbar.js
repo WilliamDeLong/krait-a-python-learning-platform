@@ -98,7 +98,7 @@ export default function Navbar({ isLightMode, toggleTheme }) {
         setData(result.data.sort((a, b) => (a.chapter_no - b.chapter_no)));
         //const LessonsRes = await axios.get(LessonDataurl, {params: {chapter_no: result.data['chapter_no']}});
         //setLessons(LessonsRes.data.sort((a, b) => (a.order_within_chapter - b.order_within_chapter)));
-        console.log(result.data.sort((a, b) => (a.chapter_no - b.chapter_no)));
+        //console.log(result.data.sort((a, b) => (a.chapter_no - b.chapter_no)));
         //console.log((LessonsRes.data));
         //console.log(lessonResult.data);
         //console.log(`Lesson found`);
@@ -127,7 +127,7 @@ export default function Navbar({ isLightMode, toggleTheme }) {
       Chapter {chapter.chapter_no}: {chapter.title}
     </Dropdown.Item>
   );
-  console.log(chapters);
+  //console.log(chapters);
   // if (!user) return null   - for now, let's show the bar even not logged in.
   // we have an issue with getUserInfo() returning null after a few minutes
   // it seems.
@@ -152,7 +152,7 @@ export default function Navbar({ isLightMode, toggleTheme }) {
               {chapters}
             </Dropdown.Menu>
           </Dropdown>
-          <Dropdown as={ButtonGroup} style={{color: isLightMode ? "#0f172a" : "white"}}>
+          <Dropdown as={ButtonGroup} style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}}>
             <Button href="/documentation">Documentation</Button>
 
             <Dropdown.Toggle disabled split  id="dropdown-split-basic" />
@@ -163,8 +163,8 @@ export default function Navbar({ isLightMode, toggleTheme }) {
             </Dropdown.Menu>
           </Dropdown>
           
-          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/lessonTestpage/6a19e16bd4abefc266f8ab0c">Lesson test page</Nav.Link>
-          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/editorthing">Editor Test</Nav.Link>
+          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}} href="/lessonTestpage/6a19e16bd4abefc266f8ab0c">Lesson test page</Nav.Link>
+          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}} href="/editorthing">Editor Test</Nav.Link>
           
           
         </Nav>

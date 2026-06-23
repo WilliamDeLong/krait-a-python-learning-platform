@@ -21,6 +21,8 @@ import ExperimentEditor from "./components/pages/EditorTestPage";
 import LoggedOutRedirect from "./components/logOutPage";
 import DocumentationSelect from "./components/pages/documentationSelectionPage";
 
+import { createEditorState, createEditorView } from "./components/editor";
+
 export const UserContext = createContext();
 //test change
 //test again
@@ -30,6 +32,7 @@ const App = () => {
     const savedTheme = sessionStorage.getItem("isLightMode");
     return savedTheme ? JSON.parse(savedTheme) : false;
   });
+  const [editorView, setEditorView] = useState();
   const location = useLocation();
 
   useEffect(() => {
@@ -41,15 +44,36 @@ const App = () => {
   }, [isLightMode]);
 
   const toggleTheme = () => {
+    //console.log(`lightmode current ${isLightMode}`);
     setIsLightMode((prev) => !prev);
+    //console.log(`lightmode now ${isLightMode}`);
+    if (document.querySelector(`.cm-editor`)!==null) {
+      //console.log("Reload current editor.");
+      //console.log(`is onedark ${!isLightMode}`)
+      const updatedState = createEditorState(editorView.state.doc.toString(), {oneDark: isLightMode,});
+      editorView.setState(updatedState);
+      setEditorView(editorView);
+    }
   };
+  function createEditor(loadedCode) {
+    //console.log("Attempting to make editor");
+    if (document.querySelector(`.cm-editor`)===null) {
+      var editorView2 = (createEditorView(undefined, document.getElementById("editor")));
+      const initialState = createEditorState(loadedCode, {oneDark: !isLightMode,});
+      editorView2.setState(initialState);
+      setEditorView(editorView2);
+      //console.log("Loading Editor");
+      //console.log(editorView2.state.doc.toString());
+    }
+  };
+  
 
   return (
     <>
       {user?.id && (
               <Navbar isLightMode={isLightMode} toggleTheme={toggleTheme} />
             )}
-      <UserContext.Provider value={{ user, isLightMode, toggleTheme }}>
+      <UserContext.Provider value={{ user, isLightMode, toggleTheme, editorView, createEditor}}>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/profile" element={<ProfilePage />} />

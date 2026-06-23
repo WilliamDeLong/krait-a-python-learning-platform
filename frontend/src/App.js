@@ -17,7 +17,7 @@ import getUserInfo from "./utilities/decodeJwt";
 import LessonTestPage from "./components/pages/LessonTestPage";
 import ChapterTemplatePage from "./components/pages/ChapterTemplatePage";
 import ChapterSelect from "./components/pages/ChapterSelectPage";
-import ExperimentEditor from "./components/pages/EditorTestPage";
+//import ExperimentEditor from "./components/pages/EditorTestPage";
 import LoggedOutRedirect from "./components/logOutPage";
 import DocumentationSelect from "./components/pages/documentationSelectionPage";
 
@@ -82,7 +82,7 @@ const App = () => {
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
           <Route path="/lessonTestpage/:lessonID" element={<LessonTestPage />} />
           <Route path="/chapter/:ChapterID" element={<ChapterTemplatePage />} />
-          <Route path="/editorthing" element={<ExperimentEditor />} />
+          {/* <Route path="/editorthing" element={<ExperimentEditor />} /> */}
           <Route path="/chapters" element={<ChapterSelect />} />
           <Route path="/logout" element={<LoggedOutRedirect />} />
           <Route path="/documentation" element={<DocumentationSelect />} />

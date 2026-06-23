@@ -49,6 +49,7 @@ const LessonTestPage = () => {
   const [seed, setSeed] = useState(1);
   const [error, setError] = useState("");
   const { isLightMode } = useContext(UserContext);
+  const [needs2Save, setNeed2Save] = useState(false);
   //const {editorTheme, setEditorTheme} = useState(isLightMode);
   //const inputRef = useRef(null);
   //input.addEventListener("change", updateValue);
@@ -132,7 +133,7 @@ const LessonTestPage = () => {
       //console.log(editorView.state.doc.toString());
       //console.log("Gate 2");
       setCodeSubmission({ ...codeSubmission, ["script_submission"]: editorView.state.doc.toString() });
-      
+      setNeed2Save(true);
       //console.log(`2 codeSubmission: ${codeSubmission["script_submission"]}`);
       //a
       //const inputField = document.getElementById("form"); 
@@ -159,6 +160,7 @@ const LessonTestPage = () => {
       //console.log(codeSubmission);
       //console.log((url_submissionUpdate+codeSubmission._id+"/update"));
       await axios.post((url_submissionUpdate+codeSubmission['_id']+"/update"), {params: codeSubmission});
+      setNeed2Save(false);
       //console.log(data);
       //const inputField = document.getElementById("form"); 
       //inputField.reset(); // This resets the prompts so that the page doesn't have to be reloaded to create a new question
@@ -178,8 +180,18 @@ const LessonTestPage = () => {
   };
   useEffect(() => {
     //console.log(codeSubmission["script_submission"]);
-    const result = handleSave();
+    if (needs2Save) {
+      const result = handleSave();
+      }
   }, [codeSubmission["script_submission"]]);
+  useEffect(() => {
+    //console.log(codeSubmission["script_submission"]);
+    if (document.querySelector(`.cm-editor`)===null) {
+      //console.log(`(Seeder) Is there an editor? ${document.querySelector(`.cm-editor`)!==null}`);
+      //console.log(`(Seeder) Does editor's parent exist? ${document.getElementById("editor")!==null}`);
+      setSeed((prev) => prev+1)
+    }
+  }, [codeSubmission.script_submission]);
 
   useEffect(() => {
     setUser(getUserInfo());
@@ -187,13 +199,16 @@ const LessonTestPage = () => {
     fetch_data();
     console.log("Data Fetched");
     
-  }, [seed]);
+  }, []);
   useEffect(() => {
-    if (document.querySelector(`.cm-editor`)===null) {
+    //console.log(`Is there an editor? ${document.querySelector(`.cm-editor`)!==null}`);
+    //console.log(`Does editor's parent exist? ${document.getElementById("editor")!==null}`);
+    
+    if (document.querySelector(`.cm-editor`)===null && document.getElementById("editor")!==null) {
       console.log("Creating new Editor.");
       createEditor(codeSubmission["script_submission"]);
     }
-  }, [createEditor]);
+  }, [createEditor, seed]);
 
   const fetch_data = async () => {
       

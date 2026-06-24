@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Nav from 'react-bootstrap/Nav';
@@ -54,9 +54,6 @@ const LessonTestPage = () => {
   //const inputRef = useRef(null);
   //input.addEventListener("change", updateValue);
   //let extensions = [keymap.of([defaultKeymap, indentWithTab]), basicSetup, python()];
-  let options = {
-    oneDark: !isLightMode,
-  };
   /* if (document.querySelector(`.cm-editor`)!==null) {
     //var view_updator = document.querySelector(`.cm-editor`);
     let cmEditorElement = document.querySelector(".cm-editor"); // Or whatever query you need
@@ -119,9 +116,6 @@ const LessonTestPage = () => {
         textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
     };
-    let replaceBox2 = {width: '100%',  
-      display: 'flex',
-      flexFlow: 'row wrap'}
 
 
   const handleRun = async (e) => {
@@ -184,6 +178,7 @@ const LessonTestPage = () => {
       const result = handleSave();
       }
   }, [codeSubmission["script_submission"]]);
+  
   useEffect(() => {
     //console.log(codeSubmission["script_submission"]);
     if (document.querySelector(`.cm-editor`)===null) {
@@ -259,16 +254,16 @@ const LessonTestPage = () => {
   
   if (codeSubmission.script_submission===null) return (
     <>
-        <div key={seed}><h4>Loading User Submission</h4></div>
+        <div key={seed} style={{background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading User Submission</h4></div>
     </>
     ) 
   else return (
     
-      <section className="lesson" style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", height:"93.5vh"}}>
-        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", color: !isLightMode? "#000000": "#ffffff"}}>
+      <section className="lesson" style={{background: isLightMode ? '#5562be': "#14294c", height:"93.5vh"}}>
+        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
           <div
             className="row d-flex"
-            style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", color: !isLightMode? "#000000": "#ffffff"}}>
+            style={{background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
               <div className='box' style={leftCard}>
                 <Nav className="left" style={centerCard}>
                   <Button style={{justifyContent:"left"}}  variant="secondary" /* href="/lessons" */>Previous Lesson</Button>

@@ -4,12 +4,13 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import axios from "axios";
 import ReactNavbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import Modal from "react-bootstrap/Modal";
+//import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import API_BASE from '../api';
-import DropdownButton from 'react-bootstrap/DropdownButton';
+//import DropdownButton from 'react-bootstrap/DropdownButton';
 import { useNavigate, useLocation } from "react-router-dom";
 import "../css/box.css";
 
@@ -26,10 +27,13 @@ export default function Navbar({ isLightMode, toggleTheme }) {
   // eslint-disable-next-line
   const navigate = useNavigate();
   const location = useLocation();
-  const [profileUrl, setProfileUrl] = useState("/user-icon.png");
+  //const [profileUrl, setProfileUrl] = useState("/user-icon.png");
   const [isProfileAreaHovered, setIsProfileAreaHovered] = useState(false);
   const [user, setUser] = useState({});
   const [data, setData] = useState([]);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   
   const getNavLinkStyle = (path) => {
     const isActive = location.pathname === path;
@@ -117,9 +121,8 @@ export default function Navbar({ isLightMode, toggleTheme }) {
   setUser(getUserInfo())
   fetch_data();
   }, [])
-  const handleLogout = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("accessToken");
+  const handleLogout = (async) => {
+    localStorage.clear();
     navigate("/logout");
   };
   const chapters = data.map(chapter =>
@@ -179,8 +182,22 @@ export default function Navbar({ isLightMode, toggleTheme }) {
                 {user.username}
                 </span>
             </div>
-            <button
-              onClick={handleLogout}
+            <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} >
+              <Modal.Header closeButton>
+                <Modal.Title>Log Out</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>Are you sure you want to Log Out?</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleLogout}>
+                  Yes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            <button 
+              onClick={handleShow}
               style={{backgroundColor: "#ef4444", color: "white", border: "none", borderRadius: "999px", padding: "8px 16px", cursor: "pointer", fontWeight: "600"}}>
               Log Out
             </button>

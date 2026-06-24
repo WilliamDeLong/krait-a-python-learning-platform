@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useContext} from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Button from "react-bootstrap/Button";
-import Nav from 'react-bootstrap/Nav';
+//import Button from "react-bootstrap/Button";
+//import Nav from 'react-bootstrap/Nav';
 import API_BASE from '../../api';
 import getUserInfo from "../../utilities/decodeJwt";
 import { UserContext } from '../../App';
 //import mongoose from "mongoose";
 
-import downArrowDM from "../../images/DownArrow.png";
-import checkMarkDM from "../../images/CheckMarkDM.png";
-import checkMarkLM from "../../images/CheckMarkLM.png";
-import downArrowLM from "../../images/DownArrowDarkMode.png";
 
 const url = `${API_BASE}/documentation/find/`;
 //const LessonDataurl = `${API_BASE}/lesson/findLesson`;
@@ -41,7 +37,7 @@ const DocumentationSelect = () => {
   const [error, setError] = useState("");
   const { isLightMode } = useContext(UserContext);
   //const { isLightMode } = useContext();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   let rightList = {
         display: "flex",
         justifyContent: 'start',
@@ -69,31 +65,7 @@ const DocumentationSelect = () => {
         //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
     };
-    let leftCard = {
-        display: "flex",
-        //flexDirection:'column',
-        justifyContent: "flex-start",
-        marginLeft: 0,
-        //marginRight: '50px',
-        width: '45rem',
-        //height: 'fit-content',
-        //textAlign: 'center',
-        //backgroundColor: isLightMode ? '#ffffff' : '#000000'
-    };
-    let centerCard = {
-        display: "flex",
-        flexDirection:"column",
-        //justifyContent: "baseline",
-        //marginLeft: 'auto',
-        //marginRight: 'auto',
-        width:"716px",
-        height: "40.8px",
-        textAlign: 'center',
-        //backgroundColor: isLightMode ? '#ffffff' : '#000000'
-    };
-    let replaceBox2 = {width: '100%',  
-      display: 'flex',
-      flexFlow: 'row wrap'}
+    
 
   useEffect(() => {
     setUser(getUserInfo());
@@ -138,7 +110,7 @@ const DocumentationSelect = () => {
   
   
   if (data.title===null && users.length<0) return (
-        <div><h4>Loading Documents</h4></div>
+        <div style={{background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading Documents</h4></div>
     ) 
   else {
 	const listItems = data.map(document =>
@@ -157,8 +129,8 @@ const DocumentationSelect = () => {
 	);
 	return (
     <>
-      <section className="chapters" style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", height:"93.5vh"}}>
-        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", color: !isLightMode? "#000000": "#ffffff"}}>
+      <section className="chapters" style={{background: isLightMode ? '#5562be': "#14294c", height:"93.5vh"}}>
+        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
           <div className="row d-flex" style={{color:isLightMode ? '#000000': '#ffffff', justifyContent:'center', textAlign:'center'}}>
             <h3>Documentation</h3>
             <h4 style={{fontSize:"100%"}}>Please select a document from the below list.</h4>
@@ -166,7 +138,7 @@ const DocumentationSelect = () => {
           </div>
           <div className="bar" style={{height:"2px", backgroundColor:isLightMode ? '#000000': '#ffffff'}}/>
           
-          <div className="row d-flex" style={{background: isLightMode ? "linear-gradient(135deg, #f8fafc, #dbeafe, #ede9fe)": "linear-gradient(135deg, #020617, #0f172a, #1e1b4b)", color: !isLightMode? "#000000": "#ffffff"}}>
+          <div className="row d-flex" style={{background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
                 <div className='box' style={rightBox}>
                   <ul style = {rightList}>
                     {listItems}

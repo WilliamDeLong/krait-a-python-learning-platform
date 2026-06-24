@@ -55,7 +55,7 @@ const App = () => {
       setEditorView(editorView);
     }
   };
-  function createEditor(loadedCode) {
+  function createEditor(loadedCode="Placeholder") {
     //console.log("Attempting to make editor");
     if (document.querySelector(`.cm-editor`)===null) {
       var editorView2 = (createEditorView(undefined, document.getElementById("editor")));

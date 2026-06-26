@@ -13,6 +13,7 @@ import API_BASE from '../api';
 //import DropdownButton from 'react-bootstrap/DropdownButton';
 import { useNavigate, useLocation } from "react-router-dom";
 import "../css/box.css";
+import "../css/modal.css";
 
 
 import logo from "../images/Logo.png";
@@ -93,6 +94,12 @@ export default function Navbar({ isLightMode, toggleTheme }) {
     textAlign: "center",
     pointerEvents: "none",
   };
+  let textStyling = {
+    color: isLightMode ? '#0c0c1f' : '#0c0c1f',
+    fontWeight: "bold",
+    textDecoration: "none",
+  };
+  let backgroundStyling = { backgroundColor: isLightMode ? '#ffffff' : '#14294c' };
   const fetch_data = async () => {
       try {
         //console.log(ChapterID);
@@ -136,7 +143,7 @@ export default function Navbar({ isLightMode, toggleTheme }) {
   // it seems.
   return (
     <ReactNavbar style={{
-        backgroundColor: isLightMode ? "#e2e8f0" : "#000000",
+        backgroundColor: isLightMode ? "#ffffff" : "#000000",
         padding: "0% 1.5625%",
         height: "10%"
       }} variant= "dark">
@@ -183,11 +190,11 @@ export default function Navbar({ isLightMode, toggleTheme }) {
                 </span>
             </div>
             <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} >
-              <Modal.Header closeButton>
-                <Modal.Title>Log Out</Modal.Title>
+              <Modal.Header closeButton >
+                <Modal.Title style={{color:'#ffd903'}}>Log Out</Modal.Title>
               </Modal.Header>
-              <Modal.Body>Are you sure you want to Log Out?</Modal.Body>
-              <Modal.Footer>
+              <Modal.Body style={{color:'#ffd903'}}>Are you sure you want to Log Out?</Modal.Body>
+              <Modal.Footer >
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>

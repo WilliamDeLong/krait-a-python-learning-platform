@@ -254,16 +254,16 @@ const LessonTestPage = () => {
   
   if (codeSubmission.script_submission===null) return (
     <>
-        <div key={seed} style={{background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading User Submission</h4></div>
+        <div key={seed} style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading User Submission</h4></div>
     </>
     ) 
   else return (
     
-      <section className="lesson" style={{background: isLightMode ? '#5562be': "#14294c", height:"93.5vh"}}>
-        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+      <section className="lesson" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
+        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
           <div
             className="row d-flex"
-            style={{background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+            style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
               <div className='box' style={leftCard}>
                 <Nav className="left" style={centerCard}>
                   <Button style={{justifyContent:"left"}}  variant="secondary" /* href="/lessons" */>Previous Lesson</Button>

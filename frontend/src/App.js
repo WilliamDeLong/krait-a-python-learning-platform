@@ -20,6 +20,7 @@ import ChapterSelect from "./components/pages/ChapterSelectPage";
 //import ExperimentEditor from "./components/pages/EditorTestPage";
 import LoggedOutRedirect from "./components/logOutPage";
 import DocumentationSelect from "./components/pages/documentationSelectionPage";
+import DocumentationTemplatePage from "./components/pages/DocumentationTemplatePage";
 
 import { createEditorState, createEditorView } from "./components/editor";
 
@@ -41,12 +42,20 @@ const App = () => {
 
   useEffect(() => {
     sessionStorage.setItem("isLightMode", JSON.stringify(isLightMode));
+    if (isLightMode) {
+      document.body.style.backgroundColor="#d8e6f5";
+    }
+    else {
+      document.body.style.background='#14294c'
+    }
+    //console.log(document.querySelector(`body`).style.backgroundColor);
   }, [isLightMode]);
-
+  
   const toggleTheme = () => {
     //console.log(`lightmode current ${isLightMode}`);
     setIsLightMode((prev) => !prev);
     //console.log(`lightmode now ${isLightMode}`);
+    
     if (document.querySelector(`.cm-editor`)!==null) {
       //console.log("Reload current editor.");
       //console.log(`is onedark ${!isLightMode}`)
@@ -86,6 +95,8 @@ const App = () => {
           <Route path="/chapters" element={<ChapterSelect />} />
           <Route path="/logout" element={<LoggedOutRedirect />} />
           <Route path="/documentation" element={<DocumentationSelect />} />
+          <Route path="/document/:DocumentID" element={<DocumentationTemplatePage />} />
+
           
         </Routes>
       </UserContext.Provider>

@@ -29,7 +29,7 @@ const newDocumentationSchema = new mongoose.Schema(
       label: "author",
     },
     reference_list: {
-      type: String,
+      type: [String],
       required: true
     },
     date: {

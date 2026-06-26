@@ -78,9 +78,9 @@ const ExperimentEditor = () => {
     
     
     return (
-        <div style={{maxHeight: '200%', minHeight: '200%', height:(user?.id ? '93.5vh' : '100vh'), backgroundColor: isLightMode ? '#5562be' : '#14294c'}}>
+        <div style={{maxHeight: '200%', minHeight: '200%', height:(user?.id ? '93.5vh' : '100vh'), backgroundColor: isLightMode ? "#d8e6f5" : '#14294c'}}>
             <div className='box' style={leftCard}>
-                <div className="left" style={{background: isLightMode ? '#5562be': "#14294c",width:'stretch'}}>
+                <div className="left" style={{background: isLightMode ? "#d8e6f5": "#14294c",width:'stretch'}}>
                   <div id="editor" className="script_submission" style={{height:"612px", width: '100%'}} />
                 </div>
             </div>

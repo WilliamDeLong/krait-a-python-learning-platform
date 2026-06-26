@@ -32,7 +32,7 @@ const [user, setUser] = useState(getUserInfo());
     
     
     return (
-        <div style={{maxHeight: '200%', minHeight: '200%', height:(user?.id ? '93.5vh' : '100vh'), backgroundColor: isLightMode ? '#5562be' : '#14294c'}}>
+        <div style={{maxHeight: '200%', minHeight: '200%', height:(user?.id ? '93.5vh' : '100vh'), background: isLightMode ? "#d8e6f5" : '#14294c'}}>
             <div className='box' style={{padding: '3rem'}}>
                 <Card style={leftCard}>
                     <Card.Body style={{color: isLightMode ? "#0f172a" : "#cccccc"}}>

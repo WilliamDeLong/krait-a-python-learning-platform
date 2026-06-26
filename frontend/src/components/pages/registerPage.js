@@ -1,45 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate,Link } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import getUserInfo from "../../utilities/decodeJwt";
+import { UserContext } from "../../App";
 
-const PRIMARY_COLOR = "#cc5c99";
-const SECONDARY_COLOR = "#0c0c1f";
+//const PRIMARY_COLOR = "#cc5c99";
+//const SECONDARY_COLOR = "#0c0c1f";
 const url = `${process.env.REACT_APP_BACKEND_SERVER_URI}/user/signup`;
 
 const Register = () => {
   const [data, setData] = useState({ username: "", email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const [light, setLight] = useState(false);
-  const [bgColor, setBgColor] = useState(SECONDARY_COLOR);
-  const [bgText, setBgText] = useState("Light Mode");
+  const { isLightMode } = useContext(UserContext);
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
-  useEffect(() => {
-    if (light) {
-      setBgColor("white");
-      setBgText("Dark mode");
-    } else {
-      setBgColor(SECONDARY_COLOR);
-      setBgText("Light mode");
-    }
-  }, [light]);
 
   let labelStyling = {
-    color: PRIMARY_COLOR,
+    color: isLightMode ? '#000000' : "#ffffffff",
+    fontWeight: "bold",
+    textDecoration: "none",
+    //outline: "2px solid rgb(96 139 168)",
+    font: '800 17px Arial',
+    WebkitTextFillColor: '#d32283',
+    WebkitTextStroke: '0.4px'
+  };
+  let textStyling = {
+    color: isLightMode ? '#0c0c1f' : '#0c0c1f',
     fontWeight: "bold",
     textDecoration: "none",
   };
-  let backgroundStyling = { background: bgColor };
+  let backgroundStyling = { backgroundColor: isLightMode ? "#d8e6f5" : '#14294c' };
   let buttonStyling = {
-    background: PRIMARY_COLOR,
+    background: isLightMode ? '#d32283' : "#cc5c99",
     borderStyle: "none",
-    color: bgColor,
+    color: isLightMode ? '#0c0c1f' : '#0c0c1f',
   };
 
   const handleSubmit = async (e) => {
@@ -82,8 +82,8 @@ const Register = () => {
                     onChange={handleChange}
                     placeholder="Enter username"
                   />
-                  <Form.Text className="text-muted">
-                    We just might sell your data
+                  <Form.Text style={textStyling}>
+                    Note: I can and will judge you for your username.
                   </Form.Text>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -94,8 +94,8 @@ const Register = () => {
                     onChange={handleChange}
                     placeholder="Enter Email Please"
                   />
-                  <Form.Text className="text-muted">
-                    We just might sell your data
+                  <Form.Text style={textStyling}>
+                    You don't have to input a real email, there's no system in place that can make use of it, so just input something funny
                   </Form.Text>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -107,22 +107,15 @@ const Register = () => {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <div className="form-check form-switch">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="flexSwitchCheckDefault"
-                    onChange={() => {
-                      setLight(!light);
-                    }}
-                  />
-                  <label
-                    className="form-check-label text-muted"
-                    htmlFor="flexSwitchCheckDefault"
-                  >
-                    {bgText}
-                  </label>
-                </div>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Text className="pt-1" style={textStyling}>
+                    Already have an account?
+                    <span>
+                      <Link to="/login" style={labelStyling}> Login
+                      </Link>
+                    </span>
+                  </Form.Text>
+                </Form.Group>
                 {error && (
                   <div style={labelStyling} className="pt-3">
                     {error}

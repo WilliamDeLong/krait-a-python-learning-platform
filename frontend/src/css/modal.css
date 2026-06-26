@@ -1,0 +1,11 @@
+.modal-content  {
+  background-color: #000000 !important;
+}
+
+.modal-content > * {
+  border-top-color: #14294c !important;
+  border-bottom-color: #14294c !important;
+}
+
+
+

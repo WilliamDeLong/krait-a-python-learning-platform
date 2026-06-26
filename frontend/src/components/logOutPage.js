@@ -18,7 +18,7 @@ const LoggedOutRedirect = () => {
   });
   
   return (
-        <div style={{background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Logging Out</h4></div>
+        <div style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Logging Out</h4></div>
     ) 
 };
 

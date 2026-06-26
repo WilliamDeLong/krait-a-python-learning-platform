@@ -26,7 +26,7 @@ const ProfilePage = () => {
 
     return (
         <>
-            <div style={{backgroundColor: isLightMode ? '#5562be' : '#14294c', height:"93.5vh", width:'210.5vh'}}>
+            <div style={{backgroundColor: isLightMode ? "#d8e6f5" : '#14294c', height:"93.5vh", width:'210.5vh'}}>
                 <div className="card-container" >
                     <div className="card" style={{backgroundColor: isLightMode ? '#ffffff' : '#000000', color: isLightMode ? '#000000' : '#ffffff'}}>
                         <h3>Welcome</h3>

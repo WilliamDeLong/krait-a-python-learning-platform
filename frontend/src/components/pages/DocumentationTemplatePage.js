@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 //import Button from "react-bootstrap/Button";
 //import Nav from 'react-bootstrap/Nav';
@@ -7,32 +7,32 @@ import API_BASE from '../../api';
 import getUserInfo from "../../utilities/decodeJwt";
 import { UserContext } from '../../App';
 
-//import downArrowDM from "../../images/DownArrow.png";
-//import checkMarkDM from "../../images/CheckMarkDM.png";
-//import checkMarkLM from "../../images/CheckMarkLM.png";
-//import downArrowLM from "../../images/DownArrowDarkMode.png";
+import downArrowDM from "../../images/DownArrow.png";
+import checkMarkDM from "../../images/CheckMarkDM.png";
+import checkMarkLM from "../../images/CheckMarkLM.png";
+import downArrowLM from "../../images/DownArrowDarkMode.png";
 
-const url = `${API_BASE}/chapter/list`;
+const url = `${API_BASE}/documentation/`;
 //const LessonDataurl = `${API_BASE}/lesson/findLesson`;
 //const NextChapterURL = `${API_BASE}/chapter/findChapter`;
 
 
 
-//const chapter_data_default = { title: null, description: '', chapter_no: 0, lessons: [], test_id: "", documentation_references: ""};
+const chapter_data_default = { title: null, description: '', content: '', author: '', reference_list: [""]};
 //const Next_chapter_data_default = { title: "null", description: '', chapter_no: 0, lessons: [], test_id: "", documentation_references: ""};
 
 
 
 
-const ChapterSelect = () => {
+const DocumentationTemplatePage = () => {
   const [user, setUser] = useState(getUserInfo());
+  const [users, setUsers] = useState([]);
   //const [data, setData] = useState(dataDefault);
-  //let {ChapterID} = useParams();
-  //console.log(ChapterID);
+  let {DocumentID} = useParams();
+  //console.log(DocumentID);
   //console.log(useParams());
   //const [lessonID, setLesson] = useState(lessonDefault);
-  const [data, setData] = useState([]);
-  //const [NChapter, setNChap] = useState(Next_chapter_data_default);
+  const [data, setData] = useState(chapter_data_default);
 
   //const [lessons, setLessons] = useState([]);
   const [error, setError] = useState("");
@@ -75,14 +75,14 @@ const ChapterSelect = () => {
 
   const fetch_data = async () => {
       try {
-        //console.log(ChapterID);
-        const result = await axios.get(url);
+        //console.log(DocumentID);
+        const result = await axios.get(url+DocumentID);
         //console.log(result.data);
-
-        setData(result.data.sort((a, b) => (a.chapter_no - b.chapter_no)));
+        setData(result.data);
+        const author_data = await axios.get(`${API_BASE}/user/getAll`);
+        setUsers(author_data.data);
         //const LessonsRes = await axios.get(LessonDataurl, {params: {chapter_no: result.data['chapter_no']}});
         //setLessons(LessonsRes.data.sort((a, b) => (a.order_within_chapter - b.order_within_chapter)));
-        
         //console.log((LessonsRes.data));
         //console.log(lessonResult.data);
         //console.log(`Lesson found`);
@@ -97,40 +97,23 @@ const ChapterSelect = () => {
       }
     };
   //const { username } = user;
-  const listItems = data.map(chapter =>
-    <li key={chapter.chapter_no} style={{color:isLightMode ? '#000000': '#ffffff'}}>
-      {/* <img
-        src={isLightMode ? (chapter.is_test ? checkMarkLM : downArrowDM) :  (chapter.is_test ? checkMarkDM : downArrowLM)}
-        alt={chapter.title}
-        style={{width: "30px",display:'inline-block'}}/> */}
-      <p style={{display:'inline', marginLeft:"10px", }}>
-        <a href={`/chapter/${chapter._id}`} style={{fontWeight:"bold",color:isLightMode ? '#000000': '#ffffff'}}><b>Chapter {chapter.chapter_no} - {chapter.title}</b> </a><br/>
-      </p>
-      <p style={{marginLeft:"40px"}}>{chapter.description}</p>
-    </li>
-  );
   
-  if (data.title===null) return (
-        <div><h4>Loading Chapter</h4></div>
+  if (data.title===null || users.length<2) return (
+        <div style={{height:'100vh', background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading Chapter</h4></div>
     ) 
   else return (
     <>
-      <section className="chapters" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
-        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+      <section className="lesson" style={{height:"93.5vh"}}>
+        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", color: !isLightMode? "#000000": "#ffffff"}}>
           <div className="row d-flex" style={{color:isLightMode ? '#000000': '#ffffff', justifyContent:'center', textAlign:'center'}}>
-            <h3>Chapter Select</h3>
-            <h4 style={{fontSize:"100%"}}>Please select a chapter from the below list.</h4>
-            
-            <h5 style={{fontSize:"80%"}}>If a chapter is grayed out, that means you haven't completed the previous chapter.</h5>
+            <h3>{data.title}</h3>
+            <h4>Written by {users.find((element) => element._id === data.author).username}</h4>
+            <h5 style={{width:'50%', fontSize:"100%"}}>{data.description}</h5>
           </div>
           <div className="bar" style={{height:"2px", backgroundColor:isLightMode ? '#000000': '#ffffff'}}/>
-          
-          <div className="row d-flex" style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
-                <div className='box' style={rightBox}>
-                  <ul style = {rightList}>
-                    {listItems}
-                  </ul>
-                </div>
+
+          <div className="Main-content" style={{color: !isLightMode? "#ffffff": "#000000"}}>
+                {data.content}
           </div>
         </div>
       </section>
@@ -138,4 +121,4 @@ const ChapterSelect = () => {
   );
 };
 
-export default ChapterSelect;
+export default DocumentationTemplatePage;

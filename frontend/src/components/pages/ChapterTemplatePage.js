@@ -124,12 +124,12 @@ const ChapterTemplatePage = () => {
   );
   
   if (data.title===null) return (
-        <div style={{background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading Chapter</h4></div>
+        <div style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading Chapter</h4></div>
     ) 
   else return (
     <>
-      <section className="lesson" style={{background: isLightMode ? "linear-gradient(135deg, #e5e7e9, #dbeafe, #ede9fe)": "#14294c", height:"93.5vh"}}>
-        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "linear-gradient(135deg, #d8e6f5, #aac6ec, #9da0f7)": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+      <section className="lesson" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
+        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
           <div className="row d-flex" style={{color:isLightMode ? '#000000': '#ffffff', justifyContent:'center', textAlign:'center'}}>
             <h4>Section {data.chapter_no}</h4>
             <h3>{data.title}</h3>
@@ -137,7 +137,7 @@ const ChapterTemplatePage = () => {
           </div>
           <div className="bar" style={{height:"2px", backgroundColor:isLightMode ? '#000000': '#ffffff'}}/>
 
-          <div className="row d-flex" style={{background: isLightMode ? "linear-gradient(135deg, #d8e6f5, #aac6ec, #9da0f7)": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+          <div className="row d-flex" style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
                 <div className='box' style={rightBox}>
                   <ul style = {rightList}>
                     {listItems}

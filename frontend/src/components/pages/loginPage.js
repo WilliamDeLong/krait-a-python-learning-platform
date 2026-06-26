@@ -1,33 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import getUserInfo from "../../utilities/decodeJwt";
+import { UserContext } from "../../App";
 
-const PRIMARY_COLOR = "#cc5c99";
-const SECONDARY_COLOR = '#0c0c1f'
+//const PRIMARY_COLOR = "#cc5c99";
+//const SECONDARY_COLOR = '#0c0c1f';
 const url = `${process.env.REACT_APP_BACKEND_SERVER_URI}/user/login`;
 
 const Login = () => {
   const [user, setUser] = useState(null)
   const [data, setData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
-  const [light, setLight] = useState(false);
-  const [bgColor, setBgColor] = useState(SECONDARY_COLOR);
-  const [bgText, setBgText] = useState('Light Mode')
+  const { isLightMode } = useContext(UserContext);
   const navigate = useNavigate();
 
   let labelStyling = {
-    color: PRIMARY_COLOR,
+    color: isLightMode ? '#000000' : "#ffffffff",
+    fontWeight: "bold",
+    textDecoration: "none",
+    //outline: "2px solid rgb(96 139 168)",
+    font: '800 20px Arial',
+    WebkitTextFillColor: '#d32283',
+    WebkitTextStroke: '0.5px'
+  };
+  let textStyling = {
+    color: isLightMode ? '#0c0c1f' : '#0c0c1f',
     fontWeight: "bold",
     textDecoration: "none",
   };
-  let backgroundStyling = { background: bgColor };
+  let backgroundStyling = { backgroundColor: isLightMode ? "#d8e6f5" : '#14294c' };
   let buttonStyling = {
-    background: PRIMARY_COLOR,
+    background: isLightMode ? '#d32283' : "#cc5c99",
     borderStyle: "none",
-    color: bgColor,
+    color: isLightMode ? '#0c0c1f' : '#0c0c1f',
   };
 
   const handleChange = ({ currentTarget: input }) => {
@@ -39,14 +47,8 @@ const Login = () => {
     const obj = getUserInfo(user)
     setUser(obj)
 
-    if (light) {
-      setBgColor("white");
-      setBgText('Dark mode')
-    } else {
-      setBgColor(SECONDARY_COLOR);
-      setBgText('Light mode')
-    }
-  }, [light]);
+    
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,8 +91,8 @@ const Login = () => {
                     onChange={handleChange}
                     placeholder="Enter username"
                   />
-                  <Form.Text className="text-muted">
-                    We just might sell your data
+                  <Form.Text style={textStyling}>
+                    Welcome back!
                   </Form.Text>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -103,7 +105,7 @@ const Login = () => {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Text className="text-muted pt-1">
+                  <Form.Text className="pt-1" style={textStyling}>
                     Dont have an account?
                     <span>
                       <Link to="/signup" style={labelStyling}> Sign up

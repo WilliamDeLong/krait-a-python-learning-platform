@@ -76,41 +76,37 @@ const DocumentationSelect = () => {
   }, []);
 
   const fetch_data = async () => {
-      try {
-        //console.log(ChapterID);
-        const result = await axios.get(url);
-		const author_data = await axios.get(`${API_BASE}/user/getAll`);
-        //console.log(result.data);
-
-        setData(result.data.sort((a, b) => (a.shortID - b.shortID)));
-		
-		//console.log(author_data.data[0]);
-		setUsers(author_data.data);
-		//console.log('testing search');
-		//console.log(users.find((element) => element._id === '6a18823fe3a22d37ce5b6b83').username);
-		
-        //const LessonsRes = await axios.get(LessonDataurl, {params: {chapter_no: result.data['chapter_no']}});
-        //setLessons(LessonsRes.data.sort((a, b) => (a.order_within_chapter - b.order_within_chapter)));
-        
-        //console.log((LessonsRes.data));
-        //console.log(lessonResult.data);
-        //console.log(`Lesson found`);
-      } catch (error) {
-        if (
-          error.response &&
-          error.response.status >= 400 &&
-          error.response.status <= 500
-        ) {
-          setError(error.response.data.message);
-        }
+    try {
+      //console.log(ChapterID);
+      const result = await axios.get(url);
+      const author_data = await axios.get(`${API_BASE}/user/getAll`);
+      //console.log(result.data);
+      setData(result.data.sort((a, b) => (a.shortID - b.shortID)));
+	  	//console.log(author_data.data[0]);
+  		setUsers(author_data.data);
+		  //console.log('testing search');
+		  //console.log(users.find((element) => element._id === '6a18823fe3a22d37ce5b6b83').username);
+      //const LessonsRes = await axios.get(LessonDataurl, {params: {chapter_no: result.data['chapter_no']}});
+      //setLessons(LessonsRes.data.sort((a, b) => (a.order_within_chapter - b.order_within_chapter)));
+      //console.log((LessonsRes.data));
+      //console.log(lessonResult.data);
+      //console.log(`Lesson found`);
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setError(error.response.data.message);
       }
-    };
+    }
+  };
 	
   //const { username } = user;
   
   
   if (data.title===null && users.length<0) return (
-        <div style={{background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading Documents</h4></div>
+        <div style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading Documents</h4></div>
     ) 
   else {
 	const listItems = data.map(document =>
@@ -129,8 +125,8 @@ const DocumentationSelect = () => {
 	);
 	return (
     <>
-      <section className="chapters" style={{background: isLightMode ? '#5562be': "#14294c", height:"93.5vh"}}>
-        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+      <section className="chapters" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
+        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
           <div className="row d-flex" style={{color:isLightMode ? '#000000': '#ffffff', justifyContent:'center', textAlign:'center'}}>
             <h3>Documentation</h3>
             <h4 style={{fontSize:"100%"}}>Please select a document from the below list.</h4>
@@ -138,7 +134,7 @@ const DocumentationSelect = () => {
           </div>
           <div className="bar" style={{height:"2px", backgroundColor:isLightMode ? '#000000': '#ffffff'}}/>
           
-          <div className="row d-flex" style={{background: isLightMode ? '#5562be': "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+          <div className="row d-flex" style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
                 <div className='box' style={rightBox}>
                   <ul style = {rightList}>
                     {listItems}

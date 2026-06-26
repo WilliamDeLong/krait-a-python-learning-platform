@@ -22,12 +22,12 @@ const Register = () => {
 
 
   let labelStyling = {
-    color: isLightMode ? '#000000' : "#ffffffff",
+    color: '#000000',
     fontWeight: "bold",
     textDecoration: "none",
     //outline: "2px solid rgb(96 139 168)",
     font: '800 17px Arial',
-    WebkitTextFillColor: '#d32283',
+    WebkitTextFillColor: '#ffd903',
     WebkitTextStroke: '0.4px'
   };
   let textStyling = {
@@ -37,7 +37,7 @@ const Register = () => {
   };
   let backgroundStyling = { backgroundColor: isLightMode ? "#d8e6f5" : '#14294c' };
   let buttonStyling = {
-    background: isLightMode ? '#d32283' : "#cc5c99",
+    background: isLightMode ? '#ffd903' : "#ffd903",
     borderStyle: "none",
     color: isLightMode ? '#0c0c1f' : '#0c0c1f',
   };

@@ -118,9 +118,9 @@ const DocumentationSelect = () => {
 		<p style={{display:'inline'}}>
 			<a href={`/document/${document._id}`} style={{fontWeight:"bold",color:isLightMode ? '#000000': '#ffffff'}}><b>Document {document.shortID} - {document.title}</b> </a><br/>
 		</p>
-		{users.length>1 &&<p>by {users.find((element) => element._id === document.author).username}</p>}
+		{users.length>1 &&<p style={{marginBottom:'0.5rem'}}>by {users.find((element) => element._id === document.author).username}</p>}
 		{users.length<1&&<p>by {document.author}</p>}
-		<p style={{wordWrap:'break-word'}}>{document.description}</p>
+		<p style={{wordWrap:'break-word',overflowWrap:'break-word',height:'40%',overflow:'hidden'}}>{document.description}</p>
 		</li>
 	);
 	return (

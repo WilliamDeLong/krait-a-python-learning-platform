@@ -9,6 +9,7 @@ import { UserContext } from '../../App';
 import "../../css/editor.css";
 import "../../css/h3.css";
 import "../../css/box.css";
+//const { loadPyodide } = require("pyodide");
 //import CodeEditor from "../CodeEditor";
 //import { useRef } from "react";
 //import {basicSetup} from "codemirror";
@@ -34,6 +35,7 @@ const lesson_block_data_default = { default_script: "", solution_verification: '
 const codeSubmission_default = {"_id": null, script_submission: null, userID: "null", lessonID: "null", success: false, submission_date: null};
 
 
+
 const LessonTestPage = () => {
   const [user, setUser] = useState(getUserInfo());
   const {editorView} = useContext(UserContext);
@@ -50,6 +52,9 @@ const LessonTestPage = () => {
   const [error, setError] = useState("");
   const { isLightMode } = useContext(UserContext);
   const [needs2Save, setNeed2Save] = useState(false);
+  const output = document.getElementById("output");
+  
+  //let pyodideReadyPromise = main();
   //const {editorTheme, setEditorTheme} = useState(isLightMode);
   //const inputRef = useRef(null);
   //input.addEventListener("change", updateValue);
@@ -116,6 +121,9 @@ const LessonTestPage = () => {
         textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
     };
+  function addToOutput(s) {
+    output.value += ">>>" + editorView.state.doc.toString() + "\n" + s + "\n";
+  };
 
 
   const handleRun = async (e) => {
@@ -126,7 +134,9 @@ const LessonTestPage = () => {
       //console.log("Gate 1");
       //console.log(editorView.state.doc.toString());
       //console.log("Gate 2");
+
       setCodeSubmission({ ...codeSubmission, ["script_submission"]: editorView.state.doc.toString() });
+      addToOutput("This is a placeholder for outputs");
       setNeed2Save(true);
       //console.log(`2 codeSubmission: ${codeSubmission["script_submission"]}`);
       //a
@@ -281,10 +291,8 @@ const LessonTestPage = () => {
                 <div id="Instructions" style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#000000", width:"stretch", textAlign:'left', height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}} >{lesson_block_data["instructions"]}</div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"50%"}}>
-                  {"Pretend this is a terminal that's spitting out results, I'll get it working later"}
-                  {/* {false&&
-                  <iframe src="" frameBorder={"0"} className="iframe">
-                  </iframe>} */}
+                  {/* {"Pretend this is a terminal that's spitting out results, I'll get it working later"} */}
+                  {<textarea id="output" style={{"width": "100%", height:'100%',resize:"none",color: "#008a00",backgroundColor:"#000000"}} rows="6" disabled ></textarea>}
                 </div>
               </div>
           </div>

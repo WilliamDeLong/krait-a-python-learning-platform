@@ -18,8 +18,8 @@ const url = `${API_BASE}/documentation/`;
 
 
 
-const chapter_data_default = { title: null, description: '', content: '', author: '', reference_list: [""]};
-//const Next_chapter_data_default = { title: "null", description: '', chapter_no: 0, lessons: [], test_id: "", documentation_references: ""};
+const document_data_default = { title: null, description: '', content: '', author: '', reference_list: [""]};
+//const Next_document_data_default = { title: "null", description: '', chapter_no: 0, lessons: [], test_id: "", documentation_references: ""};
 
 
 
@@ -32,7 +32,7 @@ const DocumentationTemplatePage = () => {
   //console.log(DocumentID);
   //console.log(useParams());
   //const [lessonID, setLesson] = useState(lessonDefault);
-  const [data, setData] = useState(chapter_data_default);
+  const [data, setData] = useState(document_data_default);
 
   //const [lessons, setLessons] = useState([]);
   const [error, setError] = useState("");

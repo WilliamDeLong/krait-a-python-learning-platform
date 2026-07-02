@@ -4,8 +4,11 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 
 
 
+
 const PythonTerminal = ({ tableData, columns }) => {
 	const { isLightMode } = useContext(UserContext);
+	const output = document.getElementById("output");
+	
   	/* async function hello_python() {
 		let pyodide = await loadPyodide();
 		return pyodide.runPythonAsync("1+1");

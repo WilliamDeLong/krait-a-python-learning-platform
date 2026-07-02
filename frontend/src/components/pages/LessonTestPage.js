@@ -10,6 +10,7 @@ import "../../css/editor.css";
 import "../../css/h3.css";
 import "../../css/box.css";
 import PythonTerminal from "../PyTerminal.js";
+import { usePyodide } from '../usePyodide';
 //import { loadPyodide } from "pyodide";
 //const { loadPyodide } = require("pyodide");
 //import CodeEditor from "../CodeEditor";
@@ -55,6 +56,13 @@ const LessonTestPage = () => {
   const { isLightMode } = useContext(UserContext);
   const [needs2Save, setNeed2Save] = useState(false);
   const output = document.getElementById("output");
+  const pyodide = usePyodide();
+  const runCode = async (code) => {
+      if (!pyodide) return;
+      return pyodide.runPythonAsync(code);
+    };
+    //if (!pyodide) output.value += "Loading Python runtime...\n";
+    // ...
   
   //let pyodideReadyPromise = main();
   //const {editorTheme, setEditorTheme} = useState(isLightMode);
@@ -131,7 +139,7 @@ const LessonTestPage = () => {
     let pyodide = await loadPyodide();
     return pyodide.runPythonAsync("1+1");
   }; */
-
+  
 
   const handleRun = async (e) => {
     e.preventDefault();
@@ -144,6 +152,7 @@ const LessonTestPage = () => {
 
       setCodeSubmission({ ...codeSubmission, ["script_submission"]: editorView.state.doc.toString() });
       addToOutput("This is a placeholder for outputs");
+      runCode(editorView.state.doc.toString());
       /* const rez = await hello_python();
       console.log("Python says that 1+1 =", rez); */
       setNeed2Save(true);
@@ -286,7 +295,7 @@ const LessonTestPage = () => {
               <div className='box' style={leftCard}>
                 <div className="left nav" style={centerCard}>
                   <button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'25%', height:'37.5px'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>
-                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'25%', height:'37.5px',opacity:'0.65'}}  disabled={true} ><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'25%', opacity:'0.65'}}  disabled={true} ><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
                   {/* <button style={{justifyContent:"center", height:'37.5px'}} title="Save Code" variant="success" onClick={handleSave} >Save Code</button> */}
                   <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'25%', height:'37.5px'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</button>
                   <button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'25%', height:'37.5px'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>   

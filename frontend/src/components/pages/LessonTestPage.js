@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useContext} from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Button from "react-bootstrap/Button";
-import Nav from 'react-bootstrap/Nav';
-import API_BASE from '../../api';
-import getUserInfo from "../../utilities/decodeJwt";
-import { UserContext } from '../../App';
+//import Button from "react-bootstrap/Button";
+//import Nav from 'react-bootstrap/Nav';
+import API_BASE from '../../api.js';
+import getUserInfo from "../../utilities/decodeJwt.js";
+import { UserContext } from '../../App.js';
 import "../../css/editor.css";
 import "../../css/h3.css";
 import "../../css/box.css";
+import PythonTerminal from "../PyTerminal.js";
+//import { loadPyodide } from "pyodide";
 //const { loadPyodide } = require("pyodide");
 //import CodeEditor from "../CodeEditor";
 //import { useRef } from "react";
@@ -125,6 +127,11 @@ const LessonTestPage = () => {
     output.value += ">>>" + editorView.state.doc.toString() + "\n" + s + "\n";
   };
 
+  /* async function hello_python() {
+    let pyodide = await loadPyodide();
+    return pyodide.runPythonAsync("1+1");
+  }; */
+
 
   const handleRun = async (e) => {
     e.preventDefault();
@@ -137,6 +144,8 @@ const LessonTestPage = () => {
 
       setCodeSubmission({ ...codeSubmission, ["script_submission"]: editorView.state.doc.toString() });
       addToOutput("This is a placeholder for outputs");
+      /* const rez = await hello_python();
+      console.log("Python says that 1+1 =", rez); */
       setNeed2Save(true);
       //console.log(`2 codeSubmission: ${codeSubmission["script_submission"]}`);
       //a
@@ -275,13 +284,13 @@ const LessonTestPage = () => {
             className="row d-flex"
             style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
               <div className='box' style={leftCard}>
-                <Nav className="left" style={centerCard}>
-                  <Button style={{justifyContent:"left"}}  variant="secondary" /* href="/lessons" */>Previous Lesson</Button>
-                  <Button style={{justifyContent:"center",height:'37.6px'}}  disabled={true} ><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%'}}>{lesson_block_data.title}</p></Button>
-                  {/* <Button style={{justifyContent:"center"}} title="Save Code" variant="success" onClick={handleSave} >Save Code</Button> */}
-                  <Button style={{justifyContent:"center"}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</Button>
-                  <Button style={{justifyContent:"right"}}  variant="secondary" /* href="/lessons" */>Next Lesson</Button>   
-                </Nav>
+                <div className="left nav" style={centerCard}>
+                  <button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'25%', height:'37.5px'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>
+                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'25%', height:'37.5px',opacity:'0.65'}}  disabled={true} ><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+                  {/* <button style={{justifyContent:"center", height:'37.5px'}} title="Save Code" variant="success" onClick={handleSave} >Save Code</button> */}
+                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'25%', height:'37.5px'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</button>
+                  <button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'25%', height:'37.5px'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>   
+                </div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div className="left" style={{width:'stretch'}}>
                   <div id="editor" className="script_submission" style={{height:"612px", width: '100%',backgroundColor: isLightMode? "#ffffff": "#000000",color: isLightMode? "#000000":"#ffffff"}} />
@@ -292,7 +301,7 @@ const LessonTestPage = () => {
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"50%"}}>
                   {/* {"Pretend this is a terminal that's spitting out results, I'll get it working later"} */}
-                  {<textarea id="output" style={{"width": "100%", height:'100%',resize:"none",color: "#008a00",backgroundColor:"#000000"}} rows="6" disabled ></textarea>}
+                  <PythonTerminal></PythonTerminal>
                 </div>
               </div>
           </div>

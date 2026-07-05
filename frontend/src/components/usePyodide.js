@@ -5,6 +5,7 @@ const PYODIDE_VERSION = '314.0.2'; // pin whatever version you're targeting
 
 export function usePyodide() {
   const [pyodide, setPyodide] = useState(null);
+  const [outputLines, setOutputLines] = useState([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -19,7 +20,9 @@ export function usePyodide() {
           document.body.appendChild(script);
         });
       }
-      const instance = await window.loadPyodide();
+      const instance = await window.loadPyodide({
+        stdout: (text) => setOutputLines((prev) => [...prev, text]),
+      });
       if (!cancelled) setPyodide(instance);
     }
 
@@ -27,5 +30,7 @@ export function usePyodide() {
     return () => { cancelled = true; };
   }, []);
 
-  return pyodide;
+  const clearOutput = () => setOutputLines([]);
+
+  return { pyodide, outputLines, clearOutput };
 }

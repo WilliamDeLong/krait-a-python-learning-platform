@@ -56,7 +56,7 @@ const LessonTestPage = () => {
   const { isLightMode } = useContext(UserContext);
   const [needs2Save, setNeed2Save] = useState(false);
   const output = document.getElementById("output");
-  const pyodide = usePyodide();
+  const { pyodide, outputLines, clearOutput } = usePyodide();
   const runCode = async (code) => {
       if (!pyodide) return;
       return pyodide.runPythonAsync(code);
@@ -139,7 +139,10 @@ const LessonTestPage = () => {
     let pyodide = await loadPyodide();
     return pyodide.runPythonAsync("1+1");
   }; */
-  
+  const clearOut = async (e) => {
+    output.value = "";
+    clearOutput();
+  };
 
   const handleRun = async (e) => {
     e.preventDefault();
@@ -151,8 +154,14 @@ const LessonTestPage = () => {
       //console.log("Gate 2");
 
       setCodeSubmission({ ...codeSubmission, ["script_submission"]: editorView.state.doc.toString() });
-      addToOutput("This is a placeholder for outputs");
+      //addToOutput("This is a placeholder for outputs");
+      
       runCode(editorView.state.doc.toString());
+      //console.log("Testing outputLines");
+      /* outputLines.forEach(i => {
+          console.log(i);
+      }); */
+      //console.log(outputLines);
       /* const rez = await hello_python();
       console.log("Python says that 1+1 =", rez); */
       setNeed2Save(true);
@@ -181,6 +190,7 @@ const LessonTestPage = () => {
       //console.log(editorView.state.doc.toString());
       //console.log(codeSubmission);
       //console.log((url_submissionUpdate+codeSubmission._id+"/update"));
+      //console.log(outputLines);
       await axios.post((url_submissionUpdate+codeSubmission['_id']+"/update"), {params: codeSubmission});
       setNeed2Save(false);
       //console.log(data);
@@ -200,6 +210,16 @@ const LessonTestPage = () => {
     }
     
   };
+
+  useEffect(() => {
+    if (outputLines.length>=1) {
+      console.log("Updating Lines");
+      console.log(performance.now());
+      console.log(outputLines);
+      output.value += outputLines.at(outputLines.length-1) + "\n";
+    }
+  }, [outputLines]);
+
   useEffect(() => {
     //console.log(codeSubmission["script_submission"]);
     if (needs2Save) {
@@ -294,11 +314,11 @@ const LessonTestPage = () => {
             style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
               <div className='box' style={leftCard}>
                 <div className="left nav" style={centerCard}>
-                  <button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'25%', height:'37.5px'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>
-                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'25%', opacity:'0.65'}}  disabled={true} ><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
-                  {/* <button style={{justifyContent:"center", height:'37.5px'}} title="Save Code" variant="success" onClick={handleSave} >Save Code</button> */}
-                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'25%', height:'37.5px'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</button>
-                  <button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'25%', height:'37.5px'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>   
+                  <button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>
+                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'20%', opacity:'0.65'}}  disabled={true} ><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+                   <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'20%', height:'37.5px'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'20%', height:'37.5px'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</button>
+                  <button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>   
                 </div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div className="left" style={{width:'stretch'}}>

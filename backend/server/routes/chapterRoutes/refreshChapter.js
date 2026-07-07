@@ -23,11 +23,12 @@ router.post("/:id/refresh", async (req, res) =>
     query.getFilter();
     const lesson_acquisition = query.exec();
     //console.log("Gate 3");
-    (await lesson_acquisition).forEach(element => {
+    ((await lesson_acquisition).sort((a, b) => (a.order_within_chapter - b.order_within_chapter))).forEach(element => {
         lessons.push(element._id);
         if (element.is_test && test_id===null) {
             test_id =element._id;
         }
+        //console.log(`${element._id} is lesson ${element.order_within_chapter}`);
     });
     // find and update lesson using stored information
     chapterSchema.findByIdAndUpdate(id, {

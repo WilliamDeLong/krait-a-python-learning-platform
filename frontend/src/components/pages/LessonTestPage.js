@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 //import Button from "react-bootstrap/Button";
 //import Nav from 'react-bootstrap/Nav';
@@ -31,6 +31,9 @@ const url_submissionUpdate = `${API_BASE}/submissions/`;
 const url_submissionLoad = `${API_BASE}/submissions/findSubmission`;
 const url_submissionCreate = `${API_BASE}/submissions/create`;
 const url_LessonData = `${API_BASE}/lesson/`;
+const url_otherLessons = `${API_BASE}/lesson/findLesson`;
+const url_chapter = `${API_BASE}/chapter/findChapter`;
+
 
 
 //const lessonDefault = {lessonID: "6a19e16bd4abefc266f8ab0c"};
@@ -48,7 +51,10 @@ const LessonTestPage = () => {
   let {lessonID} = useParams();
   //console.log(lessonID);
   //const [lessonID, setLesson] = useState(lessonDefault);
-  
+  const navigate = useNavigate();
+  const [prevLesson, setPrevLesson] = useState(lesson_block_data_default);
+  const [nextLesson, setNextLesson] = useState(lesson_block_data_default);
+  const [chapter, setChapter] = useState();
   const [lesson_block_data, setlesson_block_data] = useState(lesson_block_data_default);
   const [codeSubmission, setCodeSubmission] = useState(codeSubmission_default);
   const [seed, setSeed] = useState(1);
@@ -134,7 +140,12 @@ const LessonTestPage = () => {
   function addToOutput(s) {
     output.value += ">>>" + editorView.state.doc.toString() + "\n" + s + "\n";
   };
-
+  useEffect(() => {
+    setUser(getUserInfo());
+    //console.log(isLightMode);
+    fetch_data();
+    console.log("Data Fetched");
+  }, []);
   /* async function hello_python() {
     let pyodide = await loadPyodide();
     return pyodide.runPythonAsync("1+1");
@@ -157,6 +168,8 @@ const LessonTestPage = () => {
       //addToOutput("This is a placeholder for outputs");
       
       runCode(editorView.state.doc.toString());
+      //console.log(chapter["_id"]);
+      //console.log(chapter._id);
       //console.log("Testing outputLines");
       /* outputLines.forEach(i => {
           console.log(i);
@@ -181,6 +194,21 @@ const LessonTestPage = () => {
         setError(error.response.data.message);
       }
     }
+    
+  };
+  
+  const handleChapterReturn = (async) => {
+    //localStorage.clear();
+    navigate(`/chapter/${chapter['_id']}`);
+  };
+  const handleNextLesson = (async) => {
+    //localStorage.clear();
+    navigate(`/lessonRedirect/${nextLesson._id}`);
+    //seed+=(1);
+  };
+  const handlePreviousLesson = (async) => {
+    //localStorage.clear();
+    navigate(`/lessonRedirect/${prevLesson._id}`);
     
   };
 //a
@@ -236,13 +264,7 @@ const LessonTestPage = () => {
     }
   }, [codeSubmission.script_submission]);
 
-  useEffect(() => {
-    setUser(getUserInfo());
-    //console.log(isLightMode);
-    fetch_data();
-    console.log("Data Fetched");
-    
-  }, []);
+  
   useEffect(() => {
     //console.log(`Is there an editor? ${document.querySelector(`.cm-editor`)!==null}`);
     //console.log(`Does editor's parent exist? ${document.getElementById("editor")!==null}`);
@@ -259,7 +281,6 @@ const LessonTestPage = () => {
 
         //console.log({userID: user['id'], lessonID: lessonID});
         const submissionResult = await axios.get(url_submissionLoad, {params: {userID: user['id'], lessonID: lessonID}});
-
         setCodeSubmission(submissionResult.data[0]);
         //console.log(submissionResult.data);
         //console.log(submissionResult.data[0]._id);
@@ -284,6 +305,32 @@ const LessonTestPage = () => {
         //console.log(lesson_block_data);
         const lessonResult = await axios.get(url_LessonData+lessonID);
         setlesson_block_data(lessonResult.data);
+        console.log(lessonResult.data['chapter_no']);
+        const ChapterRes = await axios.get(url_chapter, {params: {chapter_no: (lessonResult.data['chapter_no'])}});
+        //console.log(ChapterRes.data[0]);
+        setChapter(ChapterRes.data[0]);
+        //console.log((lessonResult.data['order_within_chapter']));
+        //console.log((lessonResult.data['order_within_chapter'])!=0);
+        if (lessonResult.data['order_within_chapter']>1) {
+          const prevLessonRes = await axios.get(url_otherLessons, {params: {chapter_no: lessonResult.data['chapter_no'], order_within_chapter: (lessonResult.data['order_within_chapter']-1)}});
+        setPrevLesson(prevLessonRes.data[0]);
+        }
+        else {
+        setPrevLesson("Null");
+        }
+        if (!lessonResult.data['is_test']) {
+          try {
+          const nextLessonRes = await axios.get(url_otherLessons, {params: {chapter_no: lessonResult.data['chapter_no'], order_within_chapter: (lessonResult.data['order_within_chapter']+1)}});
+          setNextLesson(nextLessonRes.data[0]);
+        } catch (error) {
+          if (error.response.status === 404) {
+            setNextLesson("Null");
+          }
+        }
+        }
+          else {
+        setNextLesson("Null");
+        }
         //console.log(result);
         //console.log(lessonResult.data);
         //console.log(`Lesson found`);
@@ -300,7 +347,7 @@ const LessonTestPage = () => {
   //const { username } = user;
   
   
-  if (codeSubmission.script_submission===null) return (
+  if (codeSubmission.script_submission===null||prevLesson===null||nextLesson===null||lesson_block_data._id===null) return (
     <>
         <div key={seed} style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading User Submission</h4></div>
     </>
@@ -314,11 +361,15 @@ const LessonTestPage = () => {
             style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
               <div className='box' style={leftCard}>
                 <div className="left nav" style={centerCard}>
-                  <button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>
-                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'20%', opacity:'0.65'}}  disabled={true} ><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+                  {prevLesson!=="Null"&&<button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px'}}  variant="secondary" onClick={handlePreviousLesson}>Previous Lesson</button>}
+                  {prevLesson==="Null"&&<button disabled style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>}
+                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'20%', opacity:'0.65'}}  disabled><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
                    <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'20%', height:'37.5px'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
                   <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'20%', height:'37.5px'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</button>
-                  <button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>   
+                  {nextLesson!=="Null"&&lesson_block_data.is_test===false&&<button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px'}}  variant="secondary" onClick={handleNextLesson}>Next Lesson</button>}
+                  {nextLesson==="Null"&&lesson_block_data.is_test===false&&<button disabled style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>}
+                  {lesson_block_data.is_test===true&&<button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px'}}  variant="secondary" onClick={handleChapterReturn}/* href={`/chapter/${chapter['_id']}`} */>Back to Chapter</button>}
+
                 </div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div className="left" style={{width:'stretch'}}>

@@ -37,6 +37,7 @@ router.get("/findLesson", (req, res, next) => {
     paramater_status["chapter_no"]=1;
   }
   if (order_within_chapter != null) {
+    //console.log(order_within_chapter);
     query.find({order_within_chapter: order_within_chapter});
     paramater_status["order_within_chapter"]=1;
   }

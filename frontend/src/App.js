@@ -15,6 +15,7 @@ import { createContext, useState, useEffect } from "react";
 import getUserInfo from "./utilities/decodeJwt";
 
 import LessonTestPage from "./components/pages/LessonTestPage";
+import LessonRedirectPage from "./components/pages/LessonRedirection";
 import ChapterTemplatePage from "./components/pages/ChapterTemplatePage";
 import ChapterSelect from "./components/pages/ChapterSelectPage";
 //import ExperimentEditor from "./components/pages/EditorTestPage";
@@ -66,6 +67,11 @@ const App = () => {
   };
   function createEditor(loadedCode="Placeholder") {
     //console.log("Attempting to make editor");
+    if (document.querySelector(`.cm-editor`)!==null) {
+      let cmEditorElement = document.querySelector(".cm-editor"); // Or whatever query you need
+      console.log("Removed existing editor.");
+      cmEditorElement.remove();
+    }
     if (document.querySelector(`.cm-editor`)===null) {
       var editorView2 = (createEditorView(undefined, document.getElementById("editor")));
       const initialState = createEditorState(loadedCode, {oneDark: !isLightMode,});
@@ -96,6 +102,7 @@ const App = () => {
           <Route path="/logout" element={<LoggedOutRedirect />} />
           <Route path="/documentation" element={<DocumentationSelect />} />
           <Route path="/document/:DocumentID" element={<DocumentationTemplatePage />} />
+          <Route path="/lessonRedirect/:lessonID" element={<LessonRedirectPage />} />
 
           
         </Routes>

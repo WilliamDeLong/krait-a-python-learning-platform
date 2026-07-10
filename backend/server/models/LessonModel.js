@@ -22,10 +22,10 @@ const lessonSchema = new mongoose.Schema(
       default: "#This is where you put YOUR code to be ran."
     },
     solution_verification: {
-      type: String,
+      type: Object,
       required: true,
       label: "solver",
-      default: "print('Hello World')"
+      default: {"funcName": "functionZero","testCases": [{ "args": [5], "expected": 5 },{ "args": [201], "expected": 201 },{ "args": [74], "expected": 74 }]}
     },
     is_test: {
       type: Boolean,

@@ -15,7 +15,7 @@ router.post('/create', async (req, res) => {
     query.find({chapter_no: chapter_no});
     //console.log("Gate 2");
     query.getFilter();
-    const lesson_acquisition = query.exec().sort((a, b) => (a.order_within_chapter - b.order_within_chapter));
+    const lesson_acquisition = query.exec();
     //console.log("Gate 3");
     ((await lesson_acquisition).sort((a, b) => (a.order_within_chapter - b.order_within_chapter))).forEach(element => {
         lessons.push(element._id);

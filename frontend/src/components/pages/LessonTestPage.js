@@ -37,7 +37,7 @@ const url_chapter = `${API_BASE}/chapter/findChapter`;
 
 
 //const lessonDefault = {lessonID: "6a19e16bd4abefc266f8ab0c"};
-const lesson_block_data_default = { default_script: "", solution_verification: '', instructions: "", title: ''};
+const lesson_block_data_default = {_id:"6a19e16bd4abefc266f8ab0c" , default_script: "", solution_verification: '', instructions: "", title: ''};
 const codeSubmission_default = {"_id": null, script_submission: null, userID: "null", lessonID: "null", success: false, submission_date: null};
 
 
@@ -49,6 +49,7 @@ const LessonTestPage = () => {
 
   //const [data, setData] = useState(dataDefault);
   let {lessonID} = useParams();
+  lesson_block_data_default._id=lessonID;
   //console.log(lessonID);
   //const [lessonID, setLesson] = useState(lessonDefault);
   const navigate = useNavigate();
@@ -62,11 +63,8 @@ const LessonTestPage = () => {
   const { isLightMode } = useContext(UserContext);
   const [needs2Save, setNeed2Save] = useState(false);
   const output = document.getElementById("output");
-  const { pyodide, outputLines, clearOutput } = usePyodide();
-  const runCode = async (code) => {
-      if (!pyodide) return;
-      return pyodide.runPythonAsync(code);
-    };
+  const { isReady, outputLines, clearOutput, runCode, runGraded } = usePyodide();
+  
     //if (!pyodide) output.value += "Loading Python runtime...\n";
     // ...
   
@@ -156,44 +154,21 @@ const LessonTestPage = () => {
   };
 
   const handleRun = async (e) => {
+    clearOut();
     e.preventDefault();
-    try {
-      //console.log(document.querySelector(`.cm-editor`));
-      //console.log(`1 codeSubmission: ${codeSubmission["script_submission"]}`);
-      //console.log("Gate 1");
-      //console.log(editorView.state.doc.toString());
-      //console.log("Gate 2");
-
-      setCodeSubmission({ ...codeSubmission, ["script_submission"]: editorView.state.doc.toString() });
-      //addToOutput("This is a placeholder for outputs");
-      
-      runCode(editorView.state.doc.toString());
-      //console.log(chapter["_id"]);
-      //console.log(chapter._id);
-      //console.log("Testing outputLines");
-      /* outputLines.forEach(i => {
-          console.log(i);
-      }); */
-      //console.log(outputLines);
-      /* const rez = await hello_python();
-      console.log("Python says that 1+1 =", rez); */
-      setNeed2Save(true);
-      //console.log(`2 codeSubmission: ${codeSubmission["script_submission"]}`);
-      //a
-      //const inputField = document.getElementById("form"); 
-      //inputField.reset(); // This resets the prompts so that the page doesn't have to be reloaded to create a new question
-      //setData(data_default); // This resets the values for all of the prompts
-      //console.log(data); // This 
-      //setError(""); // This resets the error pop-up so it doesn't stick around and bother me
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message);
-      }
+    setCodeSubmission({ ...codeSubmission, script_submission: editorView.state.doc.toString() });
+    //addToOutput("This is a placeholder for outputs");
+    //console.log("Attempting to run code");
+    const codeOutput = await runCode(editorView.state.doc.toString());
+    //console.log(output);
+    //console.log(output.error);
+    if (codeOutput.error) {
+      //console.log("There was an error");
+      output.value += `Error: ${codeOutput.error}\n`;
+      //console.log(`Error: ${codeOutput.error}\n`);
+      return;
     }
+    setNeed2Save(true);
     
   };
   
@@ -203,6 +178,7 @@ const LessonTestPage = () => {
   };
   const handleNextLesson = (async) => {
     //localStorage.clear();
+    
     navigate(`/lessonRedirect/${nextLesson._id}`);
     //seed+=(1);
   };
@@ -212,48 +188,84 @@ const LessonTestPage = () => {
     
   };
 //a
-  const handleSave = async () => {
+
+  const handleSubmit = async (e) => {
+    clearOut();
+    e.preventDefault();
+    const code = editorView.state.doc.toString();
+    setCodeSubmission({ ...codeSubmission, script_submission: code });
+    //console.log('test verification');
+    let verification;
     try {
-      //console.log(document.querySelector(`.cm-editor`));
-      //console.log(editorView.state.doc.toString());
-      //console.log(codeSubmission);
-      //console.log((url_submissionUpdate+codeSubmission._id+"/update"));
-      //console.log(outputLines);
-      await axios.post((url_submissionUpdate+codeSubmission['_id']+"/update"), {params: codeSubmission});
-      setNeed2Save(false);
-      //console.log(data);
-      //const inputField = document.getElementById("form"); 
-      //inputField.reset(); // This resets the prompts so that the page doesn't have to be reloaded to create a new question
-      //setData(data_default); // This resets the values for all of the prompts
-      //console.log(data); // This 
-      //setError(""); // This resets the error pop-up so it doesn't stick around and bother me
+      //console.log("Next log should be the testcases");
+      //console.log((lesson_block_data.solution_verification));
+      //console.log((lesson_block_data));
+      //console.log(`verification.testCases: ${verification.testCases}`);
+      verification = (lesson_block_data.solution_verification);
     } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message);
-      }
+      //console.log(error);
+      console.log('This lesson has no valid test cases configured.');
+      setError('This lesson has no valid test cases configured.');
+      return;
     }
+    //console.log('test grading');
+    const graded = await runGraded(code, verification.funcName, verification.testCases);
+    //console.log('test graded');
     
+
+    if (graded.error) {
+      output.value += `Grading error: ${graded.error}\n`;
+      return;
+    }
+    //console.log('graded success');
+    const passedCount = graded.results.filter(r => r.passed).length;
+    const total = graded.results.length;
+    const allPassed = passedCount === total;
+    //console.log('test output');
+    output.value += `\n--- ${passedCount}/${total} tests passed ---\n`;
+    graded.results.forEach((r, i) => {
+      if (!r.passed) {
+        output.value += `Test ${i + 1} FAILED — args: ${JSON.stringify(r.args)}, expected: ${JSON.stringify(r.expected)}, got: ${r.error ? 'error' : JSON.stringify(r.actual)}\n`;
+      }
+    });
+    //console.log(`allPassed = ${allPassed}`);
+    //a
+    setCodeSubmission(prev => ({ ...prev, success: allPassed }));
+    setNeed2Save(true);
   };
 
+
   useEffect(() => {
+    //console.log(outputLines);
     if (outputLines.length>=1) {
-      console.log("Updating Lines");
-      console.log(performance.now());
-      console.log(outputLines);
+      //console.log("Updating Lines");
+      //console.log(performance.now());
+      //console.log(outputLines);
       output.value += outputLines.at(outputLines.length-1) + "\n";
     }
   }, [outputLines]);
 
   useEffect(() => {
-    //console.log(codeSubmission["script_submission"]);
-    if (needs2Save) {
-      const result = handleSave();
+    async function saveSystem() {
+      //console.log(`Needs to save check: ${needs2Save}`);
+      if (needs2Save) {
+        try {
+          //console.log(codeSubmission);
+          await axios.post((url_submissionUpdate+codeSubmission['_id']+"/update"), {params: codeSubmission});
+          setNeed2Save(false);
+        } catch (error) {
+          if (
+            error.response &&
+            error.response.status >= 400 &&
+            error.response.status <= 500
+          ) {
+            setError(error.response.data.message);
+          }
+        }
       }
-  }, [codeSubmission["script_submission"]]);
+    }
+    saveSystem();//a
+  }, [needs2Save]);
   
   useEffect(() => {
     //console.log(codeSubmission["script_submission"]);
@@ -266,9 +278,6 @@ const LessonTestPage = () => {
 
   
   useEffect(() => {
-    //console.log(`Is there an editor? ${document.querySelector(`.cm-editor`)!==null}`);
-    //console.log(`Does editor's parent exist? ${document.getElementById("editor")!==null}`);
-    
     if (document.querySelector(`.cm-editor`)===null && document.getElementById("editor")!==null) {
       console.log("Creating new Editor.");
       createEditor(codeSubmission["script_submission"]);
@@ -305,7 +314,7 @@ const LessonTestPage = () => {
         //console.log(lesson_block_data);
         const lessonResult = await axios.get(url_LessonData+lessonID);
         setlesson_block_data(lessonResult.data);
-        console.log(lessonResult.data['chapter_no']);
+        //console.log(lessonResult.data['chapter_no']);
         const ChapterRes = await axios.get(url_chapter, {params: {chapter_no: (lessonResult.data['chapter_no'])}});
         //console.log(ChapterRes.data[0]);
         setChapter(ChapterRes.data[0]);
@@ -318,7 +327,7 @@ const LessonTestPage = () => {
         else {
         setPrevLesson("Null");
         }
-        if (!lessonResult.data['is_test']) {
+        if (!lessonResult.data['is_test']&& ChapterRes.data[0].lessons.length>lessonResult.data.order_within_chapter&&lessonResult.data.order_within_chapter!==0) {
           try {
           const nextLessonRes = await axios.get(url_otherLessons, {params: {chapter_no: lessonResult.data['chapter_no'], order_within_chapter: (lessonResult.data['order_within_chapter']+1)}});
           setNextLesson(nextLessonRes.data[0]);
@@ -361,14 +370,18 @@ const LessonTestPage = () => {
             style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
               <div className='box' style={leftCard}>
                 <div className="left nav" style={centerCard}>
-                  {prevLesson!=="Null"&&<button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px'}}  variant="secondary" onClick={handlePreviousLesson}>Previous Lesson</button>}
-                  {prevLesson==="Null"&&<button disabled style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>}
-                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'20%', opacity:'0.65'}}  disabled><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
-                   <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'20%', height:'37.5px'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
-                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'20%', height:'37.5px'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</button>
-                  {nextLesson!=="Null"&&lesson_block_data.is_test===false&&<button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px'}}  variant="secondary" onClick={handleNextLesson}>Next Lesson</button>}
-                  {nextLesson==="Null"&&lesson_block_data.is_test===false&&<button disabled style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>}
-                  {lesson_block_data.is_test===true&&<button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'20%', height:'37.5px'}}  variant="secondary" onClick={handleChapterReturn}/* href={`/chapter/${chapter['_id']}`} */>Back to Chapter</button>}
+                  {prevLesson!=="Null"&&<button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px'}}  variant="secondary" onClick={handlePreviousLesson}>Previous Lesson</button>}
+                  {prevLesson==="Null"&&<button disabled title="Previous Lesson does not exist" style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>}
+                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'16.7%', opacity:'0.65'}}  disabled><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+                  {nextLesson!=="Null"&&lesson_block_data.is_test===false&&<button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px'}}  variant="secondary" onClick={handleNextLesson}>Next Lesson</button>}
+                  {nextLesson==="Null"&&lesson_block_data.is_test===false&&<button disabled title="Next Lesson does not exist" style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>}
+                  {lesson_block_data.is_test===true&&<button title={`Return to chapter ${lesson_block_data.chapter_no}`} style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px'}}  variant="secondary" onClick={handleChapterReturn}/* href={`/chapter/${chapter['_id']}`} */>Back to Chapter</button>}
+                  
+                  
+                   <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'16.7%', height:'37.5px'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'16.7%', height:'37.5px'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', width:'16.7%', height:'37.5px'}} title="Submit Code" variant="success" onClick={handleSubmit}/* href="/lessons" */>Submit Code</button>
+                  
 
                 </div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>

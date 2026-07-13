@@ -209,10 +209,11 @@ const LessonTestPage = () => {
       return;
     }
     //console.log('test grading');
-    const graded = await runGraded(code, verification.funcName, verification.testCases);
+    const graded = await runGraded(code, verification);
+    console.log(verification);
     //console.log('test graded');
     
-
+    //console.log(graded);
     if (graded.error) {
       output.value += `Grading error: ${graded.error}\n`;
       return;
@@ -224,8 +225,33 @@ const LessonTestPage = () => {
     //console.log('test output');
     output.value += `\n--- ${passedCount}/${total} tests passed ---\n`;
     graded.results.forEach((r, i) => {
-      if (!r.passed) {
-        output.value += `Test ${i + 1} FAILED — args: ${JSON.stringify(r.args)}, expected: ${JSON.stringify(r.expected)}, got: ${r.error ? 'error' : JSON.stringify(r.actual)}\n`;
+      console.log(r);
+      if (!r.passed ) {
+        if (verification.mode==="function") {
+          output.value += `Test ${i + 1} FAILED — args: ${JSON.stringify(r.args)}, expected: ${JSON.stringify(r.expected)}, got: ${r.error ? 'error' : JSON.stringify(r.actual)}\n`;
+        } 
+        if (verification.mode==="script") {
+            if (r.type==="stdout") {
+            output.value += `Test ${i + 1} FAILED - Results below \n\tExpected: \n${(r.expected)} \n\tGot: \n${r.error ? 'error' : (r.actual)}\n`;
+          } 
+          if (r.type==="variable") {
+            output.value += `Test ${i + 1} FAILED — expected: ${JSON.stringify(r.expected)}, got: ${r.error ? 'error' : JSON.stringify(r.actual)}\n`;
+          } 
+        } 
+      }
+      else {
+        if (verification.mode==="function") {
+          output.value += `Test ${i + 1} PASSED — args: ${JSON.stringify(r.args)}, got: ${r.error ? 'error' : JSON.stringify(r.actual)}\n`;
+        } 
+        if (verification.mode==="script") {
+          if (r.type==="stdout") {
+            console.log(r.actual);
+            output.value += `Test ${i + 1} PASSED - Got: \n${r.error ? 'error' : (r.actual)}\n`;
+          } 
+          if (r.type==="variable") {
+            output.value += `Test ${i + 1} PASSED — got: ${r.error ? 'error' : JSON.stringify(r.actual)}\n`;
+          } 
+        } 
       }
     });
     //console.log(`allPassed = ${allPassed}`);

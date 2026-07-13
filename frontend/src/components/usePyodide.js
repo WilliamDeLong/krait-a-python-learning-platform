@@ -80,9 +80,11 @@ export function usePyodide() {
     
   }, [sendRequest]);
 
-  const runGraded = useCallback((studentCode, funcName, testCases) => {
-    //console.log(sendRequest('runGraded', { studentCode, funcName, testCases }));
-    return sendRequest('runGraded', { studentCode, funcName, testCases });
+  // verification is the parsed solution_verification object, e.g.
+  //   { mode: 'function', funcName: 'solve', testCases: [...] }
+  //   { mode: 'script', checks: [{ type: 'stdout', expected: '...' }, ...] }
+  const runGraded = useCallback((studentCode, verification) => {
+    return sendRequest('runGraded', { studentCode, ...verification });
   }, [sendRequest]);
 
   const clearOutput = () => setOutputLines([]);

@@ -17,7 +17,7 @@ const PythonTerminal = ({ tableData, columns }) => {
 	console.log("Python says that 1+1 =", rez);  */
 	return (
 		<>
-		{<textarea id="output" style={{"width": "100%", height:'100%',resize:"none",color: "#008a00",backgroundColor:"#000000"}} rows="6" disabled ></textarea>}
+		{<textarea id="output" style={{"width": "100%", height:'100%',resize:"none",color: "#008a00",backgroundColor: isLightMode? "#d9dbdf": "#000000"}} rows="6" disabled ></textarea>}
 		</>
 	);
 };

@@ -300,6 +300,8 @@ const LessonTestPage = () => {
         if (error.response.status === 404) {
           const submissionCreateResult = await axios.post(url_submissionCreate, {params: {userID: user['id'], lessonID: lessonID}});
           setSeed(seed+1);
+          navigate(`/lessonRedirect/${lessonID}`);
+
           //console.log(submissionCreateResult);
         }
         else if (
@@ -372,7 +374,7 @@ const LessonTestPage = () => {
                 <div className="left nav" style={centerCard}>
                   {prevLesson!=="Null"&&<button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px'}}  variant="secondary" onClick={handlePreviousLesson}>Previous Lesson</button>}
                   {prevLesson==="Null"&&<button disabled title="Previous Lesson does not exist" style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>}
-                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'16.7%', opacity:'0.65'}}  disabled><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize:'75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'16.7%', opacity:'0.65'}}  disabled><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize: lesson_block_data.title.length>30? '45%': '75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
                   {nextLesson!=="Null"&&lesson_block_data.is_test===false&&<button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px'}}  variant="secondary" onClick={handleNextLesson}>Next Lesson</button>}
                   {nextLesson==="Null"&&lesson_block_data.is_test===false&&<button disabled title="Next Lesson does not exist" style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>}
                   {lesson_block_data.is_test===true&&<button title={`Return to chapter ${lesson_block_data.chapter_no}`} style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px'}}  variant="secondary" onClick={handleChapterReturn}/* href={`/chapter/${chapter['_id']}`} */>Back to Chapter</button>}

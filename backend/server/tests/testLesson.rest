@@ -4,10 +4,17 @@ POST http://localhost:8081/lesson/create
 Content-Type: application/json 
 
 {
-    "title" : "Hello World2",
-    "instructions": "The print statement is used for displaying text allowing for the creation of visuals.",
+    "title" : "Experimental Rework of Solution Verification",
+    "instructions": "Please do ignore this, as you are not meant to see it.",
     "default_script": "# This is the code editor, it allows for the modification of code and programming in general.\n",
-    "solution_verification": "print(\"Hello World.\")",
+    "solution_verification": {
+        "funcName": "functionZero",
+        "testCases": [
+            { "args": [5], "expected": 5 },
+            { "args": [201], "expected": 201 },
+            { "args": [74], "expected": 74 }
+            ]
+        },
     "is_test": false,
     "chapter_no": 0,
     "order_within_chapter": 1,

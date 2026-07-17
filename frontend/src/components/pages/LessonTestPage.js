@@ -7,9 +7,11 @@ import API_BASE from '../../api.js';
 import getUserInfo from "../../utilities/decodeJwt.js";
 import { UserContext } from '../../App.js';
 import "../../css/editor.css";
+//import "../../css/lessonInstructions.css";
 import "../../css/h3.css";
 import "../../css/box.css";
 import PythonTerminal from "../PyTerminal.js";
+import LessonInstructions from "../instructionsTestPage.js";
 import { usePyodide } from '../usePyodide';
 //import { loadPyodide } from "pyodide";
 //const { loadPyodide } = require("pyodide");
@@ -210,7 +212,7 @@ const LessonTestPage = () => {
     }
     //console.log('test grading');
     const graded = await runGraded(code, verification);
-    console.log(verification);
+    //console.log(verification);
     //console.log('test graded');
     
     //console.log(graded);
@@ -227,17 +229,20 @@ const LessonTestPage = () => {
     graded.results.forEach((r, i) => {
       console.log(r);
       if (!r.passed ) {
-        if (verification.mode==="function") {
-          output.value += `Test ${i + 1} FAILED — args: ${JSON.stringify(r.args)}, expected: ${JSON.stringify(r.expected)}, got: ${r.error ? 'error' : JSON.stringify(r.actual)}\n`;
-        } 
-        if (verification.mode==="script") {
+        if (r.error) output.value += `Test ${i + 1} failed due to an error: ${r.error}\n`;
+        else {
+          if (verification.mode==="function") {
+            output.value += `Test ${i + 1} FAILED — args: ${JSON.stringify(r.args)}, expected: ${JSON.stringify(r.expected)}, got: ${r.error ? 'error' : JSON.stringify(r.actual)}\n`;
+          } 
+          if (verification.mode==="script") {
             if (r.type==="stdout") {
-            output.value += `Test ${i + 1} FAILED - Results below \n\tExpected: \n${(r.expected)} \n\tGot: \n${r.error ? 'error' : (r.actual)}\n`;
+              output.value += `Test ${i + 1} FAILED - Results below \n\tExpected: \n${(r.expected)} \n\tGot: \n${r.error ? 'error' : (r.actual)}\n`;
+            } 
+            if (r.type==="variable") {
+              output.value += `Test ${i + 1} FAILED — expected: ${JSON.stringify(r.expected)}, got: ${r.error ? 'error' : JSON.stringify(r.actual)}\n`;
+            }
           } 
-          if (r.type==="variable") {
-            output.value += `Test ${i + 1} FAILED — expected: ${JSON.stringify(r.expected)}, got: ${r.error ? 'error' : JSON.stringify(r.actual)}\n`;
-          } 
-        } 
+        }
       }
       else {
         if (verification.mode==="function") {
@@ -418,7 +423,8 @@ const LessonTestPage = () => {
                 </div>
               </div>
               <div className='box' style={rightCard}>
-                <div id="Instructions" style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#000000", width:"stretch", textAlign:'left', height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}} >{lesson_block_data["instructions"]}</div>
+                {<div className="Instructions" id="Instructions" style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}} ><LessonInstructions ></LessonInstructions>{/* {lesson_block_data["instructions"]} */}</div>}
+                
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"50%"}}>
                   {/* {"Pretend this is a terminal that's spitting out results, I'll get it working later"} */}

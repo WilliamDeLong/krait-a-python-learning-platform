@@ -142,11 +142,14 @@ async function runGraded(payload) {
       await pyodide.runPythonAsync(studentCode, { globals: namespace });
       pyodide.globals.set('__student_ns__', namespace);
       const { checks } = payload;
+      console.log(checks)
       pyodide.globals.set('__checks__', checks);
       pyodide.globals.set('__captured_stdout__', capturedChunks.join('\n'));
+      if (capturedChunks.length<1) return { error: `Script contains no output, cannot parse solution without an output (print statement).` };
       const resultJson = await pyodide.runPythonAsync(SCRIPT_HARNESS);
       //DeleteMeForMoreTesting//console.log(`result Json: ${resultJson}`);
       console.log("Post result chunks:");console.log(capturedChunks);
+      
       return JSON.parse(resultJson);
     }
 

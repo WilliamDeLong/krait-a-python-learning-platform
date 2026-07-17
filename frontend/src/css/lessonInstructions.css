@@ -1,0 +1,436 @@
+
+/* ── LAYOUT ── */
+.lessonInstructions  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+/* ── HERO HEADER ── */
+.lessonInstructions  .hero {
+    text-align: center;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    border: 2px solid #4fc3f7;
+    border-radius: 16px;
+    padding: 48px 32px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+}
+
+.lessonInstructions  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(79,195,247,0.05) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.lessonInstructions  .hero h1 {
+    font-size: 2.6rem;
+    color: #4fc3f7;
+    margin-bottom: 12px;
+    text-shadow: 0 0 20px rgba(79,195,247,0.4);
+}
+
+.lessonInstructions  .hero .subtitle {
+    font-size: 1.1rem;
+    color: #90caf9;
+    font-style: italic;
+}
+
+.lessonInstructions  .hero .snake-banner {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    display: block;
+}
+
+/* ── SECTION HEADERS ── */
+.lessonInstructions  .part-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: linear-gradient(90deg, #1e3a5f, transparent);
+    border-left: 5px solid #4fc3f7;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 48px 0 24px 0;
+}
+
+.lessonInstructions  .part-header .part-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.lessonInstructions  .part-header h2 {
+    font-size: 1.7rem;
+    color: #4fc3f7;
+    margin-bottom: 4px;
+}
+
+.lessonInstructions  .part-header .part-subtitle {
+    font-size: 0.9rem;
+    color: #78909c;
+    font-style: italic;
+}
+
+/* ── SECTION SUBHEADERS ── */
+.lessonInstructions  h3 {
+    font-size: 1.25rem;
+    color: #81d4fa;
+    margin: 32px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #1e3a5f;
+}
+
+.lessonInstructions  h4 {
+    font-size: 1.05rem;
+    color: #b0bec5;
+    margin: 20px 0 10px 0;
+}
+
+/* ── PARAGRAPHS & TEXT ── */
+.lessonInstructions  p {
+    margin-bottom: 14px;
+    color: #cfd8dc;
+}
+
+.lessonInstructions  strong {
+    color: #e0f7fa;
+}
+
+.lessonInstructions  em {
+    color: #b0bec5;
+}
+
+/* ── CALLOUT BOXES ── */
+.lessonInstructions  .callout {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-left: 4px solid;
+    font-size: 0.95rem;
+}
+
+.lessonInstructions  .callout-tip {
+    background-color: #0d2b1e;
+    border-color: #66bb6a;
+    color: #c8e6c9;
+}
+
+.lessonInstructions  .callout-tip .callout-icon::before { content: "💡 "; }
+
+.lessonInstructions  .callout-warning {
+    background-color: #2b1a0d;
+    border-color: #ffa726;
+    color: #ffe0b2;
+}
+
+.lessonInstructions  .callout-warning .callout-icon::before { content: "⚠️ "; }
+
+.lessonInstructions  .callout-danger {
+    background-color: #2b0d0d;
+    border-color: #ef5350;
+    color: #ffcdd2;
+}
+
+.lessonInstructions  .callout-danger .callout-icon::before { content: "🚨 "; }
+
+.lessonInstructions  .callout-fun {
+    background-color: #1a1a2e;
+    border-color: #ce93d8;
+    color: #e1bee7;
+}
+
+.lessonInstructions  .callout-fun .callout-icon::before { content: "😂 "; }
+
+.lessonInstructions  .callout-title {
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+}
+
+/* ── CODE BLOCKS ── */
+.lessonInstructions pre {
+    background-color: #0d1117;
+    border: 1px solid #1e3a5f;
+    border-radius: 10px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 16px 0;
+    position: relative;
+}
+
+.lessonInstructions pre::before {
+    content: 'Python';
+    position: absolute;
+    top: 8px;
+    right: 14px;
+    font-size: 0.7rem;
+    color: #4fc3f7;
+    opacity: 0.6;
+    font-family: monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.lessonInstructions  code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: #e0e0f0;
+}
+
+.lessonInstructions  p code, .lessonInstructions  li code {
+    background-color: #1a1a2e;
+    border: 1px solid #2a3f5f;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 0.85rem;
+    color: #80cbc4;
+}
+
+/* ── SYNTAX HIGHLIGHTING (manual) ── */
+.lessonInstructions  .kw   { color: #c792ea; }   /* keywords: def, if, for, while, etc */
+.lessonInstructions  .fn   { color: #82aaff; }   /* function names */
+.lessonInstructions  .str  { color: #c3e88d; }   /* strings */
+.lessonInstructions  .num  { color: #f78c6c; }   /* numbers */
+.lessonInstructions  .cm   { color: #546e7a; font-style: italic; }  /* comments */
+.lessonInstructions  .op   { color: #89ddff; }   /* operators */
+.lessonInstructions  .var  { color: #eeffff; }   /* variables */
+.lessonInstructions  .bool { color: #ff9cac; }   /* True / False */
+.lessonInstructions  .out  { color: #ffcb6b; }   /* output lines */
+
+/* ── TABLES ── */
+.lessonInstructions  .table-wrap {
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+.lessonInstructions  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.lessonInstructions  thead tr {
+    background-color: #1e3a5f;
+}
+
+.lessonInstructions  thead th {
+    padding: 12px 16px;
+    text-align: left;
+    color: #4fc3f7;
+    font-weight: 600;
+    border-bottom: 2px solid #4fc3f7;
+}
+
+.lessonInstructions  tbody tr {
+    border-bottom: 1px solid #1a2744;
+    transition: background 0.2s;
+}
+
+.lessonInstructions  tbody tr:hover {
+    background-color: #131c2e;
+}
+
+.lessonInstructions  tbody td {
+    padding: 10px 16px;
+    color: #cfd8dc;
+    vertical-align: top;
+}
+
+.lessonInstructions  tbody td:first-child {
+    color: #80cbc4;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+}
+
+/* ── LISTS ── */
+.lessonInstructions  ul, ol {
+    padding-left: 24px;
+    margin: 10px 0 16px 0;
+}
+
+.lessonInstructions  li {
+    margin-bottom: 8px;
+    color: #cfd8dc;
+}
+
+.lessonInstructions  li::marker {
+    color: #4fc3f7;
+}
+
+/* ── DIVIDERS ── */
+.lessonInstructions  .section-divider {
+    border: none;
+    border-top: 1px solid #1e3a5f;
+    margin: 40px 0;
+}
+
+/* ── CHEAT SHEET ── */
+.lessonInstructions  .cheat-sheet {
+    background: linear-gradient(135deg, #0d1b2e, #0d2b1e);
+    border: 2px solid #4fc3f7;
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin: 32px 0;
+}
+
+.lessonInstructions  .cheat-sheet h2 {
+    color: #4fc3f7;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* ── FINAL WORDS BOX ── */
+.lessonInstructions  .final-box {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    border: 2px solid #ce93d8;
+    border-radius: 14px;
+    padding: 32px;
+    margin: 40px 0;
+    text-align: center;
+}
+
+.lessonInstructions  .final-box blockquote {
+    font-size: 1.15rem;
+    color: #e1bee7;
+    font-style: italic;
+    border: none;
+    margin-bottom: 24px;
+    line-height: 1.8;
+}
+
+.lessonInstructions  .final-box .tip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.lessonInstructions  .tip-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid #2a3f5f;
+    border-radius: 10px;
+    padding: 16px 20px;
+    flex: 1 1 180px;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #b0bec5;
+}
+
+.lessonInstructions  .tip-card .tip-emoji {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* ── TABLE OF CONTENTS ── */
+.lessonInstructions  .toc {
+    background-color: #0d1117;
+    border: 1px solid #1e3a5f;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+}
+
+.lessonInstructions  .toc h2 {
+    font-size: 1.1rem;
+    color: #4fc3f7;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.lessonInstructions  .toc ol {
+    padding-left: 20px;
+}
+
+.lessonInstructions  .toc li {
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+}
+
+.lessonInstructions  .toc a {
+    color: #81d4fa;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.lessonInstructions  .toc a:hover {
+    color: #4fc3f7;
+    text-decoration: underline;
+}
+
+/* ── GOLDEN RULE BOX ── */
+.lessonInstructions  .golden-rule {
+    background: linear-gradient(90deg, #1a2e1a, #1a2e1a);
+    border: 1px solid #66bb6a;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 20px 0;
+    color: #c8e6c9;
+    font-size: 0.95rem;
+}
+
+.lessonInstructions  .golden-rule strong {
+    color: #a5d6a7;
+}
+
+/* ── BADGE LABELS ── */
+.lessonInstructions  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.lessonInstructions  .badge-new {
+    background-color: #0d3b4f;
+    color: #4fc3f7;
+    border: 1px solid #4fc3f7;
+}
+
+.lessonInstructions  .badge-tip {
+    background-color: #0d3b1e;
+    color: #66bb6a;
+    border: 1px solid #66bb6a;
+}
+
+.lessonInstructions  .badge-warning {
+    background-color: #3b1e0d;
+    color: #ffa726;
+    border: 1px solid #ffa726;
+}
+
+/* ── FOOTER ── */
+.lessonInstructions  footer {
+    text-align: center;
+    padding: 32px;
+    color: #546e7a;
+    font-size: 0.85rem;
+    border-top: 1px solid #1e3a5f;
+    margin-top: 48px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+    .lessonInstructions  .hero h1 { font-size: 1.8rem; }
+    .lessonInstructions  .part-header h2 { font-size: 1.3rem; }
+    .lessonInstructions  pre { font-size: 0.8rem; padding: 14px 16px; }
+    .lessonInstructions  .tip-card { flex: 1 1 100%; }
+}

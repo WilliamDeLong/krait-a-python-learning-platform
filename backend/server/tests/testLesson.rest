@@ -4,8 +4,9 @@ POST http://localhost:8081/lesson/create
 Content-Type: application/json 
 
 {
-    "title" : "Experimental Rework of Solution Verification",
-    "instructions": "Please do ignore this, as you are not meant to see it.",
+    "title" : "Experimental Rework of Instructions",
+    "instructions": "FISH",
+    "instructionsHTML": "<pre><code><span class='cm'># Instead of memorizing 617-555-0192...</span>\n<span class='var'>best_friends_number</span> <span class='op'>=</span> <span class='str'>'617-555-0192'</span>\n<span class='var'>my_grade</span>            <span class='op'>=</span> <span class='num'>95</span>\n<span class='var'>passing_score</span>       <span class='op'>=</span> <span class='num'>70</span>\n<span class='var'>is_friday</span>           <span class='op'>=</span> <span class='bool'>True</span></code></pre>",
     "default_script": "# This is the code editor, it allows for the modification of code and programming in general.\n",
     "solution_verification": {
         "funcName": "functionZero",
@@ -17,7 +18,7 @@ Content-Type: application/json
         },
     "is_test": false,
     "chapter_no": 0,
-    "order_within_chapter": 1,
+    "order_within_chapter": 2,
     "documentation_id": "To be fixed later"
 }
 

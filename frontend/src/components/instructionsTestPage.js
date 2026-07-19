@@ -10,6 +10,7 @@ function LessonInstructions({ lessonId }) {
   const [lesson, setLesson] = useState(null);
   const [error, setError] = useState(null);
   const { isLightMode } = useContext(UserContext);
+  const { lessonLayoutType } = useContext(UserContext);
 
   useEffect(() => {
     axios.get(`${url_LessonData}${lessonId}`)
@@ -17,15 +18,33 @@ function LessonInstructions({ lessonId }) {
       .catch(err => setError(err.message));
   }, [lessonId]);
 
-  if (error) return <div className="error">{error}</div>;
-  if (!lesson) return <div>Loading...</div>;
+  if (error) return <div className="error" style={{color: "#ff0000",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"95.4%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}>{error}</div>;
+  if (!lesson) return <div style={{color: isLightMode? "#010101": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"95.4%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}>Loading...</div>;
 
-  return (
+  if (lessonLayoutType===0) return (
     <>
     <div
       className="Instructions"
-      style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}
-      dangerouslySetInnerHTML={{ __html: lesson.instructions }}
+      style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"50%", overflowY: 'auto'}}
+      dangerouslySetInnerHTML={{ __html: lesson.instructionsHTML }}
+    />
+    </>
+  );
+  if (lessonLayoutType===1) return (
+    <>
+    <div
+      className="Instructions"
+      style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"95.4%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}
+      dangerouslySetInnerHTML={{ __html: lesson.instructionsHTML }}
+    />
+    </>
+  );
+  if (lessonLayoutType===2) return (
+    <>
+    <div
+      className="Instructions"
+      style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"95.4%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}
+      dangerouslySetInnerHTML={{ __html: lesson.instructionsHTML }}
     />
     </>
   );

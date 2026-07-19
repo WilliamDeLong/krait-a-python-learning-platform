@@ -64,55 +64,22 @@ const LessonTestPage = () => {
   const [seed, setSeed] = useState(1);
   const [error, setError] = useState("");
   const { isLightMode } = useContext(UserContext);
+  const { toggleLayout } = useContext(UserContext);
+  const { lessonLayoutType } = useContext(UserContext);
+
   const [needs2Save, setNeed2Save] = useState(false);
   const output = document.getElementById("output");
   const { isReady, outputLines, clearOutput, runCode, runGraded } = usePyodide();
   
-    //if (!pyodide) output.value += "Loading Python runtime...\n";
-    // ...
   
-  //let pyodideReadyPromise = main();
-  //const {editorTheme, setEditorTheme} = useState(isLightMode);
-  //const inputRef = useRef(null);
-  //input.addEventListener("change", updateValue);
-  //let extensions = [keymap.of([defaultKeymap, indentWithTab]), basicSetup, python()];
-  /* if (document.querySelector(`.cm-editor`)!==null) {
-    //var view_updator = document.querySelector(`.cm-editor`);
-    let cmEditorElement = document.querySelector(".cm-editor"); // Or whatever query you need
-    //let editorView = cmEditorElement.querySelector(".cm-content");
-    console.log("Removed existing editor.");
-    cmEditorElement.remove();
-    //console.log(editorView);
-    //console.log(editorView.state.doc.toString());
-    //g
-    //setCodeSubmission({ ...codeSubmission, ["script_submission"]: editorView.state.doc.toString() });
-  }*/
-  //console.log(document.querySelector(`.cm-editor`));
-  
-  //
-  /* function changeTheme() {
-    //console.log("Gate 1");
-    //console.log(`is dark: ${!isLightMode}`);
-    
-      let options = {
-          oneDark: !isLightMode,
-      };
-      //console.log("Gate 2");
-      let newState = createEditorState(view.state.doc);
-      if (!isLightMode)
-        newState = createEditorState(view.state.doc, options);
-      //console.log(options);
-      view.setState(newState);
-  } */
-  //console.log(typeof(createEditor));
   //const { isLightMode } = useContext();
   //const navigate = useNavigate();
   let rightCard = {
         display: "flex",
-        justifyContent: "flex-end",
+        //justifyContent: "flex-end",
         marginLeft: 'auto',
         //marginRight: 0,
-        width:"760px",
+        width:"44rem",
         height: '656px',
         //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
@@ -122,7 +89,8 @@ const LessonTestPage = () => {
         //justifyContent: "flex-end",
         marginLeft: 0,
         //marginRight: '50px',
-        width: '45rem',
+        width: '44rem',
+        height:'656px'
         //height: 'fit-content',
         //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
@@ -130,9 +98,6 @@ const LessonTestPage = () => {
     let centerCard = {
         display: "flex",
         flexDirection:"column",
-        //justifyContent: "baseline",
-        //marginLeft: 'auto',
-        //marginRight: 'auto',
         width:"716px",
         height: "40.8px",
         textAlign: 'center',
@@ -395,8 +360,7 @@ const LessonTestPage = () => {
         <div key={seed} style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading User Submission</h4></div>
     </>
     ) 
-  else return (
-    
+  if (lessonLayoutType===0) return (
       <section className="lesson" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
         <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
           <div
@@ -406,15 +370,18 @@ const LessonTestPage = () => {
                 <div className="left nav" style={centerCard}>
                   {prevLesson!=="Null"&&<button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px'}}  variant="secondary" onClick={handlePreviousLesson}>Previous Lesson</button>}
                   {prevLesson==="Null"&&<button disabled title="Previous Lesson does not exist" style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>}
-                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'16.7%', opacity:'0.65'}}  disabled><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize: lesson_block_data.title.length>30? '45%': '75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+                  
+                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'16.7%', opacity:'0.65'}}   onClick={toggleLayout}><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize: lesson_block_data.title.length>30? '45%': '75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+
                   {nextLesson!=="Null"&&lesson_block_data.is_test===false&&<button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px'}}  variant="secondary" onClick={handleNextLesson}>Next Lesson</button>}
                   {nextLesson==="Null"&&lesson_block_data.is_test===false&&<button disabled title="Next Lesson does not exist" style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>}
                   {lesson_block_data.is_test===true&&<button title={`Return to chapter ${lesson_block_data.chapter_no}`} style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'16.7%', height:'37.5px'}}  variant="secondary" onClick={handleChapterReturn}/* href={`/chapter/${chapter['_id']}`} */>Back to Chapter</button>}
                   
                   
-                   <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'16.7%', height:'37.5px'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'16.7%', height:'37.5px'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
                   <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'16.7%', height:'37.5px'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</button>
                   <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', width:'16.7%', height:'37.5px'}} title="Submit Code" variant="success" onClick={handleSubmit}/* href="/lessons" */>Submit Code</button>
+                  
                   
 
                 </div>
@@ -423,12 +390,99 @@ const LessonTestPage = () => {
                   <div id="editor" className="script_submission" style={{height:"612px", width: '100%',backgroundColor: isLightMode? "#ffffff": "#000000",color: isLightMode? "#000000":"#ffffff"}} />
                 </div>
               </div>
+              {/* <div className='box' style={{width:'7rem',display: "flex", alignSelf:'center', height:'656px'}}>
+                <div className="codeFunctions" style={{display: "flex", flexDirection:"column",height:"328px", textAlign: 'center',justifySelf:'center', width:'100%'}}>
+                  <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', height:'33.3%'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', height:'33.3%'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" * />Run Code</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', height:'33.3%'}} title="Submit Code" variant="success" onClick={handleSubmit}/* href="/lessons" * />Submit Code</button>
+                </div>
+              </div> */}
               <div className='box' style={rightCard}>
                 {/* {<div className="Instructions" id="Instructions" style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}} ><LessonInstructions lessonId={lessonID} /> {lesson_block_data["instructions"]} </div>} */}
                 <LessonInstructions lessonId={lessonID} />
                 
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"50%"}}>
+                  {/* {"Pretend this is a terminal that's spitting out results, I'll get it working later"} */}
+                  <PythonTerminal></PythonTerminal>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+  );
+  if (lessonLayoutType===1) return (
+      <section className="lesson" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
+        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+          <div
+            className="row d-flex"
+            style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+              <div className='box' style={leftCard}>
+                <div className="right nav" style={centerCard}>
+                  {prevLesson!=="Null"&&<button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px'}}  variant="secondary" onClick={handlePreviousLesson}>Previous Lesson</button>}
+                  {prevLesson==="Null"&&<button disabled title="Previous Lesson does not exist" style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>}
+                  
+                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'33.3%', opacity:'0.65'}}   onClick={toggleLayout}><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize: lesson_block_data.title.length>30? '45%': '75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+
+                  {nextLesson!=="Null"&&lesson_block_data.is_test===false&&<button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px'}}  variant="secondary" onClick={handleNextLesson}>Next Lesson</button>}
+                  {nextLesson==="Null"&&lesson_block_data.is_test===false&&<button disabled title="Next Lesson does not exist" style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>}
+                  {lesson_block_data.is_test===true&&<button title={`Return to chapter ${lesson_block_data.chapter_no}`} style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px'}}  variant="secondary" onClick={handleChapterReturn}/* href={`/chapter/${chapter['_id']}`} */>Back to Chapter</button>}
+                </div>
+                <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
+                
+                <LessonInstructions style={{height:'613.2px'}} lessonId={lessonID} />
+              </div>
+              <div className='box' style={rightCard}>
+                <div className="right" style={{width:'stretch'}}>
+                  <div id="editor" className="script_submission" style={{height:"328px", width: '100%',backgroundColor: isLightMode? "#ffffff": "#000000",color: isLightMode? "#000000":"#ffffff"}} />
+                </div>
+                <div className="right nav" style={centerCard, {width:'100%'}}>
+                  <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'33.3%', height:'37.5px'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'33.3%', height:'37.5px'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', width:'33.3%', height:'37.5px'}} title="Submit Code" variant="success" onClick={handleSubmit}/* href="/lessons" */>Submit Code</button>
+                </div>
+                <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
+                <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"45%"}}>
+                  {/* {"Pretend this is a terminal that's spitting out results, I'll get it working later"} */}
+                  <PythonTerminal></PythonTerminal>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+  );
+  if (lessonLayoutType===2) return (
+      <section className="lesson" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
+        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+          <div
+            className="row d-flex"
+            style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
+              <div className='box' style={leftCard}>
+                <div className="right nav" style={centerCard}>
+                  {prevLesson!=="Null"&&<button style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px'}}  variant="secondary" onClick={handlePreviousLesson}>Previous Lesson</button>}
+                  {prevLesson==="Null"&&<button disabled title="Previous Lesson does not exist" style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>}
+                  
+                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'33.3%', opacity:'0.65'}}   onClick={toggleLayout}><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize: lesson_block_data.title.length>30? '45%': '75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+
+                  {nextLesson!=="Null"&&lesson_block_data.is_test===false&&<button style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px'}}  variant="secondary" onClick={handleNextLesson}>Next Lesson</button>}
+                  {nextLesson==="Null"&&lesson_block_data.is_test===false&&<button disabled title="Next Lesson does not exist" style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>}
+                  {lesson_block_data.is_test===true&&<button title={`Return to chapter ${lesson_block_data.chapter_no}`} style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px'}}  variant="secondary" onClick={handleChapterReturn}/* href={`/chapter/${chapter['_id']}`} */>Back to Chapter</button>}
+                </div>
+                <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
+                
+                <LessonInstructions style={{height:'613.2px'}} lessonId={lessonID} />
+              </div>
+              <div className='box' style={rightCard}>
+                <div className="right" style={{width:'stretch'}}>
+                  <div id="editor" className="script_submission" style={{height:"328px", width: '100%',backgroundColor: isLightMode? "#ffffff": "#000000",color: isLightMode? "#000000":"#ffffff"}} />
+                </div>
+                <div className="right nav" style={centerCard, {width:'100%'}}>
+                  <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'33.3%', height:'37.5px'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'33.3%', height:'37.5px'}} title="Run Code" variant="success" onClick={handleRun}/* href="/lessons" */>Run Code</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', width:'33.3%', height:'37.5px'}} title="Submit Code" variant="success" onClick={handleSubmit}/* href="/lessons" */>Submit Code</button>
+                </div>
+                <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
+                <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"45%"}}>
                   {/* {"Pretend this is a terminal that's spitting out results, I'll get it working later"} */}
                   <PythonTerminal></PythonTerminal>
                 </div>

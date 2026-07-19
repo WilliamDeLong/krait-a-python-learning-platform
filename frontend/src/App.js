@@ -34,6 +34,10 @@ const App = () => {
     const savedTheme = sessionStorage.getItem("isLightMode");
     return savedTheme ? JSON.parse(savedTheme) : false;
   });
+  const [lessonLayoutType, setLessonLayoutType] = useState(() => {
+    const savedTheme = sessionStorage.getItem("lessonLayoutType");
+    return savedTheme ? JSON.parse(savedTheme) : 0;
+  });
   const [editorView, setEditorView] = useState();
   const location = useLocation();
 
@@ -51,6 +55,9 @@ const App = () => {
     }
     //console.log(document.querySelector(`body`).style.backgroundColor);
   }, [isLightMode]);
+  useEffect(() => {
+    sessionStorage.setItem("lessonLayoutType", JSON.stringify(lessonLayoutType));
+    }, [lessonLayoutType]);
   
   const toggleTheme = () => {
     //console.log(`lightmode current ${isLightMode}`);
@@ -64,6 +71,11 @@ const App = () => {
       editorView.setState(updatedState);
       setEditorView(editorView);
     }
+  };
+  const toggleLayout = () => {
+    //console.log(`Current Layout ${lessonLayoutType}`);
+    setLessonLayoutType((prev) => prev>=2?0:prev+1);
+    //console.log(`lightmode now ${isLightMode}`);
   };
   function createEditor(loadedCode="Placeholder") {
     //console.log("Attempting to make editor");
@@ -88,7 +100,7 @@ const App = () => {
       {user?.id && (
               <Navbar isLightMode={isLightMode} toggleTheme={toggleTheme} />
             )}
-      <UserContext.Provider value={{ user, isLightMode, toggleTheme, editorView, createEditor}}>
+      <UserContext.Provider value={{ user, isLightMode, toggleTheme, editorView, createEditor, lessonLayoutType, toggleLayout}}>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/profile" element={<ProfilePage />} />

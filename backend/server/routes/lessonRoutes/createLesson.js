@@ -3,7 +3,7 @@ const router = express.Router();
 const z = require('zod')
 const bcrypt = require("bcrypt");
 const lessonSchema = require('../../models/LessonModel')
-const data_default = { title: "Placeholder title.", instructions: "You know how to make a print statement, right? Make one.", default_script: "#This is where you put YOUR code to be ran.", solution_verification: "print('Hello World')", is_test: false, chapter_no: 0, order_within_chapter: 0};
+const data_default = { title: "Placeholder title.", instructions: "You know how to make a print statement, right? Make one.", instructionsHTML: "<div class='FormattedTextSection'>You know how to make a print statement, right? Make one.</div>", default_script: "#This is where you put YOUR code to be ran.", solution_verification: "print('Hello World')", is_test: false, chapter_no: 0, order_within_chapter: 0};
 
 router.post('/create', async (req, res) => {
     const data_2_check = req.body
@@ -17,7 +17,7 @@ router.post('/create', async (req, res) => {
     });
     
     // After we have our defaulted sets, we can now properly set them to their individual variables and check each one for duplicates.
-    var { title, instructions, default_script, solution_verification, is_test, chapter_no, order_within_chapter, documentation_id, description } = data_2_check
+    var { title, instructions, instructionsHTML, default_script, solution_verification, is_test, chapter_no, order_within_chapter, documentation_id, description } = data_2_check
 
     
     const lesson_title = await lessonSchema.findOne({ title: title })
@@ -42,6 +42,7 @@ router.post('/create', async (req, res) => {
     const createLesson = new lessonSchema({
         title: title,
         instructions: instructions,
+        instructionsHTML: instructionsHTML,
         default_script: default_script,
         solution_verification: solution_verification,
         is_test: is_test,

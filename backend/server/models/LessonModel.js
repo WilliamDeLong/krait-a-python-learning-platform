@@ -15,6 +15,11 @@ const lessonSchema = new mongoose.Schema(
       label: "instructions",
       default: "You know how to make a print statement, right? Make one."
     },
+    instructionsHTML: {
+      type: String,
+      label: "instructionsHTML",
+      default: "<div class='FormattedTextSection'>You know how to make a print statement, right? Make one.</div>"
+    },
     default_script: {
       type: String,
       required: true,
@@ -51,7 +56,8 @@ const lessonSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      label: "description"
+      label: "description",
+      default: "Just for testing, feel free to ignore",
     },
     date: {
       type: Date,

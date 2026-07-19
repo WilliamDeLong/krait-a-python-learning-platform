@@ -1,13 +1,25 @@
+.FormattedTextSection * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+.FormattedTextSection body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f0f1a;
+            color: #e0e0f0;
+            line-height: 1.7;
+            font-size: 16px;
+        }
 /* ── LAYOUT ── */
-.lessonInstructions  .container {
+.FormattedTextSection .container {
     max-width: 960px;
     margin: 0 auto;
-    padding: 40px 24px;
+    padding: 0px 24px;
 }
 
 /* ── HERO HEADER ── */
-.lessonInstructions  .hero {
+.FormattedTextSection .hero {
     text-align: center;
     background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
     border: 2px solid #4fc3f7;
@@ -18,7 +30,7 @@
     overflow: hidden;
 }
 
-.lessonInstructions  .hero::before {
+.FormattedTextSection .hero::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -29,27 +41,27 @@
     pointer-events: none;
 }
 
-.lessonInstructions  .hero h1 {
+.FormattedTextSection .hero h1 {
     font-size: 2.6rem;
     color: #4fc3f7;
     margin-bottom: 12px;
     text-shadow: 0 0 20px rgba(79,195,247,0.4);
 }
 
-.lessonInstructions  .hero .subtitle {
+.FormattedTextSection .hero .subtitle {
     font-size: 1.1rem;
     color: #90caf9;
     font-style: italic;
 }
 
-.lessonInstructions  .hero .snake-banner {
+.FormattedTextSection .hero .snake-banner {
     font-size: 3rem;
     margin-bottom: 16px;
     display: block;
 }
 
 /* ── SECTION HEADERS ── */
-.lessonInstructions  .part-header {
+.FormattedTextSection .part-header {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -60,25 +72,25 @@
     margin: 48px 0 24px 0;
 }
 
-.lessonInstructions  .part-header .part-icon {
+.FormattedTextSection .part-header .part-icon {
     font-size: 2rem;
     flex-shrink: 0;
 }
 
-.lessonInstructions  .part-header h2 {
+.FormattedTextSection .part-header h2 {
     font-size: 1.7rem;
     color: #4fc3f7;
     margin-bottom: 4px;
 }
 
-.lessonInstructions  .part-header .part-subtitle {
+.FormattedTextSection .part-header .part-subtitle {
     font-size: 0.9rem;
     color: #78909c;
     font-style: italic;
 }
 
 /* ── SECTION SUBHEADERS ── */
-.lessonInstructions  h3 {
+.FormattedTextSection h3 {
     font-size: 1.25rem;
     color: #81d4fa;
     margin: 32px 0 12px 0;
@@ -86,28 +98,28 @@
     border-bottom: 1px solid #1e3a5f;
 }
 
-.lessonInstructions  h4 {
+.FormattedTextSection h4 {
     font-size: 1.05rem;
     color: #b0bec5;
     margin: 20px 0 10px 0;
 }
 
 /* ── PARAGRAPHS & TEXT ── */
-.lessonInstructions  p {
+.FormattedTextSection p {
     margin-bottom: 14px;
     color: #cfd8dc;
 }
 
-.lessonInstructions  strong {
+.FormattedTextSection strong {
     color: #e0f7fa;
 }
 
-.lessonInstructions  em {
+.FormattedTextSection em {
     color: #b0bec5;
 }
 
 /* ── CALLOUT BOXES ── */
-.lessonInstructions  .callout {
+.FormattedTextSection .callout {
     border-radius: 10px;
     padding: 16px 20px;
     margin: 20px 0;
@@ -115,39 +127,39 @@
     font-size: 0.95rem;
 }
 
-.lessonInstructions  .callout-tip {
+.FormattedTextSection .callout-tip {
     background-color: #0d2b1e;
     border-color: #66bb6a;
     color: #c8e6c9;
 }
 
-.lessonInstructions  .callout-tip .callout-icon::before { content: "💡 "; }
+.FormattedTextSection .callout-tip .callout-icon::before { content: "💡 "; }
 
-.lessonInstructions  .callout-warning {
+.FormattedTextSection .callout-warning {
     background-color: #2b1a0d;
     border-color: #ffa726;
     color: #ffe0b2;
 }
 
-.lessonInstructions  .callout-warning .callout-icon::before { content: "⚠️ "; }
+.FormattedTextSection .callout-warning .callout-icon::before { content: "⚠️ "; }
 
-.lessonInstructions  .callout-danger {
+.FormattedTextSection .callout-danger {
     background-color: #2b0d0d;
     border-color: #ef5350;
     color: #ffcdd2;
 }
 
-.lessonInstructions  .callout-danger .callout-icon::before { content: "🚨 "; }
+.FormattedTextSection .callout-danger .callout-icon::before { content: "🚨 "; }
 
-.lessonInstructions  .callout-fun {
+.FormattedTextSection .callout-fun {
     background-color: #1a1a2e;
     border-color: #ce93d8;
     color: #e1bee7;
 }
 
-.lessonInstructions  .callout-fun .callout-icon::before { content: "😂 "; }
+.FormattedTextSection .callout-fun .callout-icon::before { content: "😂 "; }
 
-.lessonInstructions  .callout-title {
+.FormattedTextSection .callout-title {
     font-weight: bold;
     margin-bottom: 6px;
     font-size: 0.85rem;
@@ -157,7 +169,7 @@
 }
 
 /* ── CODE BLOCKS ── */
-.lessonInstructions pre {
+.FormattedTextSection pre {
     background-color: #0d1117;
     border: 1px solid #1e3a5f;
     border-radius: 10px;
@@ -167,7 +179,7 @@
     position: relative;
 }
 
-.lessonInstructions pre::before {
+.FormattedTextSection pre::before {
     content: 'Python';
     position: absolute;
     top: 8px;
@@ -180,14 +192,20 @@
     letter-spacing: 1px;
 }
 
-.lessonInstructions  code {
+.FormattedTextSection code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.88rem;
     line-height: 1.8;
     color: #e0e0f0;
 }
 
-.lessonInstructions  p code, .lessonInstructions  li code {
+.FormattedTextSection pre, .FormattedTextSection pre code {
+white-space: pre;
+display: block; /* pre is block by default too, but resets sometimes touch this */
+}
+
+
+.FormattedTextSection p code, .FormattedTextSection li code {
     background-color: #1a1a2e;
     border: 1px solid #2a3f5f;
     border-radius: 4px;
@@ -197,33 +215,33 @@
 }
 
 /* ── SYNTAX HIGHLIGHTING (manual) ── */
-.lessonInstructions  .kw   { color: #c792ea; }   /* keywords: def, if, for, while, etc */
-.lessonInstructions  .fn   { color: #82aaff; }   /* function names */
-.lessonInstructions  .str  { color: #c3e88d; }   /* strings */
-.lessonInstructions  .num  { color: #f78c6c; }   /* numbers */
-.lessonInstructions  .cm   { color: #546e7a; font-style: italic; }  /* comments */
-.lessonInstructions  .op   { color: #89ddff; }   /* operators */
-.lessonInstructions  .var  { color: #eeffff; }   /* variables */
-.lessonInstructions  .bool { color: #ff9cac; }   /* True / False */
-.lessonInstructions  .out  { color: #ffcb6b; }   /* output lines */
+.FormattedTextSection .kw   { color: #c792ea; }   /* keywords: def, if, for, while, etc */
+.FormattedTextSection .fn   { color: #82aaff; }   /* function names */
+.FormattedTextSection .str  { color: #c3e88d; }   /* strings */
+.FormattedTextSection .num  { color: #f78c6c; }   /* numbers */
+.FormattedTextSection .cm   { color: #546e7a; font-style: italic; }  /* comments */
+.FormattedTextSection .op   { color: #89ddff; }   /* operators */
+.FormattedTextSection .var  { color: #eeffff; }   /* variables */
+.FormattedTextSection .bool { color: #ff9cac; }   /* True / False */
+.FormattedTextSection .out  { color: #ffcb6b; }   /* output lines */
 
 /* ── TABLES ── */
-.lessonInstructions  .table-wrap {
+.FormattedTextSection .table-wrap {
     overflow-x: auto;
     margin: 20px 0;
 }
 
-.lessonInstructions  table {
+.FormattedTextSection table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.9rem;
 }
 
-.lessonInstructions  thead tr {
+.FormattedTextSection thead tr {
     background-color: #1e3a5f;
 }
 
-.lessonInstructions  thead th {
+.FormattedTextSection thead th {
     padding: 12px 16px;
     text-align: left;
     color: #4fc3f7;
@@ -231,51 +249,51 @@
     border-bottom: 2px solid #4fc3f7;
 }
 
-.lessonInstructions  tbody tr {
+.FormattedTextSection tbody tr {
     border-bottom: 1px solid #1a2744;
     transition: background 0.2s;
 }
 
-.lessonInstructions  tbody tr:hover {
+.FormattedTextSection tbody tr:hover {
     background-color: #131c2e;
 }
 
-.lessonInstructions  tbody td {
+.FormattedTextSection tbody td {
     padding: 10px 16px;
     color: #cfd8dc;
     vertical-align: top;
 }
 
-.lessonInstructions  tbody td:first-child {
+.FormattedTextSection tbody td:first-child {
     color: #80cbc4;
     font-family: 'Courier New', monospace;
     font-size: 0.85rem;
 }
 
 /* ── LISTS ── */
-.lessonInstructions  ul, ol {
+.FormattedTextSection ul, ol {
     padding-left: 24px;
     margin: 10px 0 16px 0;
 }
 
-.lessonInstructions  li {
+.FormattedTextSection li {
     margin-bottom: 8px;
     color: #cfd8dc;
 }
 
-.lessonInstructions  li::marker {
+.FormattedTextSection li::marker {
     color: #4fc3f7;
 }
 
 /* ── DIVIDERS ── */
-.lessonInstructions  .section-divider {
+.FormattedTextSection .section-divider {
     border: none;
     border-top: 1px solid #1e3a5f;
     margin: 40px 0;
 }
 
 /* ── CHEAT SHEET ── */
-.lessonInstructions  .cheat-sheet {
+.FormattedTextSection .cheat-sheet {
     background: linear-gradient(135deg, #0d1b2e, #0d2b1e);
     border: 2px solid #4fc3f7;
     border-radius: 14px;
@@ -283,7 +301,7 @@
     margin: 32px 0;
 }
 
-.lessonInstructions  .cheat-sheet h2 {
+.FormattedTextSection .cheat-sheet h2 {
     color: #4fc3f7;
     font-size: 1.4rem;
     margin-bottom: 20px;
@@ -291,7 +309,7 @@
 }
 
 /* ── FINAL WORDS BOX ── */
-.lessonInstructions  .final-box {
+.FormattedTextSection .final-box {
     background: linear-gradient(135deg, #1a1a2e, #0f3460);
     border: 2px solid #ce93d8;
     border-radius: 14px;
@@ -300,7 +318,7 @@
     text-align: center;
 }
 
-.lessonInstructions  .final-box blockquote {
+.FormattedTextSection .final-box blockquote {
     font-size: 1.15rem;
     color: #e1bee7;
     font-style: italic;
@@ -309,7 +327,7 @@
     line-height: 1.8;
 }
 
-.lessonInstructions  .final-box .tip-row {
+.FormattedTextSection .final-box .tip-row {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
@@ -317,7 +335,7 @@
     margin-top: 20px;
 }
 
-.lessonInstructions  .tip-card {
+.FormattedTextSection .tip-card {
     background: rgba(255,255,255,0.05);
     border: 1px solid #2a3f5f;
     border-radius: 10px;
@@ -328,14 +346,14 @@
     color: #b0bec5;
 }
 
-.lessonInstructions  .tip-card .tip-emoji {
+.FormattedTextSection .tip-card .tip-emoji {
     font-size: 1.5rem;
     display: block;
     margin-bottom: 8px;
 }
 
 /* ── TABLE OF CONTENTS ── */
-.lessonInstructions  .toc {
+.FormattedTextSection .toc {
     background-color: #0d1117;
     border: 1px solid #1e3a5f;
     border-radius: 12px;
@@ -343,7 +361,7 @@
     margin-bottom: 40px;
 }
 
-.lessonInstructions  .toc h2 {
+.FormattedTextSection .toc h2 {
     font-size: 1.1rem;
     color: #4fc3f7;
     margin-bottom: 14px;
@@ -351,28 +369,28 @@
     letter-spacing: 1px;
 }
 
-.lessonInstructions  .toc ol {
+.FormattedTextSection .toc ol {
     padding-left: 20px;
 }
 
-.lessonInstructions  .toc li {
+.FormattedTextSection .toc li {
     margin-bottom: 6px;
     font-size: 0.95rem;
 }
 
-.lessonInstructions  .toc a {
+.FormattedTextSection .toc a {
     color: #81d4fa;
     text-decoration: none;
     transition: color 0.2s;
 }
 
-.lessonInstructions  .toc a:hover {
+.FormattedTextSection .toc a:hover {
     color: #4fc3f7;
     text-decoration: underline;
 }
 
 /* ── GOLDEN RULE BOX ── */
-.lessonInstructions  .golden-rule {
+.FormattedTextSection .golden-rule {
     background: linear-gradient(90deg, #1a2e1a, #1a2e1a);
     border: 1px solid #66bb6a;
     border-radius: 10px;
@@ -382,12 +400,12 @@
     font-size: 0.95rem;
 }
 
-.lessonInstructions  .golden-rule strong {
+.FormattedTextSection .golden-rule strong {
     color: #a5d6a7;
 }
 
 /* ── BADGE LABELS ── */
-.lessonInstructions  .badge {
+.FormattedTextSection .badge {
     display: inline-block;
     padding: 2px 10px;
     border-radius: 12px;
@@ -399,38 +417,39 @@
     vertical-align: middle;
 }
 
-.lessonInstructions  .badge-new {
+.FormattedTextSection .badge-new {
     background-color: #0d3b4f;
     color: #4fc3f7;
     border: 1px solid #4fc3f7;
 }
 
-.lessonInstructions  .badge-tip {
+.FormattedTextSection .badge-tip {
     background-color: #0d3b1e;
     color: #66bb6a;
     border: 1px solid #66bb6a;
 }
 
-.lessonInstructions  .badge-warning {
+.FormattedTextSection .badge-warning {
     background-color: #3b1e0d;
     color: #ffa726;
     border: 1px solid #ffa726;
 }
 
 /* ── FOOTER ── */
-.lessonInstructions  footer {
+.FormattedTextSection footer {
     text-align: center;
-    padding: 32px;
+    padding-top: 14px;
+    padding-bottom: 14px;
     color: #546e7a;
     font-size: 0.85rem;
-    border-top: 1px solid #1e3a5f;
-    margin-top: 48px;
+    /* border-top: 1px solid #1e3a5f; */
+    margin-top: 14px;
 }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
-    .lessonInstructions  .hero h1 { font-size: 1.8rem; }
-    .lessonInstructions  .part-header h2 { font-size: 1.3rem; }
-    .lessonInstructions  pre { font-size: 0.8rem; padding: 14px 16px; }
-    .lessonInstructions  .tip-card { flex: 1 1 100%; }
+    .FormattedTextSection .hero h1 { font-size: 1.8rem; }
+    .FormattedTextSection .part-header h2 { font-size: 1.3rem; }
+    .FormattedTextSection pre { font-size: 0.8rem; padding: 14px 16px; }
+    .FormattedTextSection .tip-card { flex: 1 1 100%; }
 }

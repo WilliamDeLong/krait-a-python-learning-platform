@@ -39,84 +39,33 @@ const DocumentationTemplatePage = () => {
   const { isLightMode } = useContext(UserContext);
   //const { isLightMode } = useContext();
   //const navigate = useNavigate();
-  let rightList = {
-        display: "flex",
-        justifyContent: 'start',
-        justifyItems: 'center',
-        flexDirection:"column",
-        //marginLeft: 'auto',
-        //marginRight: 0,
-        //width:"720px",
-        height: '550px',
-        borderColor: isLightMode ? '#000000' : '#ffffff'
-        //textAlign: 'center',
-        //backgroundColor: isLightMode ? '#ffffff' : '#000000'
-    };
-    let rightBox = {
-        display: "flex",
-        justifyContent: 'center',
-        marginTop: '0.5%',
-        marginLeft: '33%',
-        //marginRight: '25%',
-        width:"33%",
-        height: '550px',
-        //textAlign: 'center',
-        //backgroundColor: isLightMode ? '#ffffff' : '#000000'
-    };
-    
-
+  
   useEffect(() => {
     setUser(getUserInfo());
     //console.log(isLightMode);
-    fetch_data();
+    axios.get(`${url}${DocumentID}`)
+      .then(res => setData(res.data))
+      .catch(err => setError(err.message));
+    axios.get(`${API_BASE}/user/getAll`)
+      .then(res => setUsers(res.data))
+      .catch(err => setError(err.message));
+    //fetch_data();
     console.log("Data Fetched");
     
-  }, []);
+  }, [DocumentID]);
 
-  const fetch_data = async () => {
-      try {
-        //console.log(DocumentID);
-        const result = await axios.get(url+DocumentID);
-        //console.log(result.data);
-        setData(result.data);
-        const author_data = await axios.get(`${API_BASE}/user/getAll`);
-        setUsers(author_data.data);
-        //const LessonsRes = await axios.get(LessonDataurl, {params: {chapter_no: result.data['chapter_no']}});
-        //setLessons(LessonsRes.data.sort((a, b) => (a.order_within_chapter - b.order_within_chapter)));
-        //console.log((LessonsRes.data));
-        //console.log(lessonResult.data);
-        //console.log(`Lesson found`);
-      } catch (error) {
-        if (
-          error.response &&
-          error.response.status >= 400 &&
-          error.response.status <= 500
-        ) {
-          setError(error.response.data.message);
-        }
-      }
-    };
-  //const { username } = user;
+  
   
   if (data.title===null || users.length<2) return (
-        <div style={{height:'100vh', background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading Chapter</h4></div>
+        <div style={{height:'100vh', background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading Document</h4></div>
     ) 
   else return (
     <>
-      <section className="lesson" style={{height:"93.5vh"}}>
-        <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", color: !isLightMode? "#000000": "#ffffff"}}>
-          <div className="row d-flex" style={{color:isLightMode ? '#000000': '#ffffff', justifyContent:'center', textAlign:'center'}}>
-            <h3>{data.title}</h3>
-            <h4>Written by {users.find((element) => element._id === data.author).username}</h4>
-            <h5 style={{width:'50%', fontSize:"100%"}}>{data.description}</h5>
-          </div>
-          <div className="bar" style={{height:"2px", backgroundColor:isLightMode ? '#000000': '#ffffff'}}/>
-
-          <div className="Main-content" style={{color: !isLightMode? "#ffffff": "#000000"}}>
-                {data.content}
-          </div>
-        </div>
-      </section>
+    <div
+      className="Documentation"
+      style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", width:"50%", marginLeft:'25%', scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}
+      dangerouslySetInnerHTML={{ __html: data.content }}
+    />
     </>
   );
 };

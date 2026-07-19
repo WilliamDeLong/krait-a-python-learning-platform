@@ -13,6 +13,7 @@ import "../../css/box.css";
 import PythonTerminal from "../PyTerminal.js";
 import LessonInstructions from "../instructionsTestPage.js";
 import { usePyodide } from '../usePyodide';
+import { render, screen } from '@testing-library/react';
 //import { loadPyodide } from "pyodide";
 //const { loadPyodide } = require("pyodide");
 //import CodeEditor from "../CodeEditor";
@@ -423,7 +424,8 @@ const LessonTestPage = () => {
                 </div>
               </div>
               <div className='box' style={rightCard}>
-                {<div className="Instructions" id="Instructions" style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}} ><LessonInstructions ></LessonInstructions>{/* {lesson_block_data["instructions"]} */}</div>}
+                {/* {<div className="Instructions" id="Instructions" style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"50%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}} ><LessonInstructions lessonId={lessonID} /> {lesson_block_data["instructions"]} </div>} */}
+                <LessonInstructions lessonId={lessonID} />
                 
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"50%"}}>

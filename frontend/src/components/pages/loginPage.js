@@ -55,6 +55,7 @@ const Login = () => {
     try {
       const { data: res } = await axios.post(url, data);
       const { accessToken } = res;
+      console.log(data);
       //store token in localStorage
       localStorage.setItem("accessToken", accessToken);
       navigate("/");

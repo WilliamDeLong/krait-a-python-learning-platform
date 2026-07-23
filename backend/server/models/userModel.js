@@ -18,6 +18,24 @@ const newUserSchema = new mongoose.Schema(
       type: String,
       min : 8
     },
+    country: {
+      required: false,
+      type: String,
+      default: "USA"
+    },
+    phoneNumber: {
+      required: false,
+      type: String,
+      min: 12,
+      max: 12,
+      default: "###-###-####"
+    },
+    pronoun: {
+      required: false,
+      type: String,
+      max: 15,
+      default: "No Answer"
+    },
     date: {
       type: Date,
       default: Date.now,

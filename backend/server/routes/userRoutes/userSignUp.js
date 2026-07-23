@@ -10,8 +10,8 @@ router.post('/signup', async (req, res) => {
     //console.log(error)
     if (error) return res.status(400).send({ message: error.errors[0].message });
 
-    const { username, email, password } = req.body
-
+    const { username, email, password, country, phoneNumber, pronoun } = req.body
+    //console.log(req.body);
     //check if email already exists
     const user = await newUserModel.findOne({ username: username })
     if (user)
@@ -23,12 +23,20 @@ router.post('/signup', async (req, res) => {
     //parse the generated hash into the password
     const hashPassword = await bcrypt.hash(password, generateHash)
 
+    
+
     //creates a new user
+    //console.log(phoneNumber);
+    //console.log(pronoun);
     const createUser = new newUserModel({
         username: username,
         email: email,
         password: hashPassword,
+        country: country,
+        phoneNumber: phoneNumber,
+        pronoun: pronoun
     });
+    //console.log(createUser);
 
    
     try {

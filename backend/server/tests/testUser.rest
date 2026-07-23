@@ -6,7 +6,10 @@ Content-Type: application/json
 {
     "username" : "2chiamanze",
     "email" : "cdon@gmail.com",
-    "password" : "tochi12345"
+    "password" : "tochi12345",
+    "country": "Russia",
+    "phoneNumber": "753-555-6012",
+    "pronoun": "banan"
 }
 
 ###
@@ -39,7 +42,10 @@ Content-Type: application/json
     "userId" : "{{userTestId1}}",
     "username" : "{{userTestName1}}_Edited",
     "email" : "edit_{{userTestEmail1}}",
-    "password" : "tochi12345_v2"
+    "password" : "tochi12345_v2",
+    "country": "USA",
+    "phoneNumber": "978-242-6056",
+    "pronoun": "Taco"
 }
 
 ###

@@ -74,13 +74,13 @@ const ProfilePage = () => {
         else {
             setData({ ...data, [input.name]: input.value });
         }
-        console.log("Name: ", input.name);
-        console.log("Value: ", input.value);
+        //console.log("Name: ", input.name);
+        //console.log("Value: ", input.value);
     };
     const handleDeletionLogout = async (e) => {
         try{ 
             const { data: passwordConfirmationResult } = await axios.post(login_url, userDeletionData);
-            console.log(console.log(passwordConfirmationResult));
+            console.log(passwordConfirmationResult);
             if (passwordConfirmationResult.accessToken!==null) {
                 //console.log(delete_url+data.userId);
                 const { data: AccountDeletionResult } = await axios.post(delete_url+data.userId+"/delete");

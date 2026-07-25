@@ -2,6 +2,13 @@
   background-color: #000000 !important;
 }
 
+.Delete .modal-content > * {
+  border-top-color: #ff0000 !important;
+  border-bottom-color: #ff0000 !important;
+}
+
+
+
 .modal-content > * {
   border-top-color: #14294c !important;
   border-bottom-color: #14294c !important;

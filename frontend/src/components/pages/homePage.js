@@ -6,16 +6,25 @@ import Form from "react-bootstrap/Form";
 import { UserContext } from '../../App';
 import axios from "axios";
 import API_BASE from '../../api';
+import Modal from "react-bootstrap/Modal";
+import "../../css/modal.css";
 
 const url = `${process.env.REACT_APP_BACKEND_SERVER_URI}/user/editUser`;
+const login_url = `${process.env.REACT_APP_BACKEND_SERVER_URI}/user/login`;
+const delete_url = `${process.env.REACT_APP_BACKEND_SERVER_URI}/user/`;
 
 const ProfilePage = () => {
     const [user, setUser] = useState({});
     const [data, setData] = useState({userId: "", username: "", email: "", password: "", country: "", phoneNumber: "", pronoun: ""});
+    const [userDeletionData, setDeleter] = useState({username: "", password: ""});
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const { isLightMode } = useContext(UserContext);
-    const [editMode, setEdit] = useState(false)
+    const [editMode, setEdit] = useState(false);
+      const [show, setShow] = useState(false);
+      const handleClose = () => setShow(false);
+      const handleShow = () => setShow(true);
+      const [incorrectPW, setIPW] = useState("");
     let buttonStyling = {
         background: isLightMode ? '#ffd903' : "#ffd903",
         borderStyle: "none",
@@ -32,6 +41,14 @@ const ProfilePage = () => {
         borderStyle: "none",
         color: isLightMode ? '#0c0c1f' : '#0c0c1f',
         width:'50%'
+    };
+    let buttonStyling4 = {
+        background: isLightMode ? '#000000' : "#000000",
+        color: '#ff0303',
+        borderStyle: "dashed",
+        borderColor: '#ff0303',
+        //color: isLightMode ? '#0c0c1f' : '#0c0c1f',
+        width:'100%'
     };
     let containedCard = {
         display: 'flex',
@@ -51,9 +68,38 @@ const ProfilePage = () => {
         setEdit((prev) => !prev);
     };
     const handleChange = ({ currentTarget: input }) => {
-        setData({ ...data, [input.name]: input.value });
+        if (input.name==="Dpassword") {
+            setDeleter({username: data.username, password: input.value})
+        }
+        else {
+            setData({ ...data, [input.name]: input.value });
+        }
         console.log("Name: ", input.name);
         console.log("Value: ", input.value);
+    };
+    const handleDeletionLogout = async (e) => {
+        try{ 
+            const { data: passwordConfirmationResult } = await axios.post(login_url, userDeletionData);
+            console.log(console.log(passwordConfirmationResult));
+            if (passwordConfirmationResult.accessToken!==null) {
+                //console.log(delete_url+data.userId);
+                const { data: AccountDeletionResult } = await axios.post(delete_url+data.userId+"/delete");
+                console.log(AccountDeletionResult);
+                localStorage.clear();
+                navigate("/logout");
+                //console.log(`account_Deleted: ${AccountDeletionResult}`);
+            }
+            //console.log(passwordConfirmationResult);
+        } catch (error) {
+        if (error.response && error.response.status === 400) {
+            setIPW("Incorrect Password.");
+        }
+        if (error.response && error.response.status === 401) {
+            setIPW("Account not found.");
+        }
+        }
+        //localStorage.clear();
+        //navigate("/logout");
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -172,7 +218,25 @@ const ProfilePage = () => {
                         <Button variant="primary" type="edit" onClick={toggleEdit} style={buttonStyling2} className="mt-2">Cancel</Button>
                         <Button variant="primary" type="submit" onClick={handleSubmit} style={buttonStyling3} className="mt-2" disabled={data.password===""}>Submit Changes</Button>
                     </div>)}
-
+                    {editMode && (<Button type="delete" onClick={handleShow} style={buttonStyling4} className="mt-2" disabled={data.password===""}>Delete Account</Button>)}
+                    <Modal className="Delete" show={show} onHide={handleClose} backdrop="static" keyboard={false} >
+                        <Modal.Header closeButton >
+                            <Modal.Title style={buttonStyling4}>Delete Account?</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body style={buttonStyling4}>Are you absolutely certain you want to delete your account?
+                        This CANNOT be undone.<div><Form.Group className="mb-3" controlId="accountDeletionPassword"><Form.Control type="password" name="Dpassword" onChange={handleChange} placeholder="Enter password."/></Form.Group>
+                        </div>
+                        {incorrectPW!=="" &&(<div>{incorrectPW}</div>)}
+                        </Modal.Body>
+                        <Modal.Footer >
+                            <Button variant="secondary" onClick={handleClose}>
+                            Close
+                            </Button>
+                            <Button variant="primary" onClick={handleDeletionLogout}>
+                            Yes
+                            </Button>
+                        </Modal.Footer>
+                        </Modal>
                 </div>
                 
             </div>

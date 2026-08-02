@@ -74,7 +74,7 @@ const App = () => {
   };
   const toggleLayout = () => {
     //console.log(`Current Layout ${lessonLayoutType}`);
-    setLessonLayoutType((prev) => prev>=2?0:prev+1);
+    setLessonLayoutType((prev) => prev>=1?0:prev+1);
     //console.log(`lightmode now ${isLightMode}`);
   };
   function createEditor(loadedCode="Placeholder") {

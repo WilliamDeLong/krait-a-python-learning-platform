@@ -61,10 +61,10 @@ POST http://localhost:8081/chapter/create
 Content-Type: application/json 
 
 {
-    "title": "Chapter 0: Placeholder Chapter",
-    "chapter_no": 0, 
-    "description": "This section exists so that my text document stops producing errors.", 
-    "documentation_references": "Nonexistant, its getting deleted anyways."
+    "title": "Python Functionality",
+    "chapter_no": 2, 
+    "description": "In this section you will learn about functions, how to use built-in functions, how to make your own functions, why functions are helpful, and how to use the functions you create.", 
+    "documentation_references": "TBD"
 }
 
 ###

@@ -77,10 +77,14 @@
     flex-shrink: 0;
 }
 
-.FormattedTextSection .part-header h2 {
+.FormattedTextSection h2 {
     font-size: 1.7rem;
     color: #4fc3f7;
     margin-bottom: 4px;
+}
+.FormattedTextSection h2 code {
+    font-size: 1.25rem;
+    color: #4fc3f7;
 }
 
 .FormattedTextSection .part-header .part-subtitle {
@@ -133,6 +137,14 @@
     color: #c8e6c9;
 }
 
+.FormattedTextSection .callout-note {
+    background-color: #0d222b;
+    border-color: #26deff;
+    color: #b2dcff;
+}
+
+
+
 .FormattedTextSection .callout-tip .callout-icon::before { content: "💡 "; }
 
 .FormattedTextSection .callout-warning {
@@ -149,6 +161,8 @@
     color: #ffcdd2;
 }
 
+
+
 .FormattedTextSection .callout-danger .callout-icon::before { content: "🚨 "; }
 
 .FormattedTextSection .callout-fun {
@@ -158,6 +172,14 @@
 }
 
 .FormattedTextSection .callout-fun .callout-icon::before { content: "😂 "; }
+
+.FormattedTextSection .callout-important { border-color: #fca5a5; background: #e30909;}
+.FormattedTextSection .callout-important .callout-title { color: #991b1b; }
+.FormattedTextSection .callout-important .callout-body { color: #7f1d1d; }
+.FormattedTextSection .callout-try { border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-color: #c4b5fd; }
+.FormattedTextSection .callout-try .callout-header { background: #ede9fe; color: #5b21b6; }
+.FormattedTextSection .callout-try .callout-body { color: #2e1065; }
+.FormattedTextSection .callout-try .code-wrap { margin: 10px 0; }
 
 .FormattedTextSection .callout-title {
     font-weight: bold;
@@ -169,7 +191,7 @@
 }
 
 /* ── CODE BLOCKS ── */
-.FormattedTextSection pre {
+/* .FormattedTextSection pre {
     background-color: #0d1117;
     border: 1px solid #1e3a5f;
     border-radius: 10px;
@@ -177,9 +199,16 @@
     overflow-x: auto;
     margin: 16px 0;
     position: relative;
+} */
+
+
+.FormattedTextSection pre {
+    padding: 20px 24px;
+    overflow-x: auto;
+    position: relative;
 }
 
-.FormattedTextSection pre::before {
+/* .FormattedTextSection pre::before {
     content: 'Python';
     position: absolute;
     top: 8px;
@@ -191,6 +220,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+ */
 
 .FormattedTextSection code {
     font-family: 'Courier New', Courier, monospace;
@@ -213,6 +243,12 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     font-size: 0.85rem;
     color: #80cbc4;
 }
+.FormattedTextSection .code-wrap { border-radius: 8px; overflow: hidden; margin: 14px 0 22px; border: 1px solid #2a2a2a; box-shadow: 0 2px 8px rgba(0,0,0,0.12); background-color: #0d1117; border: 1px solid #1e3a5f; border-radius: 10px;}
+.FormattedTextSection .code-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 7px 14px; }
+.FormattedTextSection .code-lang { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #777; font-family: 'Courier New',monospace; }
+.FormattedTextSection .copy-btn { background: transparent; color: #888; border: 1px solid #4a4a4a; border-radius: 4px; padding: 3px 10px; font-size: 0.72rem; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.FormattedTextSection .copy-btn:hover { background: #3a3a3a; color: #ccc; border-color: #666; }
+.FormattedTextSection .copy-btn.copied { color: #4ade80; border-color: #4ade80; background: rgba(74,222,128,0.08); }
 
 /* ── SYNTAX HIGHLIGHTING (manual) ── */
 .FormattedTextSection .kw   { color: #c792ea; }   /* keywords: def, if, for, while, etc */
@@ -453,3 +489,11 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     .FormattedTextSection pre { font-size: 0.8rem; padding: 14px 16px; }
     .FormattedTextSection .tip-card { flex: 1 1 100%; }
 }
+
+/* -- Review -- */
+.FormattedTextSection .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0 28px; }
+.FormattedTextSection .review-card { background: #0d2b1e; border: 1px solid #66bb6a; border-radius: 8px; padding: 16px 18px; }
+.FormattedTextSection .review-card h3 { font-size: 0.9rem; color: #66bb6a; margin: 0 0 8px; padding: 0; border: none; }
+.FormattedTextSection .review-card ul { padding-left: 16px; margin: 0; }
+.FormattedTextSection .review-card li { font-size: 0.875rem; color: #c8e6c9; margin-bottom: 4px; }
+        

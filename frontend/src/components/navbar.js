@@ -173,15 +173,14 @@ export default function Navbar({ isLightMode, toggleTheme }) {
             </Dropdown.Menu>
           </Dropdown>
           
-          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}} href="/lessonTestpage/6a19e16bd4abefc266f8ab0c">Lesson test page</Nav.Link>
-          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}} href="/editorthing">Editor Test</Nav.Link>
+          <Nav.Link style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}} href="/lessonTestpage/6a19e16bd4abefc266f8ab0c">Lesson Test Page</Nav.Link>
           
           
         </Nav>
         <div className="boxy" style={{width:"fit-content", display: "flex", flexFlow: "row wrap"}}>
           <Nav variant="pills" style={{width:"100%",marginLeft: 'auto', marginRight: '0',display:'flex',justifyContent: "flex-end"}}>
             <button onClick={toggleTheme} style={themeToggleStyle} title={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"} aria-label={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"}>
-              {isLightMode ? (<><span style={{ ...themeLabelStyle, left: "10px" }}>LIGHT<br />MODE</span><span style={themeKnobStyle}>☀️</span></>) : (<><span style={themeKnobStyle}>🌙</span><span style={{ ...themeLabelStyle, right: "10px" }}>DARK<br />MODE</span></>)}
+              {isLightMode ? (<><span style={{ ...themeLabelStyle, left: "10px" }}>Light<br />Mode</span><span style={themeKnobStyle}>☀️</span></>) : (<><span style={themeKnobStyle}>🌙</span><span style={{ ...themeLabelStyle, right: "10px" }}>Dark<br />Mode</span></>)}
             </button>
             <div onClick={() => navigate("/profile")} onMouseEnter={() => setIsProfileAreaHovered(true)} onMouseLeave={() => setIsProfileAreaHovered(false)} style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", transform: isProfileAreaHovered ? "scale(1.06)" : "scale(1)", transition: "transform 0.2s ease", }}>
               {/* <img src={profileUrl} alt="Profile" onError={() => setProfileUrl("/user-icon.png")} style={{   width: "42px",   height: "42px",   borderRadius: "50%",   objectFit: "cover",   border: `2px solid ${isLightMode ? "#0f172a" : "white"}`, }}/> */}

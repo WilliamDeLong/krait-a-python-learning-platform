@@ -9,8 +9,9 @@ import { UserContext } from "../../App";
 
 
 const Landingpage = () => {
-const [user, setUser] = useState(getUserInfo());
-  const { isLightMode } = useContext(UserContext);
+    const [user, setUser] = useState(getUserInfo());
+    const [data, setData] = useState([]);
+    const { isLightMode } = useContext(UserContext);
     let rightCard = {
         display: "flex",
         justifyContent: "flex-end",
@@ -29,6 +30,7 @@ const [user, setUser] = useState(getUserInfo());
         textAlign: 'center',
         backgroundColor: isLightMode ? '#ffffff' : '#000000'
     }
+    
     
     
     return (
@@ -60,12 +62,12 @@ const [user, setUser] = useState(getUserInfo());
                     <Card.Body style={{color: isLightMode ? "#0f172a" : "#cccccc"}}>
                         <Card.Title style={{ fontWeight: 'bold'}}>Are you new to Python and/or Programming?</Card.Title>
                         <Card.Text style={{color: isLightMode ? "#0f172a" : "#cccccc", 'fontSize': 'small', fontWeight:'normal'}}>Then start here!</Card.Text>
-                        <a disabled /* href="/login" */ style={{ color: '#ffd903', backgroundColor: isLightMode ? '#000000' : '#5562be', borderRadius: "6px", fontWeight: "bold", width: '90%', height: '35px', display: 'inline-block', alignContent: 'center' }}> Section Zero: Python Fundamentals </a>
+                        <a href={"/chapter/6a6b9fb635d7d92417e7cd4b"} style={{ color: '#ffd903', backgroundColor: isLightMode ? '#000000' : '#5562be', borderRadius: "6px", fontWeight: "bold", width: '90%', height: '35px', display: 'inline-block', alignContent: 'center' }}> Python Fundamentals </a>
                         
                         <h3 style={{'fontSize':'small'}}>or</h3>
                         <Card.Title style={{fontWeight: 'bold'}}>If you do know the fundamentals</Card.Title>
-                        <Card.Text style={{color: isLightMode ? "#0f172a" : "#cccccc", 'fontSize': 'small', fontWeight:'normal'}}>Feel free to start with Section One:</Card.Text>
-                        <a disabled /* href="/signup" */ style={{ backgroundColor: '#ffd903', color: isLightMode ? '#000000': '#5562be', borderRadius: "6px", fontWeight: "bold", width: '90%', height: '35px', display: 'inline-block', alignContent: 'center' }}> Section Two: Functions </a>
+                        <Card.Text style={{color: isLightMode ? "#0f172a" : "#cccccc", 'fontSize': 'small', fontWeight:'normal'}}>Feel free to start with Chapter Two:</Card.Text>
+                        <a href={"/chapter/6a6e5d4583294ce42eb1af7b"} style={{ backgroundColor: '#ffd903', color: isLightMode ? '#000000': '#5562be', borderRadius: "6px", fontWeight: "bold", width: '90%', height: '35px', display: 'inline-block', alignContent: 'center' }}> Python Functionality </a>
                         
                     </Card.Body>
                 </Card>}

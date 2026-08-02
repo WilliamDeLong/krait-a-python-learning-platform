@@ -29,7 +29,22 @@
     
   </head>
   <body style="background-color: #14294c;">
-    
+    <script>
+        function copyCode(btn) {
+            const code = btn.closest('.code-wrap').querySelector('code');
+            const text = code.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'Copied!'; btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+            }).catch(() => {
+                const ta = document.createElement('textarea'); ta.value = text;
+                document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+                document.body.removeChild(ta);
+                btn.textContent = 'Copied!'; btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+            });
+        }
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root" ></div>
     <!--

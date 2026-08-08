@@ -105,7 +105,7 @@ const LessonCreator = () => {
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
     };
   function addToOutput(s) {
-    output.value += ">>>" + editorView.state.doc.toString() + "\n" + s + "\n";
+    output.value += /* ">>>" + editorView.state.doc.toString() +  "\n" + */s/* + "\n"*/;
   };
   useEffect(() => {
     setUser(getUserInfo());
@@ -122,16 +122,23 @@ const LessonCreator = () => {
     clearOutput();
   };
 
+  const handleChange = ({ currentTarget: input }) => {
+        setlesson_block_data({ ...lesson_block_data, [input.name]: input.value });
+        //console.log("Name: ", input.name);
+        //console.log("Value: ", input.value);
+    };
+
   const handleRun = async (e) => {
-    clearOut();
     e.preventDefault();
     //setCodeSubmission({ ...codeSubmission, script_submission: editorView.state.doc.toString() });
-    //addToOutput("This is a placeholder for outputs");
+    
     //console.log("Attempting to run code");
     //const codeOutput = await runCode(editorView.state.doc.toString());
     //console.log(output);
     //console.log(output.error);
     setlesson_block_data({ ...lesson_block_data, instructionsHTML: editorView.state.doc.toString() });
+    //addToOutput(lesson_block_data);
+    //console.log(lesson_block_data);
     //lesson_block_data["instructionsHTML"]
     refresher();
     //setNeed2Save(true);
@@ -142,9 +149,8 @@ const LessonCreator = () => {
 //a
 
   const handleSubmit = async (e) => {
-    clearOut();
     e.preventDefault();
-    const code = editorView.state.doc.toString();
+    setlesson_block_data({ ...lesson_block_data, instructionsHTML: editorView.state.doc.toString() });
     //console.log(code);
     //setCodeSubmission({ ...codeSubmission, script_submission: code });
     //console.log('test verification');
@@ -249,11 +255,12 @@ const LessonCreator = () => {
             style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
               <div className='box' style={leftCard}>
                 <div className="right nav" style={centerCard}>
-                  <button disabled title="Previous Lesson does not exist" style={{justifyContent:"left", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Previous Lesson</button>
+                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#6c757d',color:'#fff', width:'33.3%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.chapter_no} onChange={handleChange} name="chapter_no" title="Change the chapter of the lesson"></input>
                   
-                  <button style={{justifyContent:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'33.3%', opacity:'0.65'}}   /* onClick={toggleLayout} */><p style={{fontSize:'75%', textAlign:'center', height:'50%', marginBottom:'0'}}>Ch {lesson_block_data.chapter_no} Lesson {lesson_block_data.order_within_chapter}:</p><p style={{fontSize: lesson_block_data.title.length>30? '45%': '75%', textAlign:'center', height:'50%',}}>{lesson_block_data.title}</p></button>
+                  
+                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'33.3%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.title} onChange={handleChange} name="title" title="Change the title of the lesson"></input>
 
-                  <button disabled title="Next Lesson does not exist" style={{justifyContent:"right", backgroundColor:'#6c757d',color:'#fff', width:'33.3%', height:'37.5px', opacity:'0.65'}}  variant="secondary" /* href="/lessons" */>Next Lesson</button>
+                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#6c757d',color:'#fff', width:'33.3%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.order_within_chapter} onChange={handleChange} name="order_within_chapter" title="Change the placement of the lesson within its chapter"></input>
                 </div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 
@@ -266,12 +273,13 @@ const LessonCreator = () => {
                 <div className="right nav" style={centerCard, {width:'100%'}}>
                   <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'33.3%', height:'37.5px'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
                   <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'33.3%', height:'37.5px'}} title="View Changes" variant="success" onClick={handleRun}/* href="/lessons" */>View Changes</button>
-                  <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', width:'33.3%', height:'37.5px'}} title="Submit Code" variant="success" onClick={handleSubmit}/* href="/lessons" */>Submit Code</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', width:'33.3%', height:'37.5px'}} title="Submit Changes" variant="success" onClick={handleSubmit}/* href="/lessons" */>Submit Changes</button>
                 </div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"45%"}}>
                   {/* {"Pretend this is a terminal that's spitting out results, I'll get it working later"} */}
-                  <PythonTerminal></PythonTerminal>
+                  {<textarea id="output" style={{"width": "100%", height:'100%',resize:"none",color: "#008a00",backgroundColor: isLightMode? "#d9dbdf": "#000000"}} rows="6" disabled ></textarea>}
+                  {/* <PythonTerminal></PythonTerminal> */}
                 </div>
               </div>
           </div>

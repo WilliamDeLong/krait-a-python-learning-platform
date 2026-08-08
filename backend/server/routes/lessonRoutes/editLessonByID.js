@@ -13,7 +13,7 @@ router.post("/:id/edit", async (req, res) =>
     // store new user information
     const data_2_check = req.body
     
-    console.log(data_2_check);
+    //console.log(data_2_check);
 
     // I need all of the elements in an object so I can iterate through them
     //const lessonData = lessonSchema.findById(id); 

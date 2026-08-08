@@ -40,7 +40,7 @@ const url_chapter = `${API_BASE}/chapter/findChapter`;
 
 
 //const lessonDefault = {lessonID: "6a19e16bd4abefc266f8ab0c"};
-const lesson_block_data_default = {_id:"6a19e16bd4abefc266f8ab0c" , default_script: "", solution_verification: '', instructions: "", title: '', instructionsHTML:null};
+const lesson_block_data_default = {_id:"6a19e16bd4abefc266f8ab0c" , default_script: "", solution_verification: '', instructions: "", title: "Enter Lesson Title Here", instructionsHTML:null, chapter_no: 0, order_within_chapter: 0, description: "Enter Description Here"};
 const codeSubmission_default = {"_id": null, script_submission: null, userID: "null", lessonID: "null", success: false, submission_date: null};
 
 
@@ -117,9 +117,10 @@ const LessonCreator = () => {
     let pyodide = await loadPyodide();
     return pyodide.runPythonAsync("1+1");
   }; */
-  const clearOut = async (e) => {
-    output.value = "";
-    clearOutput();
+  const swapTestState = async (e) => {
+    console.log(lesson_block_data.is_test);
+    setlesson_block_data({ ...lesson_block_data, ["is_test"]: lesson_block_data.is_test?false:true });
+    
   };
 
   const handleChange = ({ currentTarget: input }) => {
@@ -128,7 +129,7 @@ const LessonCreator = () => {
         //console.log("Value: ", input.value);
     };
 
-  const handleRun = async (e) => {
+  const handleViewChanges = async (e) => {
     e.preventDefault();
     //setCodeSubmission({ ...codeSubmission, script_submission: editorView.state.doc.toString() });
     
@@ -138,7 +139,7 @@ const LessonCreator = () => {
     //console.log(output.error);
     setlesson_block_data({ ...lesson_block_data, instructionsHTML: editorView.state.doc.toString() });
     //addToOutput(lesson_block_data);
-    //console.log(lesson_block_data);
+    console.log(lesson_block_data);
     //lesson_block_data["instructionsHTML"]
     refresher();
     //setNeed2Save(true);
@@ -148,7 +149,7 @@ const LessonCreator = () => {
   
 //a
 
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     setlesson_block_data({ ...lesson_block_data, instructionsHTML: editorView.state.doc.toString() });
     //console.log(code);
@@ -255,12 +256,12 @@ const LessonCreator = () => {
             style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
               <div className='box' style={leftCard}>
                 <div className="right nav" style={centerCard}>
-                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#6c757d',color:'#fff', width:'33.3%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.chapter_no} onChange={handleChange} name="chapter_no" title="Change the chapter of the lesson"></input>
+                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#6c757d',color:'#fff', width:'25%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.chapter_no} onChange={handleChange} name="chapter_no" title="Change the chapter of the lesson"></input>
                   
                   
-                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'33.3%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.title} onChange={handleChange} name="title" title="Change the title of the lesson"></input>
-
-                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#6c757d',color:'#fff', width:'33.3%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.order_within_chapter} onChange={handleChange} name="order_within_chapter" title="Change the placement of the lesson within its chapter"></input>
+                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'25%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.title} onChange={handleChange} name="title" title="Change the title of the lesson"></input>
+                  <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'25%', height:'37.5px'}} title="Toggles whether or not this lesson is a test or not." variant="success" onClick={swapTestState} >Is test: {lesson_block_data.is_test ? "True": "False"}</button>
+                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#6c757d',color:'#fff', width:'25%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.order_within_chapter} onChange={handleChange} name="order_within_chapter" title="Change the placement of the lesson within its chapter"></input>
                 </div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 
@@ -271,9 +272,14 @@ const LessonCreator = () => {
                   <div id="editor" className="script_submission" style={{height:"328px", width: '100%',backgroundColor: isLightMode? "#ffffff": "#000000",color: isLightMode? "#000000":"#ffffff"}} />
                 </div>
                 <div className="right nav" style={centerCard, {width:'100%'}}>
-                  <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'33.3%', height:'37.5px'}} title="Clear Output" variant="success" onClick={clearOut} >Clear Output</button>
-                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'33.3%', height:'37.5px'}} title="View Changes" variant="success" onClick={handleRun}/* href="/lessons" */>View Changes</button>
-                  <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', width:'33.3%', height:'37.5px'}} title="Submit Changes" variant="success" onClick={handleSubmit}/* href="/lessons" */>Submit Changes</button>
+                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'50%', overflowX:'scroll'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.description} onChange={handleChange} name="description" title="Change to modify the description of the lesson."></input>
+                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'25%', height:'37.5px'}} title="View Changes" variant="success" onClick={handleViewChanges}/* href="/lessons" */>View Changes</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', width:'25%', height:'37.5px'}} title="Submit Changes" variant="success" onClick={handleUpdate}/* href="/lessons" */disabled = { // Disables the button's functions if options are not filled in
+                    lesson_block_data.title ==="Enter Lesson Title Here" || 
+                    //lesson_block_data.chapter_no ===0 || 
+                    lesson_block_data.order_within_chapter ===0 
+                    //|| lesson_block_data.description ==="Enter Description Here"
+                  }>Submit Changes</button>
                 </div>
                 <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"45%"}}>

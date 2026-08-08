@@ -62,7 +62,7 @@ const DocumentationTemplatePage = () => {
   else return (
     <>
     <div
-      className="Documentation"
+      className={isLightMode?"InstructionsLM":"Instructions"}
       style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", width:"50%", marginLeft:'25%', scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}
       dangerouslySetInnerHTML={{ __html: data.content }}
     />

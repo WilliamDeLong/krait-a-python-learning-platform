@@ -23,7 +23,7 @@ function LessonInstructions({ lessonId }) {
   if (lessonLayoutType===0) return (
     <>
     <div
-      className="Instructions"
+      className={isLightMode?"InstructionsLM":"Instructions"}
       style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"95.4%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}
       dangerouslySetInnerHTML={{ __html: lesson.instructionsHTML }}
     />
@@ -32,7 +32,7 @@ function LessonInstructions({ lessonId }) {
   if (lessonLayoutType===1) return (
     <>
     <div
-      className="Instructions"
+      className={isLightMode?"InstructionsLM":"Instructions"}
       style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"50%", overflowY: 'auto'}}
       dangerouslySetInnerHTML={{ __html: lesson.instructionsHTML }}
     />
@@ -41,7 +41,7 @@ function LessonInstructions({ lessonId }) {
   if (lessonLayoutType===2) return (
     <>
     <div
-      className="Instructions"
+      className={isLightMode?"InstructionsLM":"Instructions"}
       style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"95.4%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}
       dangerouslySetInnerHTML={{ __html: lesson.instructionsHTML }}
     />

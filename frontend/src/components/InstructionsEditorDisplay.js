@@ -3,6 +3,7 @@ import API_BASE from '../api.js';
 import { UserContext } from '../App.js';
 import { useEffect, useState, useContext } from 'react';
 import "../css/formattedTextSection.css";
+import "../css/formattedTextSectionLight.css";
 
 const url_LessonData = `${API_BASE}/lesson/`;
 
@@ -17,7 +18,7 @@ function InstructionsEditorDisplay({ htmlData }) {
   return (
     <>
     <div
-      className="Instructions"
+      className={isLightMode?"InstructionsLM":"Instructions"}
       style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"95.4%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}
       dangerouslySetInnerHTML={{ __html: htmlData }}
     />

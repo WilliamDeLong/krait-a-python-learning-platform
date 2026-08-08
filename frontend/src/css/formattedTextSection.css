@@ -1,10 +1,10 @@
-.FormattedTextSection * {
+.Instructions .FormattedTextSection * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-.FormattedTextSection body {
+.Instructions .FormattedTextSection body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #0f0f1a;
             color: #e0e0f0;
@@ -12,14 +12,14 @@
             font-size: 16px;
         }
 /* ── LAYOUT ── */
-.FormattedTextSection .container {
+.Instructions .FormattedTextSection .container {
     max-width: 960px;
     margin: 0 auto;
     padding: 0px 24px;
 }
 
 /* ── HERO HEADER ── */
-.FormattedTextSection .hero {
+.Instructions .FormattedTextSection .hero {
     text-align: center;
     background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
     border: 2px solid #4fc3f7;
@@ -30,7 +30,7 @@
     overflow: hidden;
 }
 
-.FormattedTextSection .hero::before {
+.Instructions .FormattedTextSection .hero::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -41,27 +41,27 @@
     pointer-events: none;
 }
 
-.FormattedTextSection .hero h1 {
+.Instructions .FormattedTextSection .hero h1 {
     font-size: 2.6rem;
     color: #4fc3f7;
     margin-bottom: 12px;
     text-shadow: 0 0 20px rgba(79,195,247,0.4);
 }
 
-.FormattedTextSection .hero .subtitle {
+.Instructions .FormattedTextSection .hero .subtitle {
     font-size: 1.1rem;
     color: #90caf9;
     font-style: italic;
 }
 
-.FormattedTextSection .hero .snake-banner {
+.Instructions .FormattedTextSection .hero .snake-banner {
     font-size: 3rem;
     margin-bottom: 16px;
     display: block;
 }
 
 /* ── SECTION HEADERS ── */
-.FormattedTextSection .part-header {
+.Instructions .FormattedTextSection .part-header {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -72,29 +72,29 @@
     margin: 24px 0 24px 0;
 }
 
-.FormattedTextSection .part-header .part-icon {
+.Instructions .FormattedTextSection .part-header .part-icon {
     font-size: 2rem;
     flex-shrink: 0;
 }
 
-.FormattedTextSection h2 {
+.Instructions .FormattedTextSection h2 {
     font-size: 1.7rem;
     color: #4fc3f7;
     margin-bottom: 4px;
 }
-.FormattedTextSection h2 code {
+.Instructions .FormattedTextSection h2 code {
     font-size: 1.25rem;
     color: #4fc3f7;
 }
 
-.FormattedTextSection .part-header .part-subtitle {
+.Instructions .FormattedTextSection .part-header .part-subtitle {
     font-size: 0.9rem;
     color: #78909c;
     font-style: italic;
 }
 
 /* ── SECTION SUBHEADERS ── */
-.FormattedTextSection h3 {
+.Instructions .FormattedTextSection h3 {
     font-size: 1.25rem;
     color: #81d4fa;
     margin: 32px 0 12px 0;
@@ -102,28 +102,28 @@
     border-bottom: 1px solid #1e3a5f;
 }
 
-.FormattedTextSection h4 {
+.Instructions .FormattedTextSection h4 {
     font-size: 1.05rem;
     color: #b0bec5;
     margin: 20px 0 10px 0;
 }
 
 /* ── PARAGRAPHS & TEXT ── */
-.FormattedTextSection p {
+.Instructions .FormattedTextSection p {
     margin-bottom: 14px;
     color: #cfd8dc;
 }
 
-.FormattedTextSection strong {
+.Instructions .FormattedTextSection strong {
     color: #e0f7fa;
 }
 
-.FormattedTextSection em {
+.Instructions .FormattedTextSection em {
     color: #b0bec5;
 }
 
 /* ── CALLOUT BOXES ── */
-.FormattedTextSection .callout {
+.Instructions .FormattedTextSection .callout {
     border-radius: 10px;
     padding: 16px 20px;
     margin: 20px 0;
@@ -131,13 +131,13 @@
     font-size: 0.95rem;
 }
 
-.FormattedTextSection .callout-tip {
+.Instructions .FormattedTextSection .callout-tip {
     background-color: #0d2b1e;
     border-color: #66bb6a;
     color: #c8e6c9;
 }
 
-.FormattedTextSection .callout-note {
+.Instructions .FormattedTextSection .callout-note {
     background-color: #0d222b;
     border-color: #26deff;
     color: #b2dcff;
@@ -145,17 +145,17 @@
 
 
 
-.FormattedTextSection .callout-tip .callout-icon::before { content: "💡 "; }
+.Instructions .FormattedTextSection .callout-tip .callout-icon::before { content: "💡 "; }
 
-.FormattedTextSection .callout-warning {
+.Instructions .FormattedTextSection .callout-warning {
     background-color: #2b1a0d;
     border-color: #ffa726;
     color: #ffe0b2;
 }
 
-.FormattedTextSection .callout-warning .callout-icon::before { content: "⚠️ "; }
+.Instructions .FormattedTextSection .callout-warning .callout-icon::before { content: "⚠️ "; }
 
-.FormattedTextSection .callout-danger {
+.Instructions .FormattedTextSection .callout-danger {
     background-color: #2b0d0d;
     border-color: #ef5350;
     color: #ffcdd2;
@@ -163,25 +163,25 @@
 
 
 
-.FormattedTextSection .callout-danger .callout-icon::before { content: "🚨 "; }
+.Instructions .FormattedTextSection .callout-danger .callout-icon::before { content: "🚨 "; }
 
-.FormattedTextSection .callout-fun {
+.Instructions .FormattedTextSection .callout-fun {
     background-color: #1a1a2e;
     border-color: #ce93d8;
     color: #e1bee7;
 }
 
-.FormattedTextSection .callout-fun .callout-icon::before { content: "😂 "; }
+.Instructions .FormattedTextSection .callout-fun .callout-icon::before { content: "😂 "; }
 
-.FormattedTextSection .callout-important { border-color: #fca5a5; background: #e30909;}
-.FormattedTextSection .callout-important .callout-title { color: #991b1b; }
-.FormattedTextSection .callout-important .callout-body { color: #7f1d1d; }
-.FormattedTextSection .callout-try { border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-color: #c4b5fd; }
-.FormattedTextSection .callout-try .callout-header { background: #ede9fe; color: #5b21b6; }
-.FormattedTextSection .callout-try .callout-body { color: #2e1065; }
-.FormattedTextSection .callout-try .code-wrap { margin: 10px 0; }
+.Instructions .FormattedTextSection .callout-important { border-color: #fca5a5; background: #e30909;}
+.Instructions .FormattedTextSection .callout-important .callout-title { color: #991b1b; }
+.Instructions .FormattedTextSection .callout-important .callout-body { color: #7f1d1d; }
+.Instructions .FormattedTextSection .callout-try { border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-color: #c4b5fd; }
+.Instructions .FormattedTextSection .callout-try .callout-header { background: #ede9fe; color: #5b21b6; }
+.Instructions .FormattedTextSection .callout-try .callout-body { color: #2e1065; }
+.Instructions .FormattedTextSection .callout-try .code-wrap { margin: 10px 0; }
 
-.FormattedTextSection .callout-title {
+.Instructions .FormattedTextSection .callout-title {
     font-weight: bold;
     margin-bottom: 6px;
     font-size: 0.85rem;
@@ -191,7 +191,7 @@
 }
 
 /* ── CODE BLOCKS ── */
-/* .FormattedTextSection pre {
+/* .Instructions .FormattedTextSection pre {
     background-color: #0d1117;
     border: 1px solid #1e3a5f;
     border-radius: 10px;
@@ -202,13 +202,13 @@
 } */
 
 
-.FormattedTextSection pre {
+.Instructions .FormattedTextSection pre {
     padding: 20px 24px;
     overflow-x: auto;
     position: relative;
 }
 
-/* .FormattedTextSection pre::before {
+/* .Instructions .FormattedTextSection pre::before {
     content: 'Python';
     position: absolute;
     top: 8px;
@@ -222,20 +222,20 @@
 }
  */
 
-.FormattedTextSection code {
+.Instructions .FormattedTextSection code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.88rem;
     line-height: 1.8;
     color: #e0e0f0;
 }
 
-.FormattedTextSection pre, .FormattedTextSection pre code {
+.Instructions .FormattedTextSection pre, .Instructions .FormattedTextSection pre code {
 white-space: pre;
 display: block; /* pre is block by default too, but resets sometimes touch this */
 }
 
 
-.FormattedTextSection p code, .FormattedTextSection li code {
+.Instructions .FormattedTextSection p code, .Instructions .FormattedTextSection li code {
     background-color: #1a1a2e;
     border: 1px solid #2a3f5f;
     border-radius: 4px;
@@ -243,41 +243,41 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     font-size: 0.85rem;
     color: #80cbc4;
 }
-.FormattedTextSection .code-wrap { border-radius: 8px; overflow: hidden; margin: 14px 0 22px; border: 1px solid #2a2a2a; box-shadow: 0 2px 8px rgba(0,0,0,0.12); background-color: #0d1117; border: 1px solid #1e3a5f; border-radius: 10px;}
-.FormattedTextSection .code-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 7px 14px; }
-.FormattedTextSection .code-lang { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #777; font-family: 'Courier New',monospace; }
-.FormattedTextSection .copy-btn { background: transparent; color: #888; border: 1px solid #4a4a4a; border-radius: 4px; padding: 3px 10px; font-size: 0.72rem; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-.FormattedTextSection .copy-btn:hover { background: #3a3a3a; color: #ccc; border-color: #666; }
-.FormattedTextSection .copy-btn.copied { color: #4ade80; border-color: #4ade80; background: rgba(74,222,128,0.08); }
+.Instructions .FormattedTextSection .code-wrap { border-radius: 8px; overflow: hidden; margin: 14px 0 22px; border: 1px solid #2a2a2a; box-shadow: 0 2px 8px rgba(0,0,0,0.12); background-color: #0d1117; border: 1px solid #1e3a5f; border-radius: 10px;}
+.Instructions .FormattedTextSection .code-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 7px 14px; }
+.Instructions .FormattedTextSection .code-lang { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #777; font-family: 'Courier New',monospace; }
+.Instructions .FormattedTextSection .copy-btn { background: transparent; color: #888; border: 1px solid #4a4a4a; border-radius: 4px; padding: 3px 10px; font-size: 0.72rem; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.Instructions .FormattedTextSection .copy-btn:hover { background: #3a3a3a; color: #ccc; border-color: #666; }
+.Instructions .FormattedTextSection .copy-btn.copied { color: #4ade80; border-color: #4ade80; background: rgba(74,222,128,0.08); }
 
 /* ── SYNTAX HIGHLIGHTING (manual) ── */
-.FormattedTextSection .kw   { color: #c792ea; }   /* keywords: def, if, for, while, etc */
-.FormattedTextSection .fn   { color: #82aaff; }   /* function names */
-.FormattedTextSection .str  { color: #c3e88d; }   /* strings */
-.FormattedTextSection .num  { color: #f78c6c; }   /* numbers */
-.FormattedTextSection .cm   { color: #546e7a; font-style: italic; }  /* comments */
-.FormattedTextSection .op   { color: #89ddff; }   /* operators */
-.FormattedTextSection .var  { color: #eeffff; }   /* variables */
-.FormattedTextSection .bool { color: #ff9cac; }   /* True / False */
-.FormattedTextSection .out  { color: #ffcb6b; }   /* output lines */
+.Instructions .FormattedTextSection .kw   { color: #c792ea; }   /* keywords: def, if, for, while, etc */
+.Instructions .FormattedTextSection .fn   { color: #82aaff; }   /* function names */
+.Instructions .FormattedTextSection .str  { color: #c3e88d; }   /* strings */
+.Instructions .FormattedTextSection .num  { color: #f78c6c; }   /* numbers */
+.Instructions .FormattedTextSection .cm   { color: #546e7a; font-style: italic; }  /* comments */
+.Instructions .FormattedTextSection .op   { color: #89ddff; }   /* operators */
+.Instructions .FormattedTextSection .var  { color: #eeffff; }   /* variables */
+.Instructions .FormattedTextSection .bool { color: #ff9cac; }   /* True / False */
+.Instructions .FormattedTextSection .out  { color: #ffcb6b; }   /* output lines */
 
 /* ── TABLES ── */
-.FormattedTextSection .table-wrap {
+.Instructions .FormattedTextSection .table-wrap {
     overflow-x: auto;
     margin: 20px 0;
 }
 
-.FormattedTextSection table {
+.Instructions .FormattedTextSection table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.9rem;
 }
 
-.FormattedTextSection thead tr {
+.Instructions .FormattedTextSection thead tr {
     background-color: #1e3a5f;
 }
 
-.FormattedTextSection thead th {
+.Instructions .FormattedTextSection thead th {
     padding: 12px 16px;
     text-align: left;
     color: #4fc3f7;
@@ -285,51 +285,51 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     border-bottom: 2px solid #4fc3f7;
 }
 
-.FormattedTextSection tbody tr {
+.Instructions .FormattedTextSection tbody tr {
     border-bottom: 1px solid #1a2744;
     transition: background 0.2s;
 }
 
-.FormattedTextSection tbody tr:hover {
+.Instructions .FormattedTextSection tbody tr:hover {
     background-color: #131c2e;
 }
 
-.FormattedTextSection tbody td {
+.Instructions .FormattedTextSection tbody td {
     padding: 10px 16px;
     color: #cfd8dc;
     vertical-align: top;
 }
 
-.FormattedTextSection tbody td:first-child {
+.Instructions .FormattedTextSection tbody td:first-child {
     color: #80cbc4;
     font-family: 'Courier New', monospace;
     font-size: 0.85rem;
 }
 
 /* ── LISTS ── */
-.FormattedTextSection ul, ol {
+.Instructions .FormattedTextSection ul, ol {
     padding-left: 24px;
     margin: 10px 0 16px 0;
 }
 
-.FormattedTextSection li {
+.Instructions .FormattedTextSection li {
     margin-bottom: 8px;
     color: #cfd8dc;
 }
 
-.FormattedTextSection li::marker {
+.Instructions .FormattedTextSection li::marker {
     color: #4fc3f7;
 }
 
 /* ── DIVIDERS ── */
-.FormattedTextSection .section-divider {
+.Instructions .FormattedTextSection .section-divider {
     border: none;
     border-top: 1px solid #1e3a5f;
     margin: 40px 0;
 }
 
 /* ── CHEAT SHEET ── */
-.FormattedTextSection .cheat-sheet {
+.Instructions .FormattedTextSection .cheat-sheet {
     background: linear-gradient(135deg, #0d1b2e, #0d2b1e);
     border: 2px solid #4fc3f7;
     border-radius: 14px;
@@ -337,7 +337,7 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     margin: 32px 0;
 }
 
-.FormattedTextSection .cheat-sheet h2 {
+.Instructions .FormattedTextSection .cheat-sheet h2 {
     color: #4fc3f7;
     font-size: 1.4rem;
     margin-bottom: 20px;
@@ -345,7 +345,7 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
 }
 
 /* ── FINAL WORDS BOX ── */
-.FormattedTextSection .final-box {
+.Instructions .FormattedTextSection .final-box {
     background: linear-gradient(135deg, #1a1a2e, #0f3460);
     border: 2px solid #ce93d8;
     border-radius: 14px;
@@ -354,7 +354,7 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     text-align: center;
 }
 
-.FormattedTextSection .final-box blockquote {
+.Instructions .FormattedTextSection .final-box blockquote {
     font-size: 1.15rem;
     color: #e1bee7;
     font-style: italic;
@@ -363,7 +363,7 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     line-height: 1.8;
 }
 
-.FormattedTextSection .final-box .tip-row {
+.Instructions .FormattedTextSection .final-box .tip-row {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
@@ -371,7 +371,7 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     margin-top: 20px;
 }
 
-.FormattedTextSection .tip-card {
+.Instructions .FormattedTextSection .tip-card {
     background: rgba(255,255,255,0.05);
     border: 1px solid #2a3f5f;
     border-radius: 10px;
@@ -382,14 +382,14 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     color: #b0bec5;
 }
 
-.FormattedTextSection .tip-card .tip-emoji {
+.Instructions .FormattedTextSection .tip-card .tip-emoji {
     font-size: 1.5rem;
     display: block;
     margin-bottom: 8px;
 }
 
 /* ── TABLE OF CONTENTS ── */
-.FormattedTextSection .toc {
+.Instructions .FormattedTextSection .toc {
     background-color: #0d1117;
     border: 1px solid #1e3a5f;
     border-radius: 12px;
@@ -397,7 +397,7 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     margin-bottom: 40px;
 }
 
-.FormattedTextSection .toc h2 {
+.Instructions .FormattedTextSection .toc h2 {
     font-size: 1.1rem;
     color: #4fc3f7;
     margin-bottom: 14px;
@@ -405,28 +405,28 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     letter-spacing: 1px;
 }
 
-.FormattedTextSection .toc ol {
+.Instructions .FormattedTextSection .toc ol {
     padding-left: 20px;
 }
 
-.FormattedTextSection .toc li {
+.Instructions .FormattedTextSection .toc li {
     margin-bottom: 6px;
     font-size: 0.95rem;
 }
 
-.FormattedTextSection .toc a {
+.Instructions .FormattedTextSection .toc a {
     color: #81d4fa;
     text-decoration: none;
     transition: color 0.2s;
 }
 
-.FormattedTextSection .toc a:hover {
+.Instructions .FormattedTextSection .toc a:hover {
     color: #4fc3f7;
     text-decoration: underline;
 }
 
 /* ── GOLDEN RULE BOX ── */
-.FormattedTextSection .golden-rule {
+.Instructions .FormattedTextSection .golden-rule {
     background: linear-gradient(90deg, #1a2e1a, #1a2e1a);
     border: 1px solid #66bb6a;
     border-radius: 10px;
@@ -436,12 +436,12 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     font-size: 0.95rem;
 }
 
-.FormattedTextSection .golden-rule strong {
+.Instructions .FormattedTextSection .golden-rule strong {
     color: #a5d6a7;
 }
 
 /* ── BADGE LABELS ── */
-.FormattedTextSection .badge {
+.Instructions .FormattedTextSection .badge {
     display: inline-block;
     padding: 2px 10px;
     border-radius: 12px;
@@ -453,26 +453,26 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
     vertical-align: middle;
 }
 
-.FormattedTextSection .badge-new {
+.Instructions .FormattedTextSection .badge-new {
     background-color: #0d3b4f;
     color: #4fc3f7;
     border: 1px solid #4fc3f7;
 }
 
-.FormattedTextSection .badge-tip {
+.Instructions .FormattedTextSection .badge-tip {
     background-color: #0d3b1e;
     color: #66bb6a;
     border: 1px solid #66bb6a;
 }
 
-.FormattedTextSection .badge-warning {
+.Instructions .FormattedTextSection .badge-warning {
     background-color: #3b1e0d;
     color: #ffa726;
     border: 1px solid #ffa726;
 }
 
 /* ── FOOTER ── */
-.FormattedTextSection footer {
+.Instructions .FormattedTextSection footer {
     text-align: center;
     padding-top: 14px;
     padding-bottom: 14px;
@@ -484,16 +484,16 @@ display: block; /* pre is block by default too, but resets sometimes touch this 
 
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
-    .FormattedTextSection .hero h1 { font-size: 1.8rem; }
-    .FormattedTextSection .part-header h2 { font-size: 1.3rem; }
-    .FormattedTextSection pre { font-size: 0.8rem; padding: 14px 16px; }
-    .FormattedTextSection .tip-card { flex: 1 1 100%; }
+    .Instructions .FormattedTextSection .hero h1 { font-size: 1.8rem; }
+    .Instructions .FormattedTextSection .part-header h2 { font-size: 1.3rem; }
+    .Instructions .FormattedTextSection pre { font-size: 0.8rem; padding: 14px 16px; }
+    .Instructions .FormattedTextSection .tip-card { flex: 1 1 100%; }
 }
 
 /* -- Review -- */
-.FormattedTextSection .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0 28px; }
-.FormattedTextSection .review-card { background: #0d2b1e; border: 1px solid #66bb6a; border-radius: 8px; padding: 16px 18px; }
-.FormattedTextSection .review-card h3 { font-size: 0.9rem; color: #66bb6a; margin: 0 0 8px; padding: 0; border: none; }
-.FormattedTextSection .review-card ul { padding-left: 16px; margin: 0; }
-.FormattedTextSection .review-card li { font-size: 0.875rem; color: #c8e6c9; margin-bottom: 4px; }
+.Instructions .FormattedTextSection .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0 28px; }
+.Instructions .FormattedTextSection .review-card { background: #0d2b1e; border: 1px solid #66bb6a; border-radius: 8px; padding: 16px 18px; }
+.Instructions .FormattedTextSection .review-card h3 { font-size: 0.9rem; color: #66bb6a; margin: 0 0 8px; padding: 0; border: none; }
+.Instructions .FormattedTextSection .review-card ul { padding-left: 16px; margin: 0; }
+.Instructions .FormattedTextSection .review-card li { font-size: 0.875rem; color: #c8e6c9; margin-bottom: 4px; }
         

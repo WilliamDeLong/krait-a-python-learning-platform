@@ -131,7 +131,7 @@ const ChapterTemplatePage = () => {
       <section className="lesson" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
         <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
           <div className="row d-flex" style={{color:isLightMode ? '#000000': '#ffffff', justifyContent:'center', textAlign:'center'}}>
-            <h4>Section {data.chapter_no}</h4>
+            <h4>Chapter {data.chapter_no}</h4>
             <h3>{data.title}</h3>
             <h5 style={{width:'50%', fontSize:"100%"}}>{data.description}</h5>
           </div>

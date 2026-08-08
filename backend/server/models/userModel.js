@@ -40,6 +40,10 @@ const newUserSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    administrator: {
+      type: Boolean,
+      default: false
+    }
   },
   { collection: "users" }
 );

@@ -176,7 +176,7 @@ const ProfilePage = () => {
                     </div>}
                     {editMode && <div style={{display: "flex", justifyContent: "flex-end", width:'150%',marginLeft:'-25%'}}>
                         <div className="card" style={{backgroundColor: isLightMode ? '#ffffff' : '#000000', color: isLightMode ? '#000000' : '#ffffff', marginLeft: '0px', width:'50%'}}>
-                        <h3>Edit Account</h3>
+                        <h3>Edit Username</h3>
                         <div className="username" style={{color: isLightMode ? '#000000' : '#ffffff'}}>{!editMode && data.username}{editMode && <Form.Group className="mb-3" controlId="formBasicUsername">
                         <Form.Control type="username" name="username" onChange={handleChange} defaultValue={data.username}/></Form.Group>}</div>
                     </div>

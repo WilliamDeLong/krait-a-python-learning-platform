@@ -23,6 +23,8 @@ import LoggedOutRedirect from "./components/logOutPage";
 import DocumentationSelect from "./components/pages/documentationSelectionPage";
 import DocumentationTemplatePage from "./components/pages/DocumentationTemplatePage";
 
+import LessonCreator from "./components/pages/lessonCreationPage";
+
 import { createEditorState, createEditorView } from "./components/editor";
 
 export const UserContext = createContext();
@@ -78,6 +80,7 @@ const App = () => {
     //console.log(`lightmode now ${isLightMode}`);
   };
   function createEditor(loadedCode="Placeholder") {
+    console.log(loadedCode);
     //console.log("Attempting to make editor");
     if (document.querySelector(`.cm-editor`)!==null) {
       let cmEditorElement = document.querySelector(".cm-editor"); // Or whatever query you need
@@ -115,6 +118,7 @@ const App = () => {
           <Route path="/documentation" element={<DocumentationSelect />} />
           <Route path="/document/:DocumentID" element={<DocumentationTemplatePage />} />
           <Route path="/lessonRedirect/:lessonID" element={<LessonRedirectPage />} />
+          <Route path="/lessonCreator/:lessonID" element={<LessonCreator />} />
 
           
         </Routes>

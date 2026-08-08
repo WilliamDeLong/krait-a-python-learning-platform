@@ -368,7 +368,9 @@ const LessonTestPage = () => {
     </>
     ) 
   
-  if (lessonLayoutType===0) return (
+  if (lessonLayoutType===0) {
+    //console.log(codeSubmission.script_submission);
+    return (
       <section className="lesson-type-one" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
         <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
           <div
@@ -407,7 +409,7 @@ const LessonTestPage = () => {
           </div>
         </div>
       </section>
-  );
+  );}
   if (lessonLayoutType===1) return (
       <section className="lesson-type-zero" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
         <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>

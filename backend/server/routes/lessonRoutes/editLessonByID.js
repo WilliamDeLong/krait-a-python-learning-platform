@@ -3,7 +3,7 @@ const router = express.Router();
 const z = require('zod')
 const bcrypt = require("bcrypt");
 const lessonSchema = require('../../models/LessonModel')
-const data_default = { title: "Placeholder title.", instructions: "You know how to make a print statement, right? Make one.", default_script: "#This is where you put YOUR code to be ran.", solution_verification: "print('Hello World')", is_test: false, chapter_no: 0, order_within_chapter: 0};
+//const data_default = { title: "Placeholder title.", instructions: "You know how to make a print statement, right? Make one.", default_script: "#This is where you put YOUR code to be ran.", solution_verification: "print('Hello World')", is_test: false, chapter_no: 0, order_within_chapter: 0};
 
 
 router.post("/:id/edit", async (req, res) =>
@@ -12,17 +12,34 @@ router.post("/:id/edit", async (req, res) =>
     var { id } = req.params;
     // store new user information
     const data_2_check = req.body
-    // I need all of the elements in an object so I can iterate through them
     
+    console.log(data_2_check);
+
+    // I need all of the elements in an object so I can iterate through them
+    //const lessonData = lessonSchema.findById(id); 
+    //console.log((lessonData));
     //Due to lessons having default values, we need to set empty values to their defaults so that the system can check for duplicates accurately.
-    Object.keys(data_default).forEach(element => {
+    /* Object.keys(data_default).forEach(element => {
         if (data_2_check[element] === undefined) 
             data_2_check[element] = data_default[element];
         //console.log(`Testing ${element}:\n\tDefault Value: ${data_default[element]}\n\tInputted Value: ${data_2_check[element]}\n\tComparison: ${data_default[element]===data_2_check[element]}`)
-    });
+    }); */
     //console.log("Gate 2");
     // After we have our defaulted sets, we can now properly set them to their individual variables and check each one for duplicates.
-    const {title, instructions, default_script, solution_verification, is_test, chapter_no, order_within_chapter, documentation_id } = data_2_check
+    if (Object.keys(req.body).length===1) {
+        var {title, instructions, instructionsHTML, default_script, solution_verification, is_test, chapter_no, order_within_chapter, documentation_id, description } = req.body.params;
+        //console.log(`Req Params: ${req.params}`);
+        //console.log(`user id: ${userID}`);
+        //console.log(`lesson id ${lessonID}`);
+    }
+    else {
+        var {title, instructions, instructionsHTML, default_script, solution_verification, is_test, chapter_no, order_within_chapter, documentation_id, description } = req.body;
+        //console.log(`Req Body: ${req.body}`);
+        //console.log(req.body);
+        //console.log(`user id: ${userID}`);
+        //console.log(`lesson id ${lessonID}`);
+    }
+    
 
 
     // check if lesson title is available
@@ -35,12 +52,14 @@ router.post("/:id/edit", async (req, res) =>
     lessonSchema.findByIdAndUpdate(id, {
         title: title,
         instructions: instructions,
+        instructionsHTML: instructionsHTML,
         default_script: default_script,
         solution_verification: solution_verification,
         is_test: is_test,
         chapter_no: chapter_no,
         order_within_chapter: order_within_chapter,
-        documentation_id: documentation_id
+        documentation_id: documentation_id,
+        description: description
     } ,function (err, lesson) {
     if (err){
         console.log(err);

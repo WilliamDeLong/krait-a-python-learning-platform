@@ -39,7 +39,7 @@ router.post('/editUser', async (req, res) =>
         console.log(err);
     } else {
         // create and send new access token to local storage
-        const accessToken = generateAccessToken(user._id, email, username, hashPassword)  
+        const accessToken = generateAccessToken(user._id, email, username, hashPassword, user.administrator)  
         res.header('Authorization', accessToken).send({ accessToken: accessToken })
     }
     });

@@ -18,14 +18,16 @@ function createEditorState(initialContents, options = {}) {
     let extensions = [
 		keymap.of([defaultKeymap, indentWithTab]), 
 		basicSetup, 
-        EditorView.lineWrapping,
-		python()
+        EditorView.lineWrapping
 	];
 
     if (options.oneDark) {
         extensions.push(oneDark);
 		//console.log(options);
 	}
+    if (options.python) {
+        extensions.push(python());
+    }
     return EditorState.create({
         doc: initialContents,
         extensions

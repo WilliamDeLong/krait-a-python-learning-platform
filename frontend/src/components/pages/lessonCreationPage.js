@@ -80,7 +80,7 @@ const LessonCreator = () => {
         //justifyContent: "flex-end",
         marginLeft: 'auto',
         //marginRight: 0,
-        width:"44rem",
+        width:"51rem",
         height: '656px',
         //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
@@ -209,7 +209,7 @@ const LessonCreator = () => {
     if (document.querySelector(`.cm-editor`)===null && document.getElementById("editor")!==null) {
       console.log("Creating new Editor.");
       //console.log(lesson_block_data["instructionsHTML"]);
-      createEditor(lesson_block_data["instructionsHTML"]);
+      createEditor(lesson_block_data["instructionsHTML"],false);
     }
   }, [createEditor, seed]);
 

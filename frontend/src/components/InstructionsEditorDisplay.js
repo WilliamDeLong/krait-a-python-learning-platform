@@ -19,7 +19,7 @@ function InstructionsEditorDisplay({ htmlData }) {
     <>
     <div
       className={isLightMode?"InstructionsLM":"Instructions"}
-      style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"95.4%", scrollbarColor: "#008a00", scrollbarWidth: "4px", overflowY: 'auto'}}
+      style={{color: isLightMode? "#a0316e": "#ffffff",backgroundColor: isLightMode? "#ffffff": "#0f0f1a", width:"stretch", height:"100%", scrollbarColor: "#008a00", scrollbarWidth: "thin", overflowY: 'auto'}}
       dangerouslySetInnerHTML={{ __html: htmlData }}
     />
     </>

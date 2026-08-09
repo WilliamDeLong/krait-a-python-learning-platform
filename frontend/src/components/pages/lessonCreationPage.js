@@ -14,6 +14,7 @@ import PythonTerminal from "../PyTerminal.js";
 import InstructionsEditorDisplay from "../InstructionsEditorDisplay.js";
 import { usePyodide } from '../usePyodide';
 import { render, screen } from '@testing-library/react';
+import GradingCriteriaBuilder from "../Gradingcriteriabuilder.js";
 //import { loadPyodide } from "pyodide";
 //const { loadPyodide } = require("pyodide");
 //import CodeEditor from "../CodeEditor";
@@ -71,6 +72,7 @@ const LessonCreator = () => {
   const [needs2Save, setNeed2Save] = useState(false);
   const output = document.getElementById("output");
   const { isReady, outputLines, clearOutput, runCode, runGraded } = usePyodide();
+  const {referenceSolutionText, setReferenceSolutionText} = useState();
   
   
   //const { isLightMode } = useContext();
@@ -78,12 +80,16 @@ const LessonCreator = () => {
   let rightCard = {
         display: "flex",
         //justifyContent: "flex-end",
-        marginLeft: 'auto',
+        //marginLeft: 'auto',
         //marginRight: 0,
-        width:"51rem",
+        width:"52rem",
         height: '656px',
         //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
+        overflowY: "scroll",
+        scrollbarWidth:'thin',
+        paddingRight: "0px",
+        paddingLeft: "0px"
     };
     let leftCard = {
         display: "flex",
@@ -91,7 +97,9 @@ const LessonCreator = () => {
         marginLeft: 0,
         //marginRight: '50px',
         width: '44rem',
-        height:'656px'
+        height:'656px',
+        paddingRight: "0px",
+        paddingLeft: "0px"
         //height: 'fit-content',
         //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
@@ -99,7 +107,7 @@ const LessonCreator = () => {
     let centerCard = {
         display: "flex",
         flexDirection:"column",
-        width:"716px",
+        width:"stretch",
         height: "40.8px",
         textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
@@ -141,7 +149,7 @@ const LessonCreator = () => {
     //addToOutput(lesson_block_data);
     console.log(lesson_block_data);
     //lesson_block_data["instructionsHTML"]
-    refresher();
+    //refresher();
     //setNeed2Save(true);
     
   };
@@ -244,7 +252,7 @@ const LessonCreator = () => {
     <>
         <div key={seed} style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading Lesson Data</h4></div>
     </>
-    ) 
+    ); 
   
   if (user.admin) {
     //console.log(lesson_block_data.instructionsHTML);
@@ -255,37 +263,64 @@ const LessonCreator = () => {
             className="row d-flex"
             style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
               <div className='box' style={leftCard}>
-                <div className="right nav" style={centerCard}>
-                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#6c757d',color:'#fff', width:'25%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.chapter_no} onChange={handleChange} name="chapter_no" title="Change the chapter of the lesson"></input>
-                  
-                  
-                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'25%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.title} onChange={handleChange} name="title" title="Change the title of the lesson"></input>
-                  <button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', width:'25%', height:'37.5px'}} title="Toggles whether or not this lesson is a test or not." variant="success" onClick={swapTestState} >Is test: {lesson_block_data.is_test ? "True": "False"}</button>
-                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#6c757d',color:'#fff', width:'25%'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.order_within_chapter} onChange={handleChange} name="order_within_chapter" title="Change the placement of the lesson within its chapter"></input>
-                </div>
-                <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
                 
-                <InstructionsEditorDisplay style={{height:'613.2px'}} htmlData={lesson_block_data.instructionsHTML} key={refreshBox} />
+                {/* <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(17, 17, 17)'}}/> */}
+                
+                <InstructionsEditorDisplay style={{height:'100%', scrollbarWidth: "thin"}} htmlData={lesson_block_data.instructionsHTML} key={refreshBox} />
               </div>
               <div className='box' style={rightCard}>
+                <div className="right nav" style={{display: "flex", flexDirection:"column", width:"stretch", height:"fit-content"}}>
+                  <div id="Explanation Textbox" style={{color:'#fff',width:'stretch'}} title="Change the chapter of the lesson">
+  <pre style={{whiteSpace: "pre-wrap", display:"block", padding: "5px 24px", overflowX: "auto", position: "relative",marginBottom:"0px"}}>
+    <span>Welcome to the Lesson Editor!</span><br/>
+    <span>Here you'll find all the tools needed to create a new lesson, or modify an existing lesson.</span><br/>
+    <span>Just below here you'll find the html code editor for the instructions page shown to your left.</span><br/>
+    <span>If you scroll down, you'll find some other fields that alter other details of the lesson.</span><br/>
+  </pre>
+</div>
+                </div>
                 <div className="right" style={{width:'stretch'}}>
-                  <div id="editor" className="script_submission" style={{height:"328px", width: '100%',backgroundColor: isLightMode? "#ffffff": "#000000",color: isLightMode? "#000000":"#ffffff"}} />
+                  <div id="editor" className="script_submission" style={{width: '100%',backgroundColor: isLightMode? "#ffffff": "#000000",color: isLightMode? "#000000":"#ffffff",scrollbarWidth: 'thin'}} />
                 </div>
                 <div className="right nav" style={centerCard, {width:'100%'}}>
-                  <input style={{textAlign:"center",height:'37.6px', backgroundColor:'#0d6efd',color:'#fff', width:'50%', overflowX:'scroll'}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.description} onChange={handleChange} name="description" title="Change to modify the description of the lesson."></input>
-                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'25%', height:'37.5px'}} title="View Changes" variant="success" onClick={handleViewChanges}/* href="/lessons" */>View Changes</button>
-                  <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', width:'25%', height:'37.5px'}} title="Submit Changes" variant="success" onClick={handleUpdate}/* href="/lessons" */disabled = { // Disables the button's functions if options are not filled in
+                  
+                  <button style={{justifyContent:"center", backgroundColor:'#198754',color:'#fff', width:'50%', height:'37.5px'}} title="View Changes" variant="success" onClick={handleViewChanges}/* href="/lessons" */>View Changes</button>
+                  <button style={{justifyContent:"center", backgroundColor:'#accf11',color:'#fff', width:'50%', height:'37.5px'}} title="Submit Changes" variant="success" onClick={handleUpdate}/* href="/lessons" */disabled = { // Disables the button's functions if options are not filled in
                     lesson_block_data.title ==="Enter Lesson Title Here" || 
                     //lesson_block_data.chapter_no ===0 || 
                     lesson_block_data.order_within_chapter ===0 
                     //|| lesson_block_data.description ==="Enter Description Here"
                   }>Submit Changes</button>
                 </div>
-                <div className="bar" style={{height:"2px", width:"90%",marginLeft:"5%",display:'flex', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
-                <div id="terminal" style={{color: "#008a00",backgroundColor:"#000000",resize:"none", width:"stretch", height:"45%"}}>
+                <div id="Explanation Textbox" style={{color:'#fff',width:'stretch'}} title="Change the chapter of the lesson">
+                <pre style={{whiteSpace: "pre-wrap", display:"block", padding: "5px 24px", overflowX: "auto", position: "relative",marginBottom:"0px"}}>
+                  <span>The above buttons as you can probably guess allow you to view the modifications you made to the html script on the left, or upload the changes you've made to the database.</span><br/><br/>
+                  <span><strong>NOTICE: ALL changes made to the code and attribute fields will be updated upon clicking submit, so make sure that you don't enter anything you do not want to be updated.</strong></span><br/><br/>
+                  <span>Just beneath these instructions you'll find 5 textboxes of varying colors, each controls a different attribute of the lesson's data.</span><br/>
+                  <span>The texboxes are in-line before their respective descriptions:</span><br/>
+                  <div style={{color:"#fff",backgroundColor:'#007d34',width:'550px'}}><input style={{textAlign:"center",height:'37.6px', backgroundColor:'#007d34',color:'#fff', width:'10%',border: "2px solid rgb(17, 17, 17)",borderRadius: "5px"}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.chapter_no} onChange={handleChange} name="chapter_no" title="Change the chapter of the lesson"/> - Box 1: Alters what chapter the lesson is a part of.</div>
+                  <div style={{color:"#fff",backgroundColor:'#4f007d'}}><input style={{textAlign:"center",height:'37.6px', backgroundColor:'#4f007d',color:'#fff', width:'10%',border: "2px solid rgb(17, 17, 17)",borderRadius: "5px"}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.order_within_chapter} onChange={handleChange} name="order_within_chapter" title="Change the placement of the lesson within its chapter"/> - Box 2: Alters the position that the lesson is in within a chapter.</div>
+                  <div style={{color:"#fff",backgroundColor:'#a2170f'}}><button style={{justifyContent:"center", backgroundColor:'#a2170f',color:'#fff', height:'37.5px',border: "2px solid rgb(17, 17, 17)",borderRadius: "5px"}} title="Toggles whether or not this lesson is a test or not." variant="success" onClick={swapTestState} >Is test: {lesson_block_data.is_test ? "True": "False"}</button> - Box 3: Toggles the test status of the lesson.</div>
+                  <div style={{color:"#fff",backgroundColor:'#0d85fd'}}><input style={{textAlign:"center",height:'37.6px', backgroundColor:'#0d85fd',color:'#fff',border: "2px solid rgb(17, 17, 17)",borderRadius: "5px"}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.title} onChange={handleChange} name="title" title="Change the title of the lesson"/> - Box 4: Alters the title of the lesson.</div>
+                  <div style={{color:"#fff",backgroundColor:'#fd5d0d'}}><input style={{textAlign:"center",height:'37.6px', backgroundColor:'#fd5d0d',color:'#fff', width:'50%', overflowX:'scroll',border: "2px solid rgb(17, 17, 17)",borderRadius: "5px"}}   /* onClick={toggleLayout} */defaultValue={lesson_block_data.description} onChange={handleChange} name="description" title="Change to modify the description of the lesson."/> - Box 5: Alters the description of the lesson.</div>
+                  
+                </pre>
+              </div>
+              <div className="bar" style={{height:"2px",display:'flex',width:'stretch', justifyContent:"center", backgroundColor:'rgb(96 139 168)'}}/>
+              <div id="Explanation Textbox" style={{color:'#fff',width:'stretch'}} title="Change the chapter of the lesson">
+                <pre style={{whiteSpace: "pre-wrap", display:"block", padding: "5px 24px", overflowX: "auto", position: "relative",marginBottom:"0px"}}>
+                  <span>Below you'll find a form that will aid in setting up the grading system for the current lesson</span><br/>
+                  <span>But first you'll need a script to use as a test for the testcases.</span><br/>
+                  
+                </pre>
+              </div>     
+                
+                <div id="terminal" style={{resize:"none", width:"stretch"}}>
                   {/* {"Pretend this is a terminal that's spitting out results, I'll get it working later"} */}
-                  {<textarea id="output" style={{"width": "100%", height:'100%',resize:"none",color: "#008a00",backgroundColor: isLightMode? "#d9dbdf": "#000000"}} rows="6" disabled ></textarea>}
+                  {/* {<textarea id="output" style={{"width": "100%", height:'100%',resize:"none",color: "#008a00",backgroundColor: isLightMode? "#d9dbdf": "#000000"}} rows="6" disabled ></textarea>} */}
                   {/* <PythonTerminal></PythonTerminal> */}
+                  <GradingCriteriaBuilder initialVerificationJson={lesson_block_data.solution_verification || null} referenceSolution={referenceSolutionText} onChange={(json) => handleChange({ currentTarget: { name: 'solution_verification', value: json } }) } isLightMode={isLightMode}
+/>
                 </div>
               </div>
           </div>

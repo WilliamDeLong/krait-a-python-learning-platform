@@ -72,7 +72,7 @@ const LessonCreator = () => {
   const [needs2Save, setNeed2Save] = useState(false);
   const output = document.getElementById("output");
   const { isReady, outputLines, clearOutput, runCode, runGraded } = usePyodide();
-  const {referenceSolutionText, setReferenceSolutionText} = useState();
+  const [referenceSolutionText, setReferenceSolutionText] = useState();
   
   
   //const { isLightMode } = useContext();
@@ -132,9 +132,10 @@ const LessonCreator = () => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
-        setlesson_block_data({ ...lesson_block_data, [input.name]: input.value });
-        //console.log("Name: ", input.name);
-        //console.log("Value: ", input.value);
+    if (input.name==="referenceSolutionText") setReferenceSolutionText(input.value)
+    else setlesson_block_data({ ...lesson_block_data, [input.name]: input.value });
+    console.log("Name: ", input.name);
+    console.log("Value: ", input.value);
     };
 
   const handleViewChanges = async (e) => {
@@ -311,7 +312,8 @@ const LessonCreator = () => {
                 <pre style={{whiteSpace: "pre-wrap", display:"block", padding: "5px 24px", overflowX: "auto", position: "relative",marginBottom:"0px"}}>
                   <span>Below you'll find a form that will aid in setting up the grading system for the current lesson</span><br/>
                   <span>But first you'll need a script to use as a test for the testcases.</span><br/>
-                  
+                  <span>Just toss some python code into the text box here and it'll be used to test your test cases.</span><br/>
+                  <div style={{borderRadius: "8px", overflow: "hidden", margin: "14px 0 22px", border: "1px solid #2a2a2a", boxShadow: "0 2px 8px rgba(0,0,0,0.12)", backgroundColor: "#0d1117", border: "1px solid #1e3a5f", borderRadius: "10px"}}><textarea id="referenceSolutionText" style={{"width": "100%", height:'100%',resize:"none",color: "#f9fbf9",backgroundColor:"inherit", paddingLeft: '3px'}} rows="6" onChange={handleChange} name="referenceSolutionText"></textarea></div>
                 </pre>
               </div>     
                 
@@ -319,8 +321,7 @@ const LessonCreator = () => {
                   {/* {"Pretend this is a terminal that's spitting out results, I'll get it working later"} */}
                   {/* {<textarea id="output" style={{"width": "100%", height:'100%',resize:"none",color: "#008a00",backgroundColor: isLightMode? "#d9dbdf": "#000000"}} rows="6" disabled ></textarea>} */}
                   {/* <PythonTerminal></PythonTerminal> */}
-                  <GradingCriteriaBuilder initialVerificationJson={lesson_block_data.solution_verification || null} referenceSolution={referenceSolutionText} onChange={(json) => handleChange({ currentTarget: { name: 'solution_verification', value: json } }) } isLightMode={isLightMode}
-/>
+                  <GradingCriteriaBuilder initialVerification={lesson_block_data.solution_verification || null} referenceSolution={referenceSolutionText} onChange={(json) => handleChange({ currentTarget: { name: 'solution_verification', value: json } }) } isLightMode={isLightMode}/>
                 </div>
               </div>
           </div>

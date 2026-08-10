@@ -10,7 +10,7 @@
 // editorView) — every field here is a plain controlled input, and the reference
 // solution is a plain <textarea>, not a second editor instance.
 
-import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef, useId } from 'react';
 import { usePyodide } from './usePyodide';
 
 // ---------- shared helpers ----------
@@ -36,14 +36,16 @@ function nextId() {
 function JsonField({ label, value, onChange, placeholder, isLightMode }) {
   const parsed = tryParseJson(value, undefined);
   const invalid = !parsed.ok;
+  const fieldId = useId();
   return (
     <div style={{ marginBottom: '10px' }}>
       {label && (
-        <label style={{ display: 'block', fontSize: '85%', marginBottom: '2px', opacity: 0.85 }}>
+        <label htmlFor={fieldId} style={{ display: 'block', fontSize: '85%', marginBottom: '2px', opacity: 0.85 }}>
           {label}
         </label>
       )}
       <input
+        id={fieldId}
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -70,17 +72,20 @@ function JsonField({ label, value, onChange, placeholder, isLightMode }) {
 }
 
 function TextField({ label, value, onChange, placeholder, isLightMode, type = 'text' }) {
+  const fieldId = useId();
+  //console.log(fieldId);
   return (
     <div style={{ marginBottom: '10px' }}>
       {label && (
-        <label style={{ display: 'block', fontSize: '85%', marginBottom: '2px', opacity: 0.85 }}>
+        <label htmlFor={fieldId} style={{ display: 'block', fontSize: '85%', marginBottom: '2px', opacity: 0.85 }}>
           {label}
         </label>
       )}
       <input
+        id={fieldId}
         type={type}
         value={value}
-        onChange={(e) => onChange(type === 'number' ? e.target.value : e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         style={{
           width: '100%',
@@ -160,6 +165,7 @@ function AddButton({ onClick, children }) {
 // ---------- function-mode test case row ----------
 
 function FunctionTestCaseRow({ row, onUpdate, onRemove, isLightMode }) {
+  console.log(row);
   return (
     <RowShell onRemove={onRemove} isLightMode={isLightMode}>
       <JsonField
@@ -208,17 +214,18 @@ const STATIC_CHECK_TYPES = [
 
 function CheckRow({ row, onUpdate, onRemove, isLightMode, availableTypes }) {
   const set = (patch) => onUpdate({ ...row, ...patch });
-
+  //console.log(set);
   return (
     <RowShell onRemove={onRemove} isLightMode={isLightMode}>
       <div style={{ marginBottom: '10px' }}>
-        <label style={{ display: 'block', fontSize: '85%', marginBottom: '2px', opacity: 0.85 }}>
+        <label htmlFor={`check-type-${row.id}`} style={{ display: 'block', fontSize: '85%', marginBottom: '2px', opacity: 0.85 }}>
           Check type
         </label>
         <select
+          id={`check-type-${row.id}`}
           value={row.type}
           onChange={(e) => onUpdate({ type: e.target.value })}
-          style={{ padding: '6px 8px', borderRadius: '4px' }}
+          style={{ padding: '6px 8px', borderRadius: '4px', color:"#000" }}
         >
           {availableTypes.map((t) => (
             <option key={t} value={t}>{t}</option>
@@ -296,6 +303,7 @@ function buildVerification(mode, funcName, testCaseRows, checkRows) {
 
   // script and static modes share the same "checks" shape
   const checks = checkRows.map((row) => {
+    //console.log(row);
     const c = { type: row.type };
     if (row.name !== undefined && row.name !== '') c.name = row.name;
     if (row.func !== undefined && row.func !== '') c.func = row.func;
@@ -312,6 +320,7 @@ function buildVerification(mode, funcName, testCaseRows, checkRows) {
     if (row.normalize !== undefined) c.normalize = row.normalize;
     return c;
   });
+  //console.log({ mode, checks });
   return { mode, checks };
 }
 
@@ -377,10 +386,12 @@ export default function GradingCriteriaBuilder({
 
   const { isReady, runGraded } = usePyodide();
   //console.log(initialVerification);
-
+  
   // seed form state from an existing verification object, if editing a lesson that already has one
   useEffect(() => {
     console.log(initialVerification);
+    console.log(typeof(initialVerification));
+    
     if (!initialVerification) return;
     try {
       // Object is the native, expected shape (matches how this system actually
@@ -407,6 +418,7 @@ export default function GradingCriteriaBuilder({
           }))
         );
       } else {
+        console.log("Experiment2");
         setCheckRows(
           (parsed.checks || []).map((c) => ({
             id: nextId(),
@@ -426,31 +438,40 @@ export default function GradingCriteriaBuilder({
       console.error('GradingCriteriaBuilder: could not load existing solution_verification', e, initialVerification);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialVerification]);
+  }, []);
+  // Complain to claude again that putting initialVerification in the box breaks every goddamn thing
 
   const verification = useMemo(
     () => buildVerification(mode, funcName, testCaseRows, checkRows),
     [mode, funcName, testCaseRows, checkRows]
   );
+  console.log(checkRows)
 
   // Only used for the read-only preview pane below — never passed to onChange,
   // since the object itself is what actually gets stored.
   const verificationJson = useMemo(() => JSON.stringify(verification, null, 2), [verification]);
 
-  // Skip the very first invocation of this effect. Without this, the form's
-  // initial (empty) computed state fires onChange before the seeding effect
-  // above has had a chance to populate real data from initialVerification —
-  // which, depending on how the parent handles onChange, can overwrite the
-  // real solution_verification with an empty default before it's ever shown.
+  // Skip the very first invocation, AND skip any invocation whose content
+  // exactly matches what was last emitted. The first-skip alone isn't enough
+  // once onChange sends a plain object: every re-seed (triggered by the
+  // parent handing back a new-but-equal object reference) builds brand-new
+  // arrays via .map(), so `verification` never reference-equals its previous
+  // value — without a content check, seed → emit → parent updates → new
+  // initialVerification reference → re-seed → emit again, forever. Comparing
+  // stringified content (cheap, and verificationJson is already computed for
+  // the preview below) breaks that cycle as soon as content actually stabilizes.
   const hasFiredOnceRef = useRef(false);
+  const lastEmittedJsonRef = useRef(null);
   useEffect(() => {
     if (!hasFiredOnceRef.current) {
       hasFiredOnceRef.current = true;
       return;
     }
+    if (lastEmittedJsonRef.current === verificationJson) return;
+    lastEmittedJsonRef.current = verificationJson;
     if (onChange) onChange(verification);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [verification]);
+  }, [verificationJson]);
 
   const availableCheckTypes = mode === 'static' ? STATIC_CHECK_TYPES : SCRIPT_CHECK_TYPES;
 

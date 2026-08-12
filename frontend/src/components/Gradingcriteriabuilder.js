@@ -25,6 +25,34 @@ function tryParseJson(text, fallbackOnEmpty) {
   }
 }
 
+// Compact, order-stable JSON for equality checks (not display — see
+// verificationJson below for the pretty-printed version). Accepts either an
+// object or a JSON string, since initialVerification can arrive as either.
+function canonicalStringify(value) {
+  if (value === null || value === undefined) return null;
+  const obj = typeof value === 'string'
+    ? (() => { try { return JSON.parse(value); } catch { return null; } })()
+    : value;
+  if (obj === null) return null;
+  return JSON.stringify(obj);
+}
+
+// True if any JSON-valued field currently has unparseable text — e.g. mid-edit
+// after backspacing a closing quote. Used to hold off emitting onChange until
+// the form is internally consistent, so a momentarily-broken field is never
+// what gets saved.
+function hasAnyInvalidJson(mode, testCaseRows, checkRows) {
+  const fieldInvalid = (text) => {
+    if (text === undefined || text === null) return false;
+    if (text.trim() === '') return false; // empty is handled separately, not "invalid"
+    return !tryParseJson(text, undefined).ok;
+  };
+  if (mode === 'function') {
+    return testCaseRows.some((r) => fieldInvalid(r.args) || fieldInvalid(r.expected));
+  }
+  return checkRows.some((r) => fieldInvalid(r.args) || fieldInvalid(r.expected));
+}
+
 let __idCounter = 0;
 function nextId() {
   __idCounter += 1;
@@ -73,7 +101,6 @@ function JsonField({ label, value, onChange, placeholder, isLightMode }) {
 
 function TextField({ label, value, onChange, placeholder, isLightMode, type = 'text' }) {
   const fieldId = useId();
-  //console.log(fieldId);
   return (
     <div style={{ marginBottom: '10px' }}>
       {label && (
@@ -85,7 +112,7 @@ function TextField({ label, value, onChange, placeholder, isLightMode, type = 't
         id={fieldId}
         type={type}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange(type === 'number' ? e.target.value : e.target.value)}
         placeholder={placeholder}
         style={{
           width: '100%',
@@ -165,7 +192,6 @@ function AddButton({ onClick, children }) {
 // ---------- function-mode test case row ----------
 
 function FunctionTestCaseRow({ row, onUpdate, onRemove, isLightMode }) {
-  console.log(row);
   return (
     <RowShell onRemove={onRemove} isLightMode={isLightMode}>
       <JsonField
@@ -214,7 +240,7 @@ const STATIC_CHECK_TYPES = [
 
 function CheckRow({ row, onUpdate, onRemove, isLightMode, availableTypes }) {
   const set = (patch) => onUpdate({ ...row, ...patch });
-  //console.log(set);
+
   return (
     <RowShell onRemove={onRemove} isLightMode={isLightMode}>
       <div style={{ marginBottom: '10px' }}>
@@ -303,7 +329,6 @@ function buildVerification(mode, funcName, testCaseRows, checkRows) {
 
   // script and static modes share the same "checks" shape
   const checks = checkRows.map((row) => {
-    //console.log(row);
     const c = { type: row.type };
     if (row.name !== undefined && row.name !== '') c.name = row.name;
     if (row.func !== undefined && row.func !== '') c.func = row.func;
@@ -320,7 +345,6 @@ function buildVerification(mode, funcName, testCaseRows, checkRows) {
     if (row.normalize !== undefined) c.normalize = row.normalize;
     return c;
   });
-  //console.log({ mode, checks });
   return { mode, checks };
 }
 
@@ -385,14 +409,31 @@ export default function GradingCriteriaBuilder({
   const [testRunning, setTestRunning] = useState(false);
 
   const { isReady, runGraded } = usePyodide();
+
+  // Tracks the canonical (compact) JSON of whatever WE last emitted via
+  // onChange. Declared before the seeding effect since that effect needs to
+  // consult it — see the echo-check below.
+  const lastEmittedJsonRef = useRef(null);
   //console.log(initialVerification);
   
+
   // seed form state from an existing verification object, if editing a lesson that already has one
   useEffect(() => {
+    if (!initialVerification) return;
     console.log(initialVerification);
     console.log(typeof(initialVerification));
-    
-    if (!initialVerification) return;
+    // If what just arrived is exactly what we ourselves emitted a moment ago,
+    // this is the parent echoing our own edit back down through props — not
+    // genuinely new data (a different lesson, a fresh page load). Re-seeding
+    // from an echo is what was breaking things: it rebuilds every row with a
+    // brand-new id, which changes React `key`s, which unmounts and remounts
+    // the actual input the admin is typing into — losing focus and jumping
+    // scroll position on every single successful edit.
+    const incomingCanonical = canonicalStringify(initialVerification);
+    if (incomingCanonical !== null && incomingCanonical === lastEmittedJsonRef.current) {
+      return;
+    }
+
     try {
       // Object is the native, expected shape (matches how this system actually
       // stores solution_verification). Still accepts a JSON string too, just in
@@ -418,7 +459,6 @@ export default function GradingCriteriaBuilder({
           }))
         );
       } else {
-        console.log("Experiment2");
         setCheckRows(
           (parsed.checks || []).map((c) => ({
             id: nextId(),
@@ -438,40 +478,44 @@ export default function GradingCriteriaBuilder({
       console.error('GradingCriteriaBuilder: could not load existing solution_verification', e, initialVerification);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  // Complain to claude again that putting initialVerification in the box breaks every goddamn thing
+  }, [initialVerification]);
 
   const verification = useMemo(
     () => buildVerification(mode, funcName, testCaseRows, checkRows),
     [mode, funcName, testCaseRows, checkRows]
   );
-  console.log(checkRows)
 
   // Only used for the read-only preview pane below — never passed to onChange,
   // since the object itself is what actually gets stored.
   const verificationJson = useMemo(() => JSON.stringify(verification, null, 2), [verification]);
+  // Compact form, used only for equality checks (dedupe + echo detection) —
+  // key order from buildVerification is stable, so this is safe to compare directly.
+  const canonicalVerificationJson = useMemo(() => JSON.stringify(verification), [verification]);
 
-  // Skip the very first invocation, AND skip any invocation whose content
-  // exactly matches what was last emitted. The first-skip alone isn't enough
-  // once onChange sends a plain object: every re-seed (triggered by the
-  // parent handing back a new-but-equal object reference) builds brand-new
-  // arrays via .map(), so `verification` never reference-equals its previous
-  // value — without a content check, seed → emit → parent updates → new
-  // initialVerification reference → re-seed → emit again, forever. Comparing
-  // stringified content (cheap, and verificationJson is already computed for
-  // the preview below) breaks that cycle as soon as content actually stabilizes.
+  const formHasInvalidJson = useMemo(
+    () => hasAnyInvalidJson(mode, testCaseRows, checkRows),
+    [mode, testCaseRows, checkRows]
+  );
+
+  // Skip the very first invocation (nothing's been edited yet). Skip emitting
+  // while any JSON field is mid-invalid (e.g. right after backspacing a
+  // closing quote) — without this, buildVerification silently drops that
+  // field (JSON.stringify omits `undefined` values), and the corrupted,
+  // field-missing object would get sent upstream and potentially saved.
+  // Skip if content matches what was last emitted, so the harmless echo
+  // triggered by the parent handing data back doesn't cause a duplicate emit.
   const hasFiredOnceRef = useRef(false);
-  const lastEmittedJsonRef = useRef(null);
   useEffect(() => {
     if (!hasFiredOnceRef.current) {
       hasFiredOnceRef.current = true;
       return;
     }
-    if (lastEmittedJsonRef.current === verificationJson) return;
-    lastEmittedJsonRef.current = verificationJson;
+    if (formHasInvalidJson) return;
+    if (lastEmittedJsonRef.current === canonicalVerificationJson) return;
+    lastEmittedJsonRef.current = canonicalVerificationJson;
     if (onChange) onChange(verification);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [verificationJson]);
+  }, [canonicalVerificationJson, formHasInvalidJson]);
 
   const availableCheckTypes = mode === 'static' ? STATIC_CHECK_TYPES : SCRIPT_CHECK_TYPES;
 

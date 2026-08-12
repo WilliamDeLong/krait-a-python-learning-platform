@@ -24,6 +24,7 @@ import DocumentationSelect from "./components/pages/documentationSelectionPage";
 import DocumentationTemplatePage from "./components/pages/DocumentationTemplatePage";
 
 import LessonCreator from "./components/pages/lessonCreationPage";
+import LessonCreationRedirection from "./components/pages/lessonCreationRedirection";
 
 import { createEditorState, createEditorView } from "./components/editor";
 
@@ -122,8 +123,8 @@ const App = () => {
           <Route path="/documentation" element={<DocumentationSelect />} />
           <Route path="/document/:DocumentID" element={<DocumentationTemplatePage />} />
           <Route path="/lessonRedirect/:lessonID" element={<LessonRedirectPage />} />
-          <Route path="/lessonCreator/:lessonID" element={<LessonCreator />} />
-
+          <Route path="/createLesson" element={<LessonCreationRedirection />} />
+          <Route path="/lessonEditor/:lessonID" element={<LessonCreator />} />
           
         </Routes>
       </UserContext.Provider>

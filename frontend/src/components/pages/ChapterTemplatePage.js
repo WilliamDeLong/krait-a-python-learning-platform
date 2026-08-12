@@ -110,12 +110,18 @@ const ChapterTemplatePage = () => {
       }
     };
   //const { username } = user;
+  //console.log(user.admin);
   const listItems = lessons.map(lesson =>
     <li key={lesson.order_within_chapter} style={{color:isLightMode ? '#000000': '#ffffff'}}>
-      <img
+      {user.admin&&<a href={`/lessonEditor/${lesson._id}`}><img
         src={isLightMode ? (lesson.is_test ? checkMarkLM : downArrowDM) :  (lesson.is_test ? checkMarkDM : downArrowLM)}
         alt={lesson.title}
-        style={{width: "30px",display:'inline-block'}}/>
+        style={{width: "30px",display:'inline-block'}}
+        /></a>}
+      {!user.admin&&<img
+        src={isLightMode ? (lesson.is_test ? checkMarkLM : downArrowDM) :  (lesson.is_test ? checkMarkDM : downArrowLM)}
+        alt={lesson.title}
+        style={{width: "30px",display:'inline-block'}}/>}
       <p style={{display:'inline', marginLeft:"10px", }}>
         <a href={`/lessonTestpage/${lesson._id}`} style={{fontWeight:"bold",color:isLightMode ? '#000000': '#ffffff'}}><b>Lesson {lesson.order_within_chapter} - {lesson.title}</b> </a><br/>
       </p>

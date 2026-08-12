@@ -173,7 +173,8 @@ export default function Navbar({ isLightMode, toggleTheme }) {
             </Dropdown.Menu>
           </Dropdown>
           
-          {user.admin && <Nav.Link style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}} href="/lessonCreator/6a7765b260cdf45504461d13">Lesson Creator Test Page</Nav.Link>}
+          {user.admin && <Nav.Link style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}} href="/lessonEditor/6a7c94cb93b5021d439c6888">Lesson Creator Test Page</Nav.Link>}
+          {user.admin && <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/createLesson">Create New Lesson</Nav.Link>}
           
           
         </Nav>

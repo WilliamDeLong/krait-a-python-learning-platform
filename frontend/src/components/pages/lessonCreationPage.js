@@ -32,8 +32,8 @@ import GradingCriteriaBuilder from "../Gradingcriteriabuilder.js";
 
 
 const url_submissionUpdate = `${API_BASE}/lesson/`;
-const url_submissionLoad = `${API_BASE}/submissions/findSubmission`;
-const url_submissionCreate = `${API_BASE}/submissions/create`;
+//const url_submissionLoad = `${API_BASE}/submissions/findSubmission`;
+//const url_submissionCreate = `${API_BASE}/submissions/create`;
 const url_LessonData = `${API_BASE}/lesson/`;
 const url_otherLessons = `${API_BASE}/lesson/findLesson`;
 const url_chapter = `${API_BASE}/chapter/findChapter`;
@@ -41,7 +41,7 @@ const url_chapter = `${API_BASE}/chapter/findChapter`;
 
 
 //const lessonDefault = {lessonID: "6a19e16bd4abefc266f8ab0c"};
-const lesson_block_data_default = {_id:"6a19e16bd4abefc266f8ab0c" , default_script: "", solution_verification: '', instructions: "", title: "Enter Lesson Title Here", instructionsHTML:null, chapter_no: 0, order_within_chapter: 0, description: "Enter Description Here"};
+const lesson_block_data_default = {_id:"6a7c94cb93b5021d439c6888" , default_script: "", solution_verification: '', instructions: "", title: "Enter Lesson Title Here", instructionsHTML:null, chapter_no: 0, order_within_chapter: 0, description: "Enter Description Here"};
 const codeSubmission_default = {"_id": null, script_submission: null, userID: "null", lessonID: "null", success: false, submission_date: null};
 
 
@@ -50,9 +50,11 @@ const LessonCreator = () => {
   const [user, setUser] = useState(getUserInfo());
   const {editorView} = useContext(UserContext);
   const {createEditor} = useContext(UserContext);
-
+  
   //const [data, setData] = useState(dataDefault);
   let {lessonID} = useParams();
+  console.log(lessonID);
+  //if (lessonID === "new")
   lesson_block_data_default._id=lessonID;
   //console.log(lessonID);
   //const [lessonID, setLesson] = useState(lessonDefault);
@@ -134,8 +136,8 @@ const LessonCreator = () => {
   const handleChange = ({ currentTarget: input }) => {
     if (input.name==="referenceSolutionText") setReferenceSolutionText(input.value)
     else setlesson_block_data({ ...lesson_block_data, [input.name]: input.value });
-    console.log("Name: ", input.name);
-    console.log("Value: ", input.value);
+    //console.log("Name: ", input.name);
+    //console.log("Value: ", input.value);
     };
 
   const handleViewChanges = async (e) => {
@@ -252,6 +254,7 @@ const LessonCreator = () => {
   if (lesson_block_data._id===null || lesson_block_data.instructionsHTML===null) return (
     <>
         <div key={seed} style={{background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}><h4>Loading Lesson Data</h4></div>
+        <div>{error}</div>
     </>
     ); 
   
@@ -321,7 +324,7 @@ const LessonCreator = () => {
                   {/* {"Pretend this is a terminal that's spitting out results, I'll get it working later"} */}
                   {/* {<textarea id="output" style={{"width": "100%", height:'100%',resize:"none",color: "#008a00",backgroundColor: isLightMode? "#d9dbdf": "#000000"}} rows="6" disabled ></textarea>} */}
                   {/* <PythonTerminal></PythonTerminal> */}
-                  <GradingCriteriaBuilder initialVerification={lesson_block_data.solution_verification || null} referenceSolution={referenceSolutionText} onChange={(json) => handleChange({ currentTarget: { name: 'solution_verification', value: json } }) } isLightMode={isLightMode}/>
+                  <GradingCriteriaBuilder initialVerification={lesson_block_data.solution_verification || null} referenceSolution={referenceSolutionText} onChange={(json) => handleChange({ currentTarget: { name: 'solution_verification', value: json } }) } isLightMode={isLightMode} />
                 </div>
               </div>
           </div>

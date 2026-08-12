@@ -15,6 +15,8 @@ import downArrowLM from "../../images/DownArrowDarkMode.png";
 const url = `${API_BASE}/chapter/find/`;
 const LessonDataurl = `${API_BASE}/lesson/findLesson`;
 const NextChapterURL = `${API_BASE}/chapter/findChapter`;
+const RefreshURL = `${API_BASE}/chapter/`;
+
 
 
 
@@ -63,6 +65,11 @@ const ChapterTemplatePage = () => {
         //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'
     };
+    async function refreshChapter() {
+      const resfreshResult = await axios.post(RefreshURL+ChapterID+"/refresh");
+      //console.log(resfreshResult.data);
+      return resfreshResult.data;
+    }
     
 
   useEffect(() => {
@@ -137,7 +144,7 @@ const ChapterTemplatePage = () => {
       <section className="lesson" style={{background: isLightMode ? "#d8e6f5": "#14294c", height:"93.5vh"}}>
         <div className="container-fluid h-custom " style={{height:"90%", position: "absolute", background: isLightMode ? "#d8e6f5": "#14294c", color: !isLightMode? "#000000": "#ffffff"}}>
           <div className="row d-flex" style={{color:isLightMode ? '#000000': '#ffffff', justifyContent:'center', textAlign:'center'}}>
-            <h4>Chapter {data.chapter_no}</h4>
+            {!user.admin && <h4>Chapter {data.chapter_no}</h4>}{user.admin && <h4 onClick={refreshChapter}>Chapter {data.chapter_no}</h4>}
             <h3>{data.title}</h3>
             <h5 style={{width:'50%', fontSize:"100%"}}>{data.description}</h5>
           </div>

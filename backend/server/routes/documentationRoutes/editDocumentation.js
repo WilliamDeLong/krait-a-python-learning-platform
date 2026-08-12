@@ -5,23 +5,39 @@ const bcrypt = require("bcrypt");
 const documentationSchema = require('../../models/documentationModel')
 
 router.post("/:id/edit", async (req, res) =>
-{
+{   
     //console.log("Gate 1");
     var { id } = req.params;
-    const {title, description, content, author, reference_list } = req.body;
+    if (Object.keys(req.body).length===1) {
+        var { shortID, title, description, content, author, reference_list } = req.body.params;
+        //console.log(`Req Params: ${req.params}`);
+        //console.log(req.body.params);
+        //console.log(`user id: ${userID}`);
+        //console.log(`lesson id ${lessonID}`);
+    }
+    else {
+        var { shortID, title, description, content, author, reference_list } = req.body;
+        //console.log(`Req Body: ${req.body}`);
+        //console.log(req.body);
+        //console.log(`user id: ${userID}`);
+        //console.log(`lesson id ${lessonID}`);
+    }
+    //const {title, description, content, author, reference_list } = req.body;
+    //console.log(req.body);
+    //console.log("Gate 1");
 
-
-    // check if lesson title is available
+    // check if document title is available
     const doc = await documentationSchema.findOne({ title: title })
     //console.log("Gate 2");
     if (doc) docIdReg = JSON.stringify(id).replace(/["]+/g, '')
     if (doc && docIdReg !== id) return res.status(409).send({ message: "Documentation title is already in use, pick another" })
     //console.log("Gate 3");
-    //console.log("Gate 4");
     
-    //console.log("Gate 5");
-    // find and update lesson using stored information
+    
+    //console.log(content);
+    // find and update document using stored information
     documentationSchema.findByIdAndUpdate(id, {
+        shortID: shortID,
         title: title,
         description: description,
         content: content,
@@ -32,7 +48,7 @@ router.post("/:id/edit", async (req, res) =>
         console.log(err);
     } else {
         // create and send new access token to local storage
-        //console.log("Gate 5");
+        //console.log("Gate 4");
         res.send({ documentation: documentation })
     }
     });

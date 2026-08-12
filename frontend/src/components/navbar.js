@@ -173,8 +173,21 @@ export default function Navbar({ isLightMode, toggleTheme }) {
             </Dropdown.Menu>
           </Dropdown>
           
-          {user.admin && <Nav.Link style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}} href="/lessonEditor/6a7c94cb93b5021d439c6888">Lesson Creator Test Page</Nav.Link>}
-          {user.admin && <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/createLesson">Create New Lesson</Nav.Link>}
+          {user.admin&&<Dropdown as={ButtonGroup} style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}}>
+            <Button >Admin Tools</Button>
+
+            <Dropdown.Toggle split  id="dropdown-split-basic" />
+            <Dropdown.Menu style={{backgroundColor:isLightMode ? '#ffffff': '#000000'}}>
+              <Dropdown.Item key="NL" href="/createLesson" style={{color:isLightMode ? '#000000': '#ffffff'}}>
+                Create New Lesson
+              </Dropdown.Item>
+              <Dropdown.Item key="NL" href="/createDocument" style={{color:isLightMode ? '#000000': '#ffffff'}}>
+                Create New Document
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>}
+          {/* {user.admin && <Nav.Link style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}} href="/lessonEditor/6a7c94cb93b5021d439c6888">Lesson Creator Test Page</Nav.Link>}
+          {user.admin && <Nav.Link style={{color: isLightMode ? "#0f172a" : "white"}} href="/createLesson">Create New Lesson</Nav.Link>} */}
           
           
         </Nav>

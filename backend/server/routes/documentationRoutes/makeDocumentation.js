@@ -6,7 +6,20 @@ const documentationSchema = require('../../models/documentationModel')
 
 
 router.post('/make', async (req, res) => {
-    const { shortID, title, description, content, author, reference_list} = req.body;
+    //var { shortID, title, description, content, author, reference_list} = req.body;
+    if (Object.keys(req.body).length===1) {
+        var { shortID, title, description, content, author, reference_list} = req.body.params;
+        //console.log(`Req Params: ${req.params}`);
+        //console.log(`user id: ${userID}`);
+        //console.log(`lesson id ${lessonID}`);
+    }
+    else {
+        var { shortID, title, description, content, author, reference_list } = req.body;
+        //console.log(`Req Body: ${req.body}`);
+        //console.log(req.body);
+        //console.log(`user id: ${userID}`);
+        //console.log(`lesson id ${lessonID}`);
+    }
     //const lesson = await lessonSchema.find(lessonID)
     //console.log(lessons);
     //console.log("Gate 1");

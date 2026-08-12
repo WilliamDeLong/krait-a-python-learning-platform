@@ -7,16 +7,17 @@ import API_BASE from '../../api';
 import getUserInfo from "../../utilities/decodeJwt";
 import { UserContext } from '../../App';
 //import mongoose from "mongoose";
-
+import checkMarkDM from "../../images/CheckMarkDM.png";
+import checkMarkLM from "../../images/CheckMarkLM.png";
 
 const url = `${API_BASE}/documentation/find/`;
-//const LessonDataurl = `${API_BASE}/lesson/findLesson`;
+//const documentDataurl = `${API_BASE}/document/finddocument`;
 //const NextChapterURL = `${API_BASE}/chapter/findChapter`;
 
 
 
-//const chapter_data_default = { title: null, description: '', chapter_no: 0, lessons: [], test_id: "", documentation_references: ""};
-//const Next_chapter_data_default = { title: "null", description: '', chapter_no: 0, lessons: [], test_id: "", documentation_references: ""};
+//const chapter_data_default = { title: null, description: '', chapter_no: 0, documents: [], test_id: "", documentation_references: ""};
+//const Next_chapter_data_default = { title: "null", description: '', chapter_no: 0, documents: [], test_id: "", documentation_references: ""};
 
 
 
@@ -29,11 +30,11 @@ const DocumentationSelect = () => {
   //let {ChapterID} = useParams();
   //console.log(ChapterID);
   //console.log(useParams());
-  //const [lessonID, setLesson] = useState(lessonDefault);
+  //const [documentID, setdocument] = useState(documentDefault);
   const [data, setData] = useState([]);
   //const [NChapter, setNChap] = useState(Next_chapter_data_default);
 
-  //const [lessons, setLessons] = useState([]);
+  //const [documents, setdocuments] = useState([]);
   const [error, setError] = useState("");
   const { isLightMode } = useContext(UserContext);
   //const { isLightMode } = useContext();
@@ -86,11 +87,11 @@ const DocumentationSelect = () => {
   		setUsers(author_data.data);
 		  //console.log('testing search');
 		  //console.log(users.find((element) => element._id === '6a18823fe3a22d37ce5b6b83').username);
-      //const LessonsRes = await axios.get(LessonDataurl, {params: {chapter_no: result.data['chapter_no']}});
-      //setLessons(LessonsRes.data.sort((a, b) => (a.order_within_chapter - b.order_within_chapter)));
-      //console.log((LessonsRes.data));
-      //console.log(lessonResult.data);
-      //console.log(`Lesson found`);
+      //const documentsRes = await axios.get(documentDataurl, {params: {chapter_no: result.data['chapter_no']}});
+      //setdocuments(documentsRes.data.sort((a, b) => (a.order_within_chapter - b.order_within_chapter)));
+      //console.log((documentsRes.data));
+      //console.log(documentResult.data);
+      //console.log(`document found`);
     } catch (error) {
       if (
         error.response &&
@@ -111,10 +112,11 @@ const DocumentationSelect = () => {
   else {
 	const listItems = data.map(document =>
 		<li key={document._id} style={{color:isLightMode ? '#000000': '#ffffff', border: "2px solid rgb(96 139 168)", width: '250px', marginLeft: '20px', height: '180px'}}>
-		{/* <img
-			src={isLightMode ? (document.is_test ? checkMarkLM : downArrowDM) :  (document.is_test ? checkMarkDM : downArrowLM)}
-			alt={document.title}
-			style={{width: "30px",display:'inline-block'}}/> */}
+		{user.admin&&<a href={`/documentEditor/${document._id}`}><img
+            src={isLightMode ? (checkMarkLM) :  (checkMarkDM)}
+            alt={document.title}
+            style={{width: "30px",display:'inline-block'}}
+            /></a>}
 		<p style={{display:'inline'}}>
 			<a href={`/document/${document._id}`} style={{fontWeight:"bold",color:isLightMode ? '#000000': '#ffffff'}}><b>Document {document.shortID} - {document.title}</b> </a><br/>
 		</p>

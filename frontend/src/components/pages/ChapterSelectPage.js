@@ -8,8 +8,8 @@ import getUserInfo from "../../utilities/decodeJwt";
 import { UserContext } from '../../App';
 
 //import downArrowDM from "../../images/DownArrow.png";
-//import checkMarkDM from "../../images/CheckMarkDM.png";
-//import checkMarkLM from "../../images/CheckMarkLM.png";
+import checkMarkDM from "../../images/CheckMarkDM.png";
+import checkMarkLM from "../../images/CheckMarkLM.png";
 //import downArrowLM from "../../images/DownArrowDarkMode.png";
 
 const url = `${API_BASE}/chapter/list`;
@@ -99,10 +99,11 @@ const ChapterSelect = () => {
   //const { username } = user;
   const listItems = data.map(chapter =>
     <li key={chapter.chapter_no} style={{color:isLightMode ? '#000000': '#ffffff'}}>
-      {/* <img
-        src={isLightMode ? (chapter.is_test ? checkMarkLM : downArrowDM) :  (chapter.is_test ? checkMarkDM : downArrowLM)}
-        alt={chapter.title}
-        style={{width: "30px",display:'inline-block'}}/> */}
+      {user.admin&&<a href={`/chapterEditor/${chapter._id}`}><img
+                  src={isLightMode ? (checkMarkLM) :  (checkMarkDM)}
+                  alt={chapter.title}
+                  style={{width: "30px",display:'inline-block'}}
+                  /></a>}
       <p style={{display:'inline', marginLeft:"10px", }}>
         <a href={`/chapter/${chapter._id}`} style={{fontWeight:"bold",color:isLightMode ? '#000000': '#ffffff'}}><b>Chapter {chapter.chapter_no} - {chapter.title}</b> </a><br/>
       </p>

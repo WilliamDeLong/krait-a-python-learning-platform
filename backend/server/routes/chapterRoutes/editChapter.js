@@ -9,8 +9,12 @@ router.post("/:id/edit", async (req, res) =>
 {
     //console.log("Gate 1");
     var { id } = req.params;
-    const {title, chapter_no, description, documentation_references } = req.body;
-
+    if (Object.keys(req.body).length===1) {
+        var { title, chapter_no, description, documentation_references} = req.body.params;
+    }
+    else {
+        var { title, chapter_no, description, documentation_references} = req.body;
+    }
 
     // check if lesson title is available
     const chapt = await chapterSchema.findOne({ title: title })

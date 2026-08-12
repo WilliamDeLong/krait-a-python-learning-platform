@@ -29,6 +29,9 @@ import LessonCreationRedirection from "./components/pages/lessonCreationRedirect
 import DocumentationCreator from "./components/pages/DocumentationCreationPage";
 import DocumentCreationRedirection from "./components/pages/documentCreationRedirection";
 
+import ChapterModifier from "./components/pages/ChapterModificationPage";
+import ChapterCreationRedirection from "./components/pages/ChapterCreationRedirection";
+
 import { createEditorState, createEditorView } from "./components/editor";
 
 export const UserContext = createContext();
@@ -130,6 +133,8 @@ const App = () => {
           <Route path="/lessonEditor/:lessonID" element={<LessonCreator />} />
           <Route path="/createDocument" element={<DocumentCreationRedirection />} />
           <Route path="/documentEditor/:documentID" element={<DocumentationCreator />} />
+          <Route path="/chapterEditor/:chapterID" element={<ChapterModifier />} />
+          <Route path="/createChapter" element={<ChapterCreationRedirection />} />
           
         </Routes>
       </UserContext.Provider>

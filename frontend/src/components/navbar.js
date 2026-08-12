@@ -184,6 +184,10 @@ export default function Navbar({ isLightMode, toggleTheme }) {
               <Dropdown.Item key="NL" href="/createDocument" style={{color:isLightMode ? '#000000': '#ffffff'}}>
                 Create New Document
               </Dropdown.Item>
+              <Dropdown.Item key="NL" href="/createChapter" style={{color:isLightMode ? '#000000': '#ffffff'}}>
+                Create New Chapter
+              </Dropdown.Item>
+              
             </Dropdown.Menu>
           </Dropdown>}
           {/* {user.admin && <Nav.Link style={{color: isLightMode ? "#0f172a" : "white",marginLeft:"10px"}} href="/lessonEditor/6a7c94cb93b5021d439c6888">Lesson Creator Test Page</Nav.Link>}

@@ -7,7 +7,13 @@ const lessonSchema = require('../../models/LessonModel')
 
 
 router.post('/create', async (req, res) => {
-    const { title, chapter_no, description, documentation_references} = req.body;
+    if (Object.keys(req.body).length===1) {
+        var { title, chapter_no, description, documentation_references} = req.body.params;
+    }
+    else {
+        var { title, chapter_no, description, documentation_references} = req.body;
+    }
+    //const { title, chapter_no, description, documentation_references} = req.body;
     var test_id = null;
     var lessons = [];
     //console.log("Gate 1");

@@ -49,7 +49,7 @@ const ChapterTemplatePage = () => {
         //marginLeft: 'auto',
         //marginRight: 0,
         //width:"720px",
-        height: '550px',
+        height: 'fit-content',
         borderColor: isLightMode ? '#000000' : '#ffffff'
         //textAlign: 'center',
         //backgroundColor: isLightMode ? '#ffffff' : '#000000'

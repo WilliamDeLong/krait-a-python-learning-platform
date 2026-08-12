@@ -146,7 +146,7 @@ const ChapterModifier = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    setChapter_block_data({ ...chapter_block_data, content: editorView.state.doc.toString() });
+    setChapter_block_data(chapter_block_data);
     //console.log(code);
     //setCodeSubmission({ ...codeSubmission, script_chapter: code });
     //console.log('test verification');
@@ -171,7 +171,7 @@ const ChapterModifier = () => {
       if (needs2Save) {
         try {
           console.log(chapter_block_data);
-          //const chapterUpdatedResponse = await axios.post((url_chapter+chapter_block_data['_id']+"/edit"), {params: chapter_block_data});
+          const chapterUpdatedResponse = await axios.post((url_chapter+chapter_block_data['_id']+"/edit"), {params: chapter_block_data});
 		  //console.log(chapterUpdatedResponse);
           setNeed2Save(false);
         } catch (error) {

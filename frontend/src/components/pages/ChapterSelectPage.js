@@ -8,8 +8,8 @@ import getUserInfo from "../../utilities/decodeJwt";
 import { UserContext } from '../../App';
 
 //import downArrowDM from "../../images/DownArrow.png";
-import checkMarkDM from "../../images/CheckMarkDM.png";
-import checkMarkLM from "../../images/CheckMarkLM.png";
+import wrenchDM from "../../images/WrenchDM.png";
+import wrenchLM from "../../images/WrenchLM.png";
 //import downArrowLM from "../../images/DownArrowDarkMode.png";
 
 const url = `${API_BASE}/chapter/list`;
@@ -100,8 +100,9 @@ const ChapterSelect = () => {
   const listItems = data.map(chapter =>
     <li key={chapter.chapter_no} style={{color:isLightMode ? '#000000': '#ffffff'}}>
       {user.admin&&<a href={`/chapterEditor/${chapter._id}`}><img
-                  src={isLightMode ? (checkMarkLM) :  (checkMarkDM)}
-                  alt={chapter.title}
+                  src={isLightMode ? (wrenchLM) :  (wrenchDM)}
+                  alt={`Edit ${chapter.title}`}
+                  title ={`Edit ${chapter.title}`}
                   style={{width: "30px",display:'inline-block'}}
                   /></a>}
       <p style={{display:'inline', marginLeft:"10px", }}>

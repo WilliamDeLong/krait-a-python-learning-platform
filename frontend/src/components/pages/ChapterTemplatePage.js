@@ -123,6 +123,7 @@ const ChapterTemplatePage = () => {
       {user.admin&&<a href={`/lessonEditor/${lesson._id}`}><img
         src={isLightMode ? (lesson.is_test ? checkMarkLM : downArrowDM) :  (lesson.is_test ? checkMarkDM : downArrowLM)}
         alt={lesson.title}
+        title ={`Edit ${lesson.title}`}
         style={{width: "30px",display:'inline-block'}}
         /></a>}
       {!user.admin&&<img

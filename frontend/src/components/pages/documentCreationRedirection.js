@@ -3,9 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 //import Button from "react-bootstrap/Button";
 //import Nav from 'react-bootstrap/Nav';
-//import getUserInfo from "../utilities/decodeJwt";
+import getUserInfo from '../../utilities/decodeJwt';
 import { UserContext } from '../../App';
 import API_BASE from '../../api.js';
+//import mongoose from "mongoose";
+//import { Mongoose } from "mongoose";
 
 const url_DocumentData = `${API_BASE}/documentation/6a7cbf52470d8ae3c5f46758`;
 const url_DocumentCreate = `${API_BASE}/documentation/make/`;
@@ -13,7 +15,7 @@ const url_DocumentCreate = `${API_BASE}/documentation/make/`;
 
 
 const DocumentCreationRedirection = () => {
-  //const [user, setUser] = useState(getUserInfo());
+  const [user, setUser] = useState(getUserInfo());
   const [error, setError] = useState("");
   const { isLightMode } = useContext(UserContext);
   let [documentID, setDocumentID] = useState("");
@@ -34,6 +36,7 @@ const DocumentCreationRedirection = () => {
         console.log(url_DocumentData);
         var documentResult = await axios.get(url_DocumentData);
         documentResult.data.title = "New Document";
+        documentResult.data.author = user.id.toString();
         console.log(documentResult.data);
         setDocumentData(documentResult.data);
         
@@ -49,6 +52,9 @@ const DocumentCreationRedirection = () => {
           error.response.status >= 400 &&
           error.response.status <= 500
         ) {
+          console.log(error.response.data.message);
+          setError(error.response.data.message);
+        } else {
           console.log(error.response.data.message);
           setError(error.response.data.message);
         }

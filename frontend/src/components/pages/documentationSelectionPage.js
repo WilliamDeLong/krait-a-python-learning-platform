@@ -7,8 +7,8 @@ import API_BASE from '../../api';
 import getUserInfo from "../../utilities/decodeJwt";
 import { UserContext } from '../../App';
 //import mongoose from "mongoose";
-import checkMarkDM from "../../images/CheckMarkDM.png";
-import checkMarkLM from "../../images/CheckMarkLM.png";
+import wrenchDM from "../../images/WrenchDM.png";
+import wrenchLM from "../../images/WrenchLM.png";
 
 const url = `${API_BASE}/documentation/find/`;
 //const documentDataurl = `${API_BASE}/document/finddocument`;
@@ -113,8 +113,9 @@ const DocumentationSelect = () => {
 	const listItems = data.map(document =>
 		<li key={document._id} style={{color:isLightMode ? '#000000': '#ffffff', border: "2px solid rgb(96 139 168)", width: '250px', marginLeft: '20px', height: '180px'}}>
 		{user.admin&&<a href={`/documentEditor/${document._id}`}><img
-            src={isLightMode ? (checkMarkLM) :  (checkMarkDM)}
+            src={isLightMode ? (wrenchLM) :  (wrenchDM)}
             alt={document.title}
+            title ={`Edit ${document.title}`}
             style={{width: "30px",display:'inline-block'}}
             /></a>}
 		<p style={{display:'inline'}}>

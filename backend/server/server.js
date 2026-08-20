@@ -50,7 +50,8 @@ require('dotenv').config();
 const SERVER_PORT = 8081
 
 dbConnection()
-app.use(cors({origin: '*'}))
+const allowedOrigin = process.env.FRONTEND_URL;
+app.use(cors({origin: allowedOrigin,methods: ['GET', 'POST', 'PUT', 'DELETE']}))
 app.use(express.json())
 // User Routes
 app.use('/user', loginRoute);
